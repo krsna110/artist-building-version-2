@@ -188,21 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
         brandObserver.observe(brandsGrid);
     }
 
-    // === Tools circle rotation on scroll ===
-    const toolsCircle = document.querySelector('.tools-circle');
-    if (toolsCircle) {
-        const toolsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    toolsCircle.style.transition = 'transform 1.5s ease';
-                    toolsCircle.style.transform = 'rotate(0deg)';
-                }
-            });
-        }, { threshold: 0.3 });
-
-        toolsCircle.style.transform = 'rotate(-30deg)';
-        toolsObserver.observe(toolsCircle);
-    }
 
     // === Counter animation for stats ===
     const statNumbers = document.querySelectorAll('.stat-number');

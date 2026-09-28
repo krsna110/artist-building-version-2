@@ -731,11 +731,34 @@ button {
 
 .tools-circle {
     position: relative;
-    width: 320px;
-    height: 320px;
+    width: 330px;
+    height: 330px;
     margin: 0 auto;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(167, 139, 250, 0.25);
+    box-shadow: 0 0 50px rgba(124, 58, 237, 0.1), inset 0 0 40px rgba(124, 58, 237, 0.06);
+    animation: orbitCircle 28s linear infinite;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tools-circle::before {
+    content: '';
+    position: absolute;
+    inset: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    pointer-events: none;
+}
+
+.tools-circle:hover {
+    animation-play-state: paused;
+    border-color: rgba(167, 139, 250, 0.5);
+    box-shadow: 0 0 60px rgba(124, 58, 237, 0.22), inset 0 0 50px rgba(124, 58, 237, 0.12);
+}
+
+.tools-circle:hover .tool-icon,
+.tools-circle:hover .tool-item span {
+    animation-play-state: paused;
 }
 
 .tool-item {
@@ -747,6 +770,7 @@ button {
     align-items: center;
     gap: 4px;
     transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--distance))) rotate(calc(-1 * var(--angle)));
+    cursor: pointer;
 }
 
 .tool-icon {
@@ -757,7 +781,8 @@ button {
     justify-content: center;
     background: transparent !important;
     border: none !important;
-    transition: var(--transition-base);
+    animation: keepUpright 28s linear infinite;
+    transition: transform var(--transition-base);
 }
 
 .tool-icon img {
@@ -770,8 +795,8 @@ button {
 }
 
 .tool-item:hover .tool-icon img {
-    transform: scale(1.12);
-    filter: drop-shadow(0 8px 20px rgba(124, 58, 237, 0.45));
+    transform: scale(1.18);
+    filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.8));
 }
 
 .tool-item span {
@@ -781,6 +806,31 @@ button {
     font-family: var(--font-accent);
     font-weight: 500;
     margin-top: 4px;
+    animation: keepUpright 28s linear infinite;
+    transition: color var(--transition-base);
+}
+
+.tool-item:hover span {
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+}
+
+@keyframes orbitCircle {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes keepUpright {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
 }
 
 /* === CTA Mid === */
