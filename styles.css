@@ -315,11 +315,21 @@ button {
     justify-content: center;
     text-align: center;
     padding: 100px var(--space-lg) var(--space-3xl);
-    background:
-        var(--gradient-hero),
-        var(--gradient-glow),
-        linear-gradient(180deg, #0d0d1a 0%, #0a0a0f 100%);
+    background-color: var(--bg-primary);
     overflow: hidden;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/ProTalentPicks_ssspin.io_1790626950-ezgif.com-gif-to-webp-converter.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .hero::before {
@@ -330,20 +340,24 @@ button {
     right: 0;
     bottom: 0;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+        radial-gradient(ellipse at 50% 40%, rgba(124, 58, 237, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
     pointer-events: none;
+    z-index: 1;
 }
 
 .hero-bg-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, 
-        rgba(10, 10, 20, 0.4) 0%,
-        rgba(10, 10, 20, 0.7) 50%,
+        rgba(10, 10, 20, 0.3) 0%,
+        rgba(10, 10, 20, 0.1) 40%,
+        rgba(10, 10, 15, 0.7) 80%,
         rgba(10, 10, 15, 1) 100%
     );
     z-index: 1;
+    pointer-events: none;
 }
 
 .hero-content {
@@ -736,44 +750,38 @@ button {
 }
 
 .tool-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
+    width: 54px;
+    height: 54px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+    background: transparent !important;
+    border: none !important;
     transition: var(--transition-base);
-    overflow: hidden;
 }
 
 .tool-icon img {
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    object-fit: cover;
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
+    transition: transform var(--transition-base), filter var(--transition-base);
+}
+
+.tool-item:hover .tool-icon img {
+    transform: scale(1.12);
+    filter: drop-shadow(0 8px 20px rgba(124, 58, 237, 0.45));
 }
 
 .tool-item span {
-    font-size: 8px;
-    color: var(--text-muted);
+    font-size: 11px;
+    color: var(--text-secondary);
     white-space: nowrap;
     font-family: var(--font-accent);
+    font-weight: 500;
+    margin-top: 4px;
 }
-
-.tool-chatgpt { background: rgba(16, 163, 127, 0.15) !important; color: #10a37f !important; }
-.tool-ps { background: rgba(49, 168, 255, 0.15) !important; color: #31a8ff !important; }
-.tool-boris { background: rgba(75, 75, 180, 0.15) !important; color: #9090ff !important; }
-.tool-ai { background: rgba(255, 154, 0, 0.15) !important; color: #ff9a00 !important; }
-.tool-canva { background: rgba(0, 194, 219, 0.15) !important; color: #00c2db !important; }
-.tool-pr { background: rgba(153, 102, 255, 0.15) !important; color: #9966ff !important; }
-.tool-resolve { background: rgba(255, 107, 53, 0.1) !important; }
-.tool-ae { background: rgba(153, 102, 255, 0.15) !important; color: #9966ff !important; }
-.tool-sail { background: rgba(255, 255, 255, 0.06) !important; font-size: 20px !important; }
 
 /* === CTA Mid === */
 .cta-mid {
@@ -972,28 +980,35 @@ button {
 
 .advantage-title {
     font-family: var(--font-heading);
-    font-size: clamp(26px, 6.5vw, 40px);
+    font-size: clamp(28px, 6.5vw, 42px);
     margin-bottom: var(--space-2xl);
     line-height: 1.2;
 }
 
 .advantage-cards {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    max-width: 500px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 680px;
     margin: 0 auto var(--space-2xl);
 }
 
+@media (max-width: 640px) {
+    .advantage-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
 .advantage-card {
-    background: var(--bg-card);
-    border: 1px solid var(--bg-card-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-xl) var(--space-lg);
+    background: #0f0f18;
+    border: 1px solid rgba(124, 58, 237, 0.22);
+    border-radius: var(--radius-xl);
+    padding: 30px 24px;
     text-align: left;
     transition: var(--transition-base);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
 .advantage-card::after {
@@ -1003,24 +1018,43 @@ button {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.4), transparent);
 }
 
 .advantage-card:hover {
-    border-color: var(--bg-card-border-hover);
-    background: var(--bg-card-hover);
+    border-color: rgba(167, 139, 250, 0.5);
+    background: #141420;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
 }
 
 .adv-icon {
-    margin-bottom: var(--space-md);
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(124, 58, 237, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+    box-shadow: inset 0 0 16px rgba(124, 58, 237, 0.1);
+    transition: var(--transition-base);
+}
+
+.advantage-card:hover .adv-icon {
+    background: rgba(124, 58, 237, 0.22);
+    border-color: rgba(167, 139, 250, 0.45);
+    transform: scale(1.05);
 }
 
 .advantage-card h3 {
     font-family: var(--font-accent);
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
     margin-bottom: var(--space-sm);
     color: var(--text-primary);
+    line-height: 1.3;
 }
 
 .advantage-card p {
@@ -1451,20 +1485,29 @@ button {
 
 .mentor-tag {
     position: absolute;
-    padding: 4px 10px;
-    background: rgba(124, 58, 237, 0.15);
-    border: 1px solid rgba(124, 58, 237, 0.3);
+    padding: 8px 14px;
+    background: rgba(124, 58, 237, 0.16);
+    border: 1px solid rgba(124, 58, 237, 0.35);
     border-radius: var(--radius-sm);
-    font-size: 10px;
+    font-size: 12px;
     font-family: var(--font-accent);
     color: var(--purple-400);
     white-space: nowrap;
     line-height: 1.4;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.mentor-tag:hover {
+    transform: translateY(-2px);
+    border-color: var(--purple-400);
 }
 
 .mentor-tag small {
-    color: var(--text-muted);
-    font-size: 8px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    display: block;
 }
 
 /* === Final CTA === */
