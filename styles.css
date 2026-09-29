@@ -383,6 +383,20 @@ button:focus-visible {
     pointer-events: none;
 }
 
+.hero-bg-overlay::before {
+    content: '';
+    position: absolute;
+    top: 62%;
+    left: 0;
+    width: 2px;
+    height: clamp(72px, 12vh, 132px);
+    background: linear-gradient(180deg, transparent, rgba(167, 139, 250, 0.72), rgba(255, 255, 255, 0.5), transparent);
+    box-shadow: 0 0 16px rgba(167, 139, 250, 0.55);
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    animation: hero-playhead 16s ease-in-out infinite;
+}
+
 .hero-content {
     position: relative;
     z-index: 2;
@@ -437,6 +451,19 @@ button:focus-visible {
     border-radius: var(--radius-md);
     animation: fadeInUp 0.8s ease 0.45s forwards;
     opacity: 0;
+}
+
+.btn-hero::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    bottom: -40%;
+    left: 0;
+    width: 34%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.24), transparent);
+    transform: translateX(-150%) skewX(-20deg);
+    pointer-events: none;
+    animation: hero-cta-sheen 7s ease-in-out 1.2s infinite;
 }
 
 .hero-meta {
@@ -1034,8 +1061,17 @@ button:focus-visible {
         linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.055) 48%, transparent 68%),
         repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,0.025) 23px 24px);
     opacity: 0.72;
+    background-size: 220% 100%, auto;
+    background-position: 100% 0, 0 0;
     pointer-events: none;
+    animation: project-film-sheen 12s ease-in-out infinite;
 }
+
+.project-thumb-2::after { animation-delay: 1.5s; }
+.project-thumb-3::after { animation-delay: 3s; }
+.project-thumb-4::after { animation-delay: 4.5s; }
+.project-thumb-5::after { animation-delay: 6s; }
+.project-thumb-6::after { animation-delay: 7.5s; }
 
 .project-thumb-1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
 .project-thumb-2 { background: linear-gradient(135deg, #0f3460, #1a1a2e); }
@@ -1901,7 +1937,9 @@ button:focus-visible {
     transform: translateY(36px) scale(0.985);
     transition: opacity 0.78s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
         filter 0.78s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
-        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 .reveal.visible {
@@ -1912,6 +1950,16 @@ button:focus-visible {
 
 .project-card.reveal.visible:hover {
     transform: translateY(-6px) scale(1.012);
+}
+
+.project-card.reveal.visible.is-active {
+    border-color: var(--bg-card-border-hover);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32), 0 0 22px rgba(124, 58, 237, 0.12);
+    transform: translateY(-3px) scale(1.012);
+}
+
+.project-card.reveal.visible.is-active:hover {
+    transform: translateY(-6px) scale(1.02);
 }
 
 .advantage-card.reveal.visible:hover {
@@ -2349,6 +2397,26 @@ button:focus-visible {
     to { transform: translate3d(1%, -1%, 0) scale(1.06); }
 }
 
+@keyframes hero-playhead {
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    6% { opacity: 0.72; }
+    62% { transform: translate3d(calc(100vw - 2px), 0, 0); opacity: 0.58; }
+    70%, 100% { transform: translate3d(calc(100vw - 2px), 0, 0); opacity: 0; }
+}
+
+@keyframes hero-cta-sheen {
+    0%, 18% { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
+    25% { opacity: 1; }
+    52% { transform: translateX(360%) skewX(-20deg); opacity: 0; }
+    100% { transform: translateX(360%) skewX(-20deg); opacity: 0; }
+}
+
+@keyframes project-film-sheen {
+    0%, 10% { background-position: 100% 0, 0 0; opacity: 0.58; }
+    52% { background-position: 0% 0, 0 0; opacity: 0.82; }
+    100% { background-position: 0% 0, 0 0; opacity: 0.58; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -2363,6 +2431,10 @@ button:focus-visible {
     .hero::before {
         animation: none;
         transform: none;
+    }
+
+    .hero-bg-overlay::before {
+        animation: none;
     }
 
     *,

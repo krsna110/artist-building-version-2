@@ -153,6 +153,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return Math.max(0, Math.min(pageCount - 1, Math.round(projectTrack.scrollLeft / pageStep)));
         }
 
+        function syncActiveCard() {
+            const trackCenter = projectTrack.getBoundingClientRect().left + projectTrack.clientWidth / 2;
+            let closestCard = null;
+            let closestDistance = Infinity;
+
+            projectCards.forEach(card => {
+                const bounds = card.getBoundingClientRect();
+                const distance = Math.abs(bounds.left + bounds.width / 2 - trackCenter);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestCard = card;
+                }
+            });
+
+            projectCards.forEach(card => card.classList.toggle('is-active', card === closestCard));
+        }
+
         function setPage(page, announce = false) {
             currentPage = Math.max(0, Math.min(pageCount - 1, page));
             projectTrack.scrollTo({ left: pagePosition(currentPage), behavior: scrollBehavior });
@@ -160,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateControls(announce = false) {
+            syncActiveCard();
             const pageDots = projectDots.querySelectorAll('button');
             pageDots.forEach((dot, index) => {
                 if (index === currentPage) dot.setAttribute('aria-current', 'true');
