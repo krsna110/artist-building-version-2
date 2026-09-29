@@ -214,31 +214,43 @@
         <h2 class="section-heading-large">Student Works</h2>
         <p class="projects-desc">A real project after every module — reviewed 1-on-1 by your mentor. Build a portfolio that proves your skill.</p>
         
-        <div class="project-cards">
-            <div class="project-card" id="project-1">
-                <div class="project-thumb project-thumb-1"></div>
-                <h3>Match Cut Project</h3>
+        <div class="project-carousel" role="region" aria-roledescription="carousel" aria-label="Student work projects">
+            <div class="project-cards" id="project-cards" tabindex="0" aria-label="Student work projects">
+                <div class="project-card" id="project-1" role="group" aria-roledescription="slide" aria-label="1 of 6: Match Cut Project">
+                    <div class="project-thumb project-thumb-1"></div>
+                    <h3>Match Cut Project</h3>
+                </div>
+                <div class="project-card" id="project-2" role="group" aria-roledescription="slide" aria-label="2 of 6: Movie Trailer Project">
+                    <div class="project-thumb project-thumb-2"></div>
+                    <h3>Movie Trailer Project</h3>
+                </div>
+                <div class="project-card" id="project-3" role="group" aria-roledescription="slide" aria-label="3 of 6: Speed Ramping Project">
+                    <div class="project-thumb project-thumb-3"></div>
+                    <h3>Speed Ramping Project</h3>
+                </div>
+                <div class="project-card" id="project-4" role="group" aria-roledescription="slide" aria-label="4 of 6: Interview Editing Project">
+                    <div class="project-thumb project-thumb-4"></div>
+                    <h3>Interview Editing Project</h3>
+                </div>
+                <div class="project-card" id="project-5" role="group" aria-roledescription="slide" aria-label="5 of 6: Music Video Edit Project">
+                    <div class="project-thumb project-thumb-5"></div>
+                    <h3>Music Video Edit Project</h3>
+                </div>
+                <div class="project-card" id="project-6" role="group" aria-roledescription="slide" aria-label="6 of 6: Final Showreel">
+                    <div class="project-thumb project-thumb-6"></div>
+                    <h3>Final Showreel</h3>
+                </div>
             </div>
-            <div class="project-card" id="project-2">
-                <div class="project-thumb project-thumb-2"></div>
-                <h3>Movie Trailer Project</h3>
+            <div class="project-carousel-controls" id="project-carousel-controls" hidden>
+                <button class="project-control" type="button" data-carousel-direction="-1" aria-label="Previous projects">
+                    <span aria-hidden="true">←</span>
+                </button>
+                <div class="project-carousel-dots" id="project-carousel-dots" aria-label="Choose project page"></div>
+                <button class="project-control" type="button" data-carousel-direction="1" aria-label="Next projects">
+                    <span aria-hidden="true">→</span>
+                </button>
             </div>
-            <div class="project-card" id="project-3">
-                <div class="project-thumb project-thumb-3"></div>
-                <h3>Speed Ramping Project</h3>
-            </div>
-            <div class="project-card" id="project-4">
-                <div class="project-thumb project-thumb-4"></div>
-                <h3>Interview Editing Project</h3>
-            </div>
-            <div class="project-card" id="project-5">
-                <div class="project-thumb project-thumb-5"></div>
-                <h3>Music Video Edit Project</h3>
-            </div>
-            <div class="project-card" id="project-6">
-                <div class="project-thumb project-thumb-6"></div>
-                <h3>Final Showreel</h3>
-            </div>
+            <p class="sr-only" id="project-carousel-status" aria-live="polite"></p>
         </div>
     </section>
 

@@ -97,6 +97,99 @@ document.addEventListener('DOMContentLoaded', () => {
     initAccordion('accordion');
     initAccordion('faq-accordion');
 
+    // === Student projects carousel ===
+    const projectTrack = document.getElementById('project-cards');
+    const projectControls = document.getElementById('project-carousel-controls');
+    const projectDots = document.getElementById('project-carousel-dots');
+    const projectStatus = document.getElementById('project-carousel-status');
+
+    if (projectTrack && projectControls && projectDots) {
+        const projectCards = Array.from(projectTrack.querySelectorAll('.project-card'));
+        const previousButton = projectControls.querySelector('[data-carousel-direction="-1"]');
+        const nextButton = projectControls.querySelector('[data-carousel-direction="1"]');
+        let pageCount = 1;
+        let currentPage = 0;
+        let scrollFrame = 0;
+        let cardsPerPage = 1;
+        let pageStep = projectTrack.clientWidth;
+        const scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+        const pagePosition = page => Math.min(page * pageStep, projectTrack.scrollWidth - projectTrack.clientWidth);
+
+        function visiblePage() {
+            const maxScroll = projectTrack.scrollWidth - projectTrack.clientWidth;
+            if (projectTrack.scrollLeft >= maxScroll - 4) return pageCount - 1;
+            return Math.max(0, Math.min(pageCount - 1, Math.round(projectTrack.scrollLeft / pageStep)));
+        }
+
+        function setPage(page, announce = false) {
+            currentPage = Math.max(0, Math.min(pageCount - 1, page));
+            projectTrack.scrollTo({ left: pagePosition(currentPage), behavior: scrollBehavior });
+            updateControls(announce);
+        }
+
+        function updateControls(announce = false) {
+            const pageDots = projectDots.querySelectorAll('button');
+            pageDots.forEach((dot, index) => {
+                if (index === currentPage) dot.setAttribute('aria-current', 'true');
+                else dot.removeAttribute('aria-current');
+            });
+            previousButton.disabled = currentPage === 0;
+            nextButton.disabled = currentPage === pageCount - 1;
+            if (announce && projectStatus) projectStatus.textContent = `Page ${currentPage + 1} of ${pageCount}`;
+        }
+
+        function configureCarousel() {
+            const previousPosition = projectTrack.scrollLeft;
+            const wasAtEnd = previousPosition >= projectTrack.scrollWidth - projectTrack.clientWidth - 4;
+            const gap = parseFloat(getComputedStyle(projectTrack).columnGap) || 0;
+            const cardStep = (projectCards[0]?.getBoundingClientRect().width || projectTrack.clientWidth) + gap;
+            cardsPerPage = Math.max(1, Math.floor((projectTrack.clientWidth + gap) / cardStep));
+            pageStep = cardsPerPage * cardStep;
+            pageCount = Math.max(1, Math.ceil(projectCards.length / cardsPerPage));
+            projectDots.replaceChildren();
+            for (let page = 0; page < pageCount; page += 1) {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'project-carousel-dot';
+                dot.setAttribute('aria-label', `Go to project page ${page + 1} of ${pageCount}`);
+                dot.addEventListener('click', () => setPage(page, true));
+                projectDots.append(dot);
+            }
+            currentPage = wasAtEnd
+                ? pageCount - 1
+                : Math.min(pageCount - 1, Math.round(previousPosition / pageStep));
+            projectTrack.scrollLeft = pagePosition(currentPage);
+            projectControls.hidden = projectCards.length < 2 || projectTrack.scrollWidth <= projectTrack.clientWidth + 1;
+            updateControls();
+        }
+
+        previousButton.addEventListener('click', () => setPage(currentPage - 1, true));
+        nextButton.addEventListener('click', () => setPage(currentPage + 1, true));
+
+        projectTrack.addEventListener('scroll', () => {
+            cancelAnimationFrame(scrollFrame);
+            scrollFrame = requestAnimationFrame(() => {
+                currentPage = visiblePage();
+                updateControls();
+            });
+        }, { passive: true });
+
+        projectTrack.addEventListener('keydown', event => {
+            if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                setPage(currentPage + 1, true);
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                setPage(currentPage - 1, true);
+            }
+        });
+
+        const resizeObserver = new ResizeObserver(configureCarousel);
+        resizeObserver.observe(projectTrack);
+        configureCarousel();
+    }
+
     // === Scroll Reveal Animations ===
     const revealElements = document.querySelectorAll(
         '.mentors-card, .brands-section, .tools-section, .project-card, ' +
@@ -218,31 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
 
     statNumbers.forEach(el => statsObserver.observe(el));
-
-    // === Project cards hover effect (tilt) ===
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            card.style.transition = 'transform 0.5s ease';
-        });
-
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'transform 0.1s ease';
-        });
-    });
 
     // === Play button interaction ===
     const playButton = document.getElementById('play-button');

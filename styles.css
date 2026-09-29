@@ -327,9 +327,11 @@ button {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.5;
+    opacity: 0.42;
     pointer-events: none;
     z-index: 0;
+    transform: scale(1.03);
+    animation: hero-background-drift 28s ease-in-out infinite alternate;
 }
 
 .hero::before {
@@ -350,10 +352,10 @@ button {
 .hero-bg-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, 
-        rgba(10, 10, 20, 0.3) 0%,
-        rgba(10, 10, 20, 0.1) 40%,
-        rgba(10, 10, 15, 0.7) 80%,
+    background: linear-gradient(180deg,
+        rgba(10, 10, 20, 0.52) 0%,
+        rgba(10, 10, 20, 0.34) 38%,
+        rgba(10, 10, 15, 0.78) 78%,
         rgba(10, 10, 15, 1) 100%
     );
     z-index: 1;
@@ -883,10 +885,93 @@ button {
 
 .project-cards {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--space-md);
-    max-width: 500px;
+    max-width: 1120px;
     margin: 0 auto;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.project-cards::-webkit-scrollbar {
+    display: none;
+}
+
+.project-cards:focus-visible {
+    outline: 2px solid var(--purple-400);
+    outline-offset: 6px;
+}
+
+.project-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin: var(--space-xl) auto 0;
+}
+
+.project-carousel-controls[hidden] {
+    display: none;
+}
+
+.project-control {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border: 1px solid var(--bg-card-border-hover);
+    border-radius: 50%;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.project-control:hover:not(:disabled) {
+    background: var(--purple-700);
+    transform: translateY(-1px);
+}
+
+.project-control:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+.project-carousel-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.project-carousel-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--text-muted);
+    cursor: pointer;
+    transition: width var(--transition-fast), background var(--transition-fast);
+}
+
+.project-carousel-dot[aria-current="true"] {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--purple-400);
+}
+
+.project-card {
+    flex: 0 0 min(84vw, 400px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .project-card {
@@ -907,6 +992,19 @@ button {
     width: 100%;
     aspect-ratio: 16/10;
     background: linear-gradient(135deg, #1a1025, #0d0d15);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.055) 48%, transparent 68%),
+        repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,0.025) 23px 24px);
+    opacity: 0.72;
+    pointer-events: none;
 }
 
 .project-thumb-1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
@@ -2100,6 +2198,10 @@ button {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(3, 1fr);
     }
+
+    .project-card {
+        flex-basis: calc((100% - var(--space-md)) / 2);
+    }
 }
 
 /* Desktop */
@@ -2133,12 +2235,54 @@ button {
         font-size: 56px;
     }
 
+    .project-card {
+        flex-basis: calc((100% - (var(--space-md) * 2)) / 3);
+    }
+
     .sticky-cta {
         display: none;
     }
 
     body {
         padding-bottom: 0;
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@keyframes hero-background-drift {
+    from { transform: scale(1.03) translate3d(-0.5%, 0, 0); }
+    to { transform: scale(1.08) translate3d(0.5%, -0.5%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .hero::after {
+        background-image: none;
+        animation: none;
+        transform: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }
 
