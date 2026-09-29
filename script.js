@@ -10,20 +10,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.getElementById('mobile-menu');
 
     if (menuToggle && mobileMenu) {
+        const desktopNavigation = window.matchMedia('(min-width: 1024px)');
+        const setMenuOpen = isOpen => {
+            menuToggle.classList.toggle('active', isOpen);
+            mobileMenu.classList.toggle('active', isOpen);
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+            mobileMenu.setAttribute('aria-hidden', String(!isOpen && !desktopNavigation.matches));
+            mobileMenu.inert = !isOpen && !desktopNavigation.matches;
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        };
+
+        setMenuOpen(false);
         menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            setMenuOpen(!mobileMenu.classList.contains('active'));
         });
 
-        // Close menu on link click
         mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', () => setMenuOpen(false));
         });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && mobileMenu.classList.contains('active')) setMenuOpen(false);
+        });
+
+        desktopNavigation.addEventListener('change', () => setMenuOpen(false));
     }
 
     // === Sticky CTA visibility ===
@@ -70,31 +81,51 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!container) return;
 
         const items = container.querySelectorAll('.accordion-item');
+        const syncOpenPanelHeights = () => {
+            container.querySelectorAll('.accordion-item.active .accordion-body').forEach(panel => {
+                panel.style.setProperty('--accordion-panel-height', `${panel.scrollHeight}px`);
+            });
+        };
 
         items.forEach(item => {
             const header = item.querySelector('.accordion-header');
             const icon = item.querySelector('.accordion-icon');
+            const panel = item.querySelector('.accordion-body');
+
+            if (panel && item.classList.contains('active')) {
+                panel.style.setProperty('--accordion-panel-height', `${panel.scrollHeight}px`);
+                header.setAttribute('aria-expanded', 'true');
+            } else {
+                header.setAttribute('aria-expanded', 'false');
+            }
 
             header.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
 
-                // Close all items in this accordion
                 items.forEach(other => {
                     other.classList.remove('active');
                     const otherIcon = other.querySelector('.accordion-icon');
+                    const otherPanel = other.querySelector('.accordion-body');
+                    const otherHeader = other.querySelector('.accordion-header');
                     if (otherIcon) otherIcon.textContent = '+';
+                    if (otherPanel) otherPanel.style.setProperty('--accordion-panel-height', '0px');
+                    if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
                 });
 
-                // Toggle current item
                 if (!isActive) {
                     item.classList.add('active');
                     if (icon) icon.textContent = '×';
+                    if (panel) panel.style.setProperty('--accordion-panel-height', `${panel.scrollHeight}px`);
+                    header.setAttribute('aria-expanded', 'true');
                 }
             });
         });
+
+        window.addEventListener('resize', syncOpenPanelHeights, { passive: true });
     }
 
     initAccordion('accordion');
+    initAccordion('ae-accordion');
     initAccordion('faq-accordion');
 
     // === Student projects carousel ===
@@ -192,11 +223,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === Scroll Reveal Animations ===
     const revealElements = document.querySelectorAll(
+        '.section-heading-large, .advantage-title, .curriculum-title, ' +
         '.mentors-card, .brands-section, .tools-section, .project-card, ' +
         '.advantage-card, .curriculum-card, .framework-section, .community-card, ' +
         '.process-step, .faq-section, .showreel-card, .academy-banner, .partner-banner, ' +
         '.video-section, .problem-section, .student-work-section, .mentors-group-section'
     );
+
+    const staggeredRevealSelectors = [
+        '.project-card', '.advantage-card', '.curriculum-card', '.process-step', '.mentors-card'
+    ].join(', ');
 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -212,6 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => {
         el.classList.add('reveal');
+        if (el.matches(staggeredRevealSelectors)) {
+            const siblings = Array.from(el.parentElement.children).filter(child => child.matches(staggeredRevealSelectors));
+            el.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(el), 4) * 90}ms`);
+        }
         revealObserver.observe(el);
     });
 
@@ -338,57 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
             }
         }, { passive: true });
-    }
-
-    // === Advantage cards stagger ===
-    const advantageCards = document.querySelectorAll('.advantage-card');
-    const advObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const cards = document.querySelectorAll('.advantage-card');
-                cards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, index * 150);
-                });
-                advObserver.disconnect();
-            }
-        });
-    }, { threshold: 0.1 });
-
-    if (advantageCards.length > 0) {
-        advantageCards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        });
-        advObserver.observe(advantageCards[0]);
-    }
-
-    // === Process steps stagger ===
-    const processSteps = document.querySelectorAll('.process-step');
-    const processObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                processSteps.forEach((step, index) => {
-                    setTimeout(() => {
-                        step.style.opacity = '1';
-                        step.style.transform = 'translateY(0)';
-                    }, index * 200);
-                });
-                processObserver.disconnect();
-            }
-        });
-    }, { threshold: 0.1 });
-
-    if (processSteps.length > 0) {
-        processSteps.forEach(step => {
-            step.style.opacity = '0';
-            step.style.transform = 'translateY(20px)';
-            step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        });
-        processObserver.observe(processSteps[0]);
     }
 
 });
