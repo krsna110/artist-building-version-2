@@ -1419,10 +1419,17 @@ button:focus-visible {
 }
 
 .work-thumb {
+    position: sticky;
+    top: calc(78px + var(--stack-offset, 0px));
     background: linear-gradient(135deg, #1a1025, #0d0d15);
     border-radius: var(--radius-sm);
     transition: var(--transition-base);
 }
+
+.work-thumb:nth-child(-n + 3) { --stack-offset: 0px; z-index: 1; }
+.work-thumb:nth-child(n + 4):nth-child(-n + 6) { --stack-offset: 16px; z-index: 2; }
+.work-thumb:nth-child(n + 7):nth-child(-n + 9) { --stack-offset: 32px; z-index: 3; }
+.work-thumb:nth-child(n + 10) { --stack-offset: 48px; z-index: 4; }
 
 .work-thumb:nth-child(odd) {
     background: linear-gradient(135deg, #16213e, #1a1a2e);
@@ -2303,6 +2310,10 @@ button:focus-visible {
         grid-template-rows: repeat(3, 1fr);
     }
 
+    .work-thumb:nth-child(-n + 4) { --stack-offset: 0px; z-index: 1; }
+    .work-thumb:nth-child(n + 5):nth-child(-n + 8) { --stack-offset: 16px; z-index: 2; }
+    .work-thumb:nth-child(n + 9) { --stack-offset: 32px; z-index: 3; }
+
     .project-card {
         flex-basis: calc((100% - var(--space-md)) / 2);
     }
@@ -2420,6 +2431,10 @@ button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+    }
+
+    .work-thumb {
+        position: static;
     }
 
     .hero::after {

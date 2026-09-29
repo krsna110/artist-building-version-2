@@ -245,11 +245,11 @@ document.addEventListener('DOMContentLoaded', () => {
         '.mentors-card, .brands-section, .tools-section, .project-card, ' +
         '.advantage-card, .curriculum-card, .framework-section, .community-card, ' +
         '.process-step, .faq-section, .showreel-card, .academy-banner, .partner-banner, ' +
-        '.video-section, .problem-section, .student-work-section, .mentors-group-section'
+        '.video-section, .problem-section, .student-work-section, .mentors-group-section, .work-thumb'
     );
 
     const staggeredRevealSelectors = [
-        '.project-card', '.advantage-card', '.curriculum-card', '.process-step', '.mentors-card'
+        '.project-card', '.advantage-card', '.curriculum-card', '.process-step', '.mentors-card', '.work-thumb'
     ].join(', ');
 
     const revealObserver = new IntersectionObserver((entries) => {
@@ -268,7 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('reveal');
         if (el.matches(staggeredRevealSelectors)) {
             const siblings = Array.from(el.parentElement.children).filter(child => child.matches(staggeredRevealSelectors));
-            el.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(el), 4) * 90}ms`);
+            const index = siblings.indexOf(el);
+            const delay = el.matches('.work-thumb') ? Math.min(index, 11) * 65 : Math.min(index, 4) * 90;
+            el.style.setProperty('--reveal-delay', `${delay}ms`);
         }
         revealObserver.observe(el);
     });
