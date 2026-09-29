@@ -57,13 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === Header background on scroll ===
     const header = document.getElementById('header');
-    let lastScroll = 0;
+    let headerIsScrolled = null;
 
     window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
+        const isScrolled = window.scrollY > 50;
+        if (isScrolled === headerIsScrolled) return;
+        headerIsScrolled = isScrolled;
 
         if (header) {
-            if (currentScroll > 50) {
+            if (isScrolled) {
                 header.style.borderBottomColor = 'rgba(124, 58, 237, 0.1)';
                 header.style.background = 'rgba(10, 10, 15, 0.95)';
             } else {
@@ -71,8 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.style.background = 'rgba(10, 10, 15, 0.85)';
             }
         }
-
-        lastScroll = currentScroll;
     }, { passive: true });
 
     // === Accordion functionality ===
@@ -127,6 +127,76 @@ document.addEventListener('DOMContentLoaded', () => {
     initAccordion('accordion');
     initAccordion('ae-accordion');
     initAccordion('faq-accordion');
+
+    // === Course tools carousel ===
+    const toolsTrack = document.getElementById('tools-carousel-track');
+    const toolsControls = document.getElementById('tools-carousel-controls');
+    const toolsStatus = document.getElementById('tools-carousel-status');
+
+    if (toolsTrack && toolsControls) {
+        const toolSlides = Array.from(toolsTrack.querySelectorAll('.tools-slide'));
+        const toolDots = Array.from(toolsControls.querySelectorAll('[data-tools-slide]'));
+        const previousButton = toolsControls.querySelector('[data-tools-direction="-1"]');
+        const nextButton = toolsControls.querySelector('[data-tools-direction="1"]');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let currentTool = 0;
+        let toolsFrame = 0;
+
+        function nearestTool() {
+            const trackCenter = toolsTrack.getBoundingClientRect().left + toolsTrack.clientWidth / 2;
+            return toolSlides.reduce((closest, slide, index) => {
+                const bounds = slide.getBoundingClientRect();
+                const distance = Math.abs(bounds.left + bounds.width / 2 - trackCenter);
+                return distance < closest.distance ? { index, distance } : closest;
+            }, { index: 0, distance: Infinity }).index;
+        }
+
+        function updateToolsControls(announce = false) {
+            currentTool = nearestTool();
+            previousButton.disabled = currentTool === 0;
+            nextButton.disabled = currentTool === toolSlides.length - 1;
+            toolsControls.hidden = toolsTrack.scrollWidth <= toolsTrack.clientWidth + 1;
+            toolDots.forEach((dot, index) => {
+                if (index === currentTool) dot.setAttribute('aria-current', 'true');
+                else dot.removeAttribute('aria-current');
+            });
+            if (announce && toolsStatus) {
+                toolsStatus.textContent = `Showing ${toolSlides[currentTool].querySelector('h3').textContent}`;
+            }
+        }
+
+        function showTool(index, announce = false) {
+            const boundedIndex = Math.max(0, Math.min(toolSlides.length - 1, index));
+            const slide = toolSlides[boundedIndex];
+            const slideCenter = slide.getBoundingClientRect().left - toolsTrack.getBoundingClientRect().left + toolsTrack.scrollLeft + slide.clientWidth / 2;
+            toolsTrack.scrollTo({
+                left: slideCenter - toolsTrack.clientWidth / 2,
+                behavior: reducedMotion.matches ? 'auto' : 'smooth'
+            });
+            currentTool = boundedIndex;
+            updateToolsControls(announce);
+        }
+
+        previousButton.addEventListener('click', () => showTool(currentTool - 1, true));
+        nextButton.addEventListener('click', () => showTool(currentTool + 1, true));
+        toolDots.forEach((dot, index) => dot.addEventListener('click', () => showTool(index, true)));
+        toolsTrack.addEventListener('scroll', () => {
+            cancelAnimationFrame(toolsFrame);
+            toolsFrame = requestAnimationFrame(() => updateToolsControls());
+        }, { passive: true });
+        toolsTrack.addEventListener('keydown', event => {
+            if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                showTool(currentTool + 1, true);
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                showTool(currentTool - 1, true);
+            }
+        });
+
+        new ResizeObserver(updateToolsControls).observe(toolsTrack);
+        updateToolsControls();
+    }
 
     // === Student projects carousel ===
     const projectTrack = document.getElementById('project-cards');
@@ -244,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '.section-heading-large, .advantage-title, .curriculum-title, ' +
         '.mentors-card, .brands-section, .tools-section, .project-card, ' +
         '.advantage-card, .curriculum-card, .framework-section, .community-card, ' +
-        '.process-step, .faq-section, .showreel-card, .academy-banner, .partner-banner, ' +
+        '.process-step, .faq-section, .showreel-card, .partner-banner, ' +
         '.video-section, .problem-section, .student-work-section, .mentors-group-section, .work-thumb'
     );
 
@@ -397,24 +467,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroStory && heroStoryStage && heroIntro && heroSecondPanel) {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let storyFrame = 0;
+        let storyStartY = 0;
+        let storyScrollRange = 1;
+
+        const resetHeroStory = () => {
+            heroStory.classList.remove('is-enhanced');
+            heroIntro.style.removeProperty('transform');
+            heroIntro.style.removeProperty('z-index');
+            heroSecondPanel.style.removeProperty('transform');
+            heroSecondPanel.style.removeProperty('z-index');
+        };
+
+        const updateHeroStoryMetrics = () => {
+            storyStartY = heroStory.getBoundingClientRect().top + window.scrollY;
+            storyScrollRange = Math.max(1, heroStory.offsetHeight - heroStoryStage.offsetHeight);
+        };
 
         const renderHeroStory = () => {
             storyFrame = 0;
 
             if (reduceMotion.matches) {
-                heroStory.classList.remove('is-enhanced');
-                heroIntro.style.removeProperty('transform');
-                heroIntro.style.removeProperty('z-index');
-                heroSecondPanel.style.removeProperty('transform');
-                heroSecondPanel.style.removeProperty('z-index');
+                resetHeroStory();
                 return;
             }
 
-            heroStory.classList.add('is-enhanced');
-            const storyBounds = heroStory.getBoundingClientRect();
-            const stageHeight = heroStoryStage.getBoundingClientRect().height;
-            const scrollRange = Math.max(1, heroStory.offsetHeight - stageHeight);
-            const progress = Math.max(0, Math.min(1, -storyBounds.top / scrollRange));
+            const progress = Math.max(0, Math.min(1, (window.scrollY - storyStartY) / storyScrollRange));
             const introScale = 1 - progress * 0.2;
             const introRotation = progress * -5;
             const showcaseScale = 0.8 + progress * 0.2;
@@ -427,13 +504,27 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const scheduleHeroStory = () => {
-            if (!storyFrame) storyFrame = requestAnimationFrame(renderHeroStory);
+            if (!reduceMotion.matches && !storyFrame) storyFrame = requestAnimationFrame(renderHeroStory);
+        };
+
+        const enableHeroStory = () => {
+            if (reduceMotion.matches) {
+                resetHeroStory();
+                return;
+            }
+            heroStory.classList.add('is-enhanced');
+            updateHeroStoryMetrics();
+            scheduleHeroStory();
         };
 
         window.addEventListener('scroll', scheduleHeroStory, { passive: true });
-        window.addEventListener('resize', scheduleHeroStory, { passive: true });
-        reduceMotion.addEventListener('change', scheduleHeroStory);
-        scheduleHeroStory();
+        window.addEventListener('resize', () => {
+            if (reduceMotion.matches) return;
+            updateHeroStoryMetrics();
+            scheduleHeroStory();
+        }, { passive: true });
+        reduceMotion.addEventListener('change', enableHeroStory);
+        enableHeroStory();
     }
 
 });

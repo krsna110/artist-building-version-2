@@ -502,6 +502,33 @@ button:focus-visible {
     animation: scrollPulse 2s ease infinite;
 }
 
+@media (max-width: 767px) {
+    .header {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .hero::after {
+        background-image: url('assets/hero-poster.webp');
+        animation: none;
+        transform: none;
+    }
+
+    .hero::before {
+        animation: none;
+    }
+
+    .hero-bg-overlay::before,
+    .btn-hero::after {
+        animation: none;
+    }
+
+    .hero-bg-overlay::before {
+        display: none;
+    }
+
+}
+
 .hero-scroll-story.is-enhanced {
     height: 200vh;
     height: 200svh;
@@ -870,107 +897,166 @@ button:focus-visible {
     margin-bottom: var(--space-3xl);
 }
 
-.tools-circle {
-    position: relative;
-    width: min(330px, calc(100vw - 48px));
-    aspect-ratio: 1;
+.tools-carousel {
+    width: min(100%, 1080px);
     margin: 0 auto;
-    border-radius: 50%;
-    border: 1px dashed rgba(167, 139, 250, 0.25);
-    box-shadow: 0 0 50px rgba(124, 58, 237, 0.1), inset 0 0 40px rgba(124, 58, 237, 0.06);
-    animation: orbitCircle 28s linear infinite;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tools-circle::before {
-    content: '';
-    position: absolute;
-    inset: 40px;
-    border-radius: 50%;
-    border: 1px solid rgba(124, 58, 237, 0.1);
-    pointer-events: none;
-}
-
-.tools-circle:hover {
-    animation-play-state: paused;
-    border-color: rgba(167, 139, 250, 0.5);
-    box-shadow: 0 0 60px rgba(124, 58, 237, 0.22), inset 0 0 50px rgba(124, 58, 237, 0.12);
-}
-
-.tools-circle:hover .tool-icon,
-.tools-circle:hover .tool-item span {
-    animation-play-state: paused;
-}
-
-.tool-item {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+.tools-carousel-track {
     display: flex;
+    gap: var(--space-md);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tools-carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.tools-carousel-track:focus-visible {
+    outline: 2px solid var(--purple-400);
+    outline-offset: 6px;
+}
+
+.tools-slide {
+    position: relative;
+    display: flex;
+    flex: 0 0 calc(50% - var(--space-sm));
+    min-width: 0;
+    min-height: 270px;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--distance))) rotate(calc(-1 * var(--angle)));
-    cursor: pointer;
+    justify-content: center;
+    gap: var(--space-md);
+    overflow: hidden;
+    border: 1px solid var(--bg-card-border);
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.16), transparent 65%),
+        repeating-linear-gradient(0deg, transparent 0 39px, rgba(167, 139, 250, 0.025) 40px, transparent 41px),
+        repeating-linear-gradient(90deg, transparent 0 39px, rgba(167, 139, 250, 0.025) 40px, transparent 41px),
+        var(--bg-card);
+    scroll-snap-align: start;
+    transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
 }
 
-.tool-icon {
-    width: 54px;
-    height: 54px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent !important;
-    border: none !important;
-    animation: keepUpright 28s linear infinite;
+.tools-slide:hover {
+    transform: translateY(-4px);
+    border-color: var(--bg-card-border-hover);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24), 0 0 36px rgba(124, 58, 237, 0.12);
+}
+
+.tools-slide img {
+    width: 112px;
+    height: 112px;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
     transition: transform var(--transition-base);
 }
 
-.tool-icon img {
-    width: 54px;
-    height: 54px;
-    border-radius: 12px;
-    object-fit: contain;
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
-    transition: transform var(--transition-base), filter var(--transition-base);
+.tools-slide:hover img {
+    transform: scale(1.06);
 }
 
-.tool-item:hover .tool-icon img {
-    transform: scale(1.18);
-    filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.8));
-}
-
-.tool-item span {
-    font-size: 11px;
-    color: var(--text-secondary);
-    white-space: nowrap;
-    font-family: var(--font-accent);
-    font-weight: 500;
-    margin-top: 4px;
-    animation: keepUpright 28s linear infinite;
-    transition: color var(--transition-base);
-}
-
-.tool-item:hover span {
+.tools-slide h3 {
+    margin: 0;
     color: var(--text-primary);
-    text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+    font-family: var(--font-heading);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 600;
 }
 
-@keyframes orbitCircle {
-    from {
-        transform: rotate(0deg);
+.tools-slide-status {
+    margin-top: calc(-1 * var(--space-sm));
+    color: var(--text-muted);
+    font-family: var(--font-accent);
+    font-size: 12px;
+}
+
+.tools-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin: var(--space-lg) auto 0;
+}
+
+.tools-carousel-controls[hidden] {
+    display: none;
+}
+
+.tools-carousel-arrow {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--bg-card-border-hover);
+    border-radius: 50%;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 19px;
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.tools-carousel-arrow:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: var(--purple-700);
+}
+
+.tools-carousel-arrow:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+.tools-carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tools-carousel-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--text-muted);
+    cursor: pointer;
+}
+
+.tools-carousel-dot[aria-current="true"] {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--purple-400);
+}
+
+@media (max-width: 767px) {
+    .tools-carousel {
+        width: min(100%, 620px);
     }
-    to {
-        transform: rotate(360deg);
+
+    .tools-carousel-track {
+        gap: var(--space-sm);
+        padding-inline: 5%;
+        scroll-padding-inline: 5%;
+    }
+
+    .tools-slide {
+        flex-basis: 90%;
+        min-height: 250px;
+        scroll-snap-align: center;
     }
 }
 
-@keyframes keepUpright {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(-360deg);
+@media (prefers-reduced-motion: reduce) {
+    .tools-slide,
+    .tools-slide img {
+        transition: none;
     }
 }
 
@@ -2331,25 +2417,16 @@ button:focus-visible {
         font-size: 28px;
     }
 
+    .btn-apply {
+        padding: 8px 10px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
     .brands-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .tools-circle {
-        width: min(260px, calc(100vw - 48px));
-        height: auto;
-        aspect-ratio: 1;
-    }
-
-    .tool-item {
-        --distance: clamp(85px, calc(50vw - 55px), 110px) !important;
-    }
-}
-
-@media (min-width: 361px) and (max-width: 420px) {
-    .tools-circle .tool-item {
-        --distance: clamp(105px, calc(50vw - 75px), 125px) !important;
-    }
 }
 
 /* Tablets */
@@ -2368,21 +2445,6 @@ button:focus-visible {
 
     .brands-grid {
         grid-template-columns: repeat(5, 1fr);
-    }
-
-    .tools-circle {
-        width: 400px;
-        height: 400px;
-    }
-
-    .tool-item {
-        --distance: 175px !important;
-    }
-
-    .tool-icon {
-        width: 56px;
-        height: 56px;
-        font-size: 18px;
     }
 
     .advantage-cards {
@@ -2554,6 +2616,14 @@ button:focus-visible {
 
     .reveal {
         transition-delay: 0s !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .reveal {
+        filter: none;
+        transition: opacity 0.48s ease var(--reveal-delay, 0ms),
+            transform 0.48s ease var(--reveal-delay, 0ms);
     }
 }
 

@@ -10,7 +10,7 @@
     <meta property="og:description" content="A live, mentor-led Premiere Pro course — go from raw footage to reels, ads, podcasts and motion graphics.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,700&family=DM+Serif+Text&family=Instrument+Serif&family=Inter+Tight:wght@600&family=Manrope:wght@500;600&family=Poppins:wght@300;400;500;600;700&family=Darker+Grotesque:wght@400;500;600;700;800&family=Bebas+Neue&family=Belanosima&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Text&family=Darker+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -163,50 +163,32 @@
     <!-- Tools Section -->
     <section class="tools-section" id="tools">
         <span class="section-tag">🎬 Software You'll Master</span>
-        <h2 class="tools-title">Tools Covered</h2>
-        <div class="tools-circle">
-            <!-- Adobe Premiere Pro -->
-            <div class="tool-item" style="--angle: 0deg; --distance: 140px;">
-                <div class="tool-icon tool-pr">
-                    <img src="assets/premiere-pro.webp" alt="Adobe Premiere Pro" width="54" height="54" loading="lazy">
-                </div>
-                <span>Adobe Premiere Pro</span>
+        <h2 class="tools-title">Tools <em>You Will Learn</em></h2>
+        <div class="tools-carousel" role="region" aria-roledescription="carousel" aria-label="Courses and creative software">
+            <div class="tools-carousel-track" id="tools-carousel-track" tabindex="0" aria-label="Course tools">
+                <article class="tools-slide" id="tool-slide-premiere" role="group" aria-roledescription="slide" aria-label="1 of 2: Adobe Premiere Pro">
+                    <img src="assets/premiere-pro.webp" alt="" width="112" height="112" loading="lazy">
+                    <h3>Adobe Premiere Pro</h3>
+                </article>
+                <article class="tools-slide" id="tool-slide-after-effects" role="group" aria-roledescription="slide" aria-label="2 of 2: Adobe After Effects">
+                    <img src="assets/after-effects.webp" alt="" width="112" height="112" loading="lazy">
+                    <h3>Adobe After Effects</h3>
+                    <span class="tools-slide-status">Coming soon</span>
+                </article>
             </div>
-            <!-- After Effects -->
-            <div class="tool-item" style="--angle: 60deg; --distance: 140px;">
-                <div class="tool-icon tool-ae">
-                    <img src="assets/after-effects.webp" alt="After Effects" width="54" height="54" loading="lazy">
+            <div class="tools-carousel-controls" id="tools-carousel-controls">
+                <button class="tools-carousel-arrow" type="button" data-tools-direction="-1" aria-label="Previous tool" disabled>
+                    <span aria-hidden="true">←</span>
+                </button>
+                <div class="tools-carousel-dots" aria-label="Choose a tool">
+                    <button class="tools-carousel-dot" type="button" data-tools-slide="0" aria-label="Show Adobe Premiere Pro" aria-current="true"></button>
+                    <button class="tools-carousel-dot" type="button" data-tools-slide="1" aria-label="Show Adobe After Effects"></button>
                 </div>
-                <span>After Effects (Soon)</span>
+                <button class="tools-carousel-arrow" type="button" data-tools-direction="1" aria-label="Next tool">
+                    <span aria-hidden="true">→</span>
+                </button>
             </div>
-            <!-- Lumetri Color -->
-            <div class="tool-item" style="--angle: 120deg; --distance: 140px;">
-                <div class="tool-icon tool-resolve">
-                    <img src="assets/lumetri-color.webp" alt="Lumetri Color" width="54" height="54" loading="lazy">
-                </div>
-                <span>Lumetri Color</span>
-            </div>
-            <!-- Essential Graphics -->
-            <div class="tool-item" style="--angle: 180deg; --distance: 140px;">
-                <div class="tool-icon tool-ps">
-                    <img src="assets/essential-graphics.webp" alt="Essential Graphics" width="54" height="54" loading="lazy">
-                </div>
-                <span>Essential Graphics</span>
-            </div>
-            <!-- Ultra Key / Luma Key -->
-            <div class="tool-item" style="--angle: 240deg; --distance: 140px;">
-                <div class="tool-icon tool-boris">
-                    <img src="assets/ultra-key.webp" alt="Ultra Key / Luma Key" width="54" height="54" loading="lazy">
-                </div>
-                <span>Ultra Key / Luma Key</span>
-            </div>
-            <!-- Mogrts & Presets -->
-            <div class="tool-item" style="--angle: 300deg; --distance: 140px;">
-                <div class="tool-icon tool-ai">
-                    <img src="assets/mogrts-presets.webp" alt="Mogrts & Presets" width="54" height="54" loading="lazy">
-                </div>
-                <span>Mogrts & Presets</span>
-            </div>
+            <p class="sr-only" id="tools-carousel-status" aria-live="polite"></p>
         </div>
     </section>
 
