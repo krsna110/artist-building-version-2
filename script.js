@@ -388,16 +388,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === Parallax effect on hero ===
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            if (scrolled < window.innerHeight) {
-                heroContent.style.transform = `translateY(${scrolled * 0.15}px)`;
-                heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+    // === Scroll-linked hero story ===
+    const heroStory = document.getElementById('hero-scroll-story');
+    const heroStoryStage = document.getElementById('hero-scroll-story-stage');
+    const heroIntro = document.getElementById('hero');
+    const heroSecondPanel = document.getElementById('academy-banner');
+
+    if (heroStory && heroStoryStage && heroIntro && heroSecondPanel) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let storyFrame = 0;
+
+        const renderHeroStory = () => {
+            storyFrame = 0;
+
+            if (reduceMotion.matches) {
+                heroStory.classList.remove('is-enhanced');
+                heroIntro.style.removeProperty('transform');
+                heroIntro.style.removeProperty('z-index');
+                heroSecondPanel.style.removeProperty('transform');
+                heroSecondPanel.style.removeProperty('z-index');
+                return;
             }
-        }, { passive: true });
+
+            heroStory.classList.add('is-enhanced');
+            const storyBounds = heroStory.getBoundingClientRect();
+            const stageHeight = heroStoryStage.getBoundingClientRect().height;
+            const scrollRange = Math.max(1, heroStory.offsetHeight - stageHeight);
+            const progress = Math.max(0, Math.min(1, -storyBounds.top / scrollRange));
+            const introScale = 1 - progress * 0.2;
+            const introRotation = progress * -5;
+            const showcaseScale = 0.8 + progress * 0.2;
+            const showcaseRotation = 5 * (1 - progress);
+
+            heroIntro.style.transform = `scale(${introScale}) rotate(${introRotation}deg)`;
+            heroSecondPanel.style.transform = `scale(${showcaseScale}) rotate(${showcaseRotation}deg)`;
+            heroIntro.style.zIndex = progress < 0.5 ? '2' : '1';
+            heroSecondPanel.style.zIndex = progress < 0.5 ? '1' : '2';
+        };
+
+        const scheduleHeroStory = () => {
+            if (!storyFrame) storyFrame = requestAnimationFrame(renderHeroStory);
+        };
+
+        window.addEventListener('scroll', scheduleHeroStory, { passive: true });
+        window.addEventListener('resize', scheduleHeroStory, { passive: true });
+        reduceMotion.addEventListener('change', scheduleHeroStory);
+        scheduleHeroStory();
     }
 
 });

@@ -50,7 +50,9 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="hero">
+    <div class="hero-scroll-story" id="hero-scroll-story">
+        <div class="hero-scroll-story__stage" id="hero-scroll-story-stage">
+    <section class="hero hero-scroll-story__panel" id="hero">
         <div class="hero-bg-overlay"></div>
         <div class="hero-content">
             <div class="hero-badge">
@@ -69,9 +71,7 @@
             <div class="scroll-line"></div>
         </div>
     </section>
-
-    <!-- Academy Banner -->
-    <section class="academy-banner" id="academy-banner">
+    <section class="academy-banner hero-scroll-story__panel" id="academy-banner">
         <div class="academy-banner-inner">
             <svg class="academy-icon" width="40" height="28" viewBox="0 0 40 28" fill="none">
                 <circle cx="12" cy="10" r="3" stroke="#a78bfa" stroke-width="1.5"/>
@@ -81,10 +81,20 @@
                 <line x1="23" y1="10" x2="25" y2="10" stroke="#a78bfa" stroke-width="1.5"/>
             </svg>
             <p class="academy-label">ARTISTBUILDING</p>
-            <h2 class="academy-title"><span class="text-gradient">Premiere Pro</span></h2>
-            <p class="academy-label-sub">EDITING COURSE</p>
+            <div class="academy-courses">
+                <div class="academy-course">
+                    <h2 class="academy-course-title"><span class="text-gradient">Premiere Pro</span></h2>
+                    <p class="academy-course-status">EDITING COURSE · ENROLLING NOW</p>
+                </div>
+                <div class="academy-course">
+                    <h2 class="academy-course-title"><span class="text-gradient">After Effects</span></h2>
+                    <p class="academy-course-status">MOTION GRAPHICS &amp; VFX · COMING SOON</p>
+                </div>
+            </div>
         </div>
     </section>
+        </div>
+    </div>
    
     <!-- About Us Section -->
     <section class="about-section" id="about">
