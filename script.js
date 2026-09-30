@@ -128,75 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAccordion('ae-accordion');
     initAccordion('faq-accordion');
 
-    // === Course tools carousel ===
-    const toolsTrack = document.getElementById('tools-carousel-track');
-    const toolsControls = document.getElementById('tools-carousel-controls');
-    const toolsStatus = document.getElementById('tools-carousel-status');
 
-    if (toolsTrack && toolsControls) {
-        const toolSlides = Array.from(toolsTrack.querySelectorAll('.tools-slide'));
-        const toolDots = Array.from(toolsControls.querySelectorAll('[data-tools-slide]'));
-        const previousButton = toolsControls.querySelector('[data-tools-direction="-1"]');
-        const nextButton = toolsControls.querySelector('[data-tools-direction="1"]');
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let currentTool = 0;
-        let toolsFrame = 0;
-
-        function nearestTool() {
-            const trackCenter = toolsTrack.getBoundingClientRect().left + toolsTrack.clientWidth / 2;
-            return toolSlides.reduce((closest, slide, index) => {
-                const bounds = slide.getBoundingClientRect();
-                const distance = Math.abs(bounds.left + bounds.width / 2 - trackCenter);
-                return distance < closest.distance ? { index, distance } : closest;
-            }, { index: 0, distance: Infinity }).index;
-        }
-
-        function updateToolsControls(announce = false) {
-            currentTool = nearestTool();
-            previousButton.disabled = currentTool === 0;
-            nextButton.disabled = currentTool === toolSlides.length - 1;
-            toolsControls.hidden = toolsTrack.scrollWidth <= toolsTrack.clientWidth + 1;
-            toolDots.forEach((dot, index) => {
-                if (index === currentTool) dot.setAttribute('aria-current', 'true');
-                else dot.removeAttribute('aria-current');
-            });
-            if (announce && toolsStatus) {
-                toolsStatus.textContent = `Showing ${toolSlides[currentTool].querySelector('h3').textContent}`;
-            }
-        }
-
-        function showTool(index, announce = false) {
-            const boundedIndex = Math.max(0, Math.min(toolSlides.length - 1, index));
-            const slide = toolSlides[boundedIndex];
-            const slideCenter = slide.getBoundingClientRect().left - toolsTrack.getBoundingClientRect().left + toolsTrack.scrollLeft + slide.clientWidth / 2;
-            toolsTrack.scrollTo({
-                left: slideCenter - toolsTrack.clientWidth / 2,
-                behavior: reducedMotion.matches ? 'auto' : 'smooth'
-            });
-            currentTool = boundedIndex;
-            updateToolsControls(announce);
-        }
-
-        previousButton.addEventListener('click', () => showTool(currentTool - 1, true));
-        nextButton.addEventListener('click', () => showTool(currentTool + 1, true));
-        toolDots.forEach((dot, index) => dot.addEventListener('click', () => showTool(index, true)));
-        toolsTrack.addEventListener('scroll', () => {
-            cancelAnimationFrame(toolsFrame);
-            toolsFrame = requestAnimationFrame(() => updateToolsControls());
-        }, { passive: true });
-        toolsTrack.addEventListener('keydown', event => {
-            if (event.key === 'ArrowRight') {
-                event.preventDefault();
-                showTool(currentTool + 1, true);
-            } else if (event.key === 'ArrowLeft') {
-                event.preventDefault();
-                showTool(currentTool - 1, true);
-            }
-        });
-
-        new ResizeObserver(updateToolsControls).observe(toolsTrack);
-        updateToolsControls();
-    }
 
     // === Student projects carousel ===
     const projectTrack = document.getElementById('project-cards');
@@ -309,42 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
         configureCarousel();
     }
 
-    // === Scroll Reveal Animations ===
-    const revealElements = document.querySelectorAll(
-        '.section-heading-large, .advantage-title, .curriculum-title, ' +
-        '.mentors-card, .brands-section, .tools-section, .project-card, ' +
-        '.advantage-card, .curriculum-card, .framework-section, .community-card, ' +
-        '.process-step, .faq-section, .showreel-card, .partner-banner, ' +
-        '.video-section, .problem-section, .student-work-section, .mentors-group-section, .work-thumb'
-    );
-
-    const staggeredRevealSelectors = [
-        '.project-card', '.advantage-card', '.curriculum-card', '.process-step', '.mentors-card', '.work-thumb'
-    ].join(', ');
-
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('reveal', 'visible');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    revealElements.forEach(el => {
-        el.classList.add('reveal');
-        if (el.matches(staggeredRevealSelectors)) {
-            const siblings = Array.from(el.parentElement.children).filter(child => child.matches(staggeredRevealSelectors));
-            const index = siblings.indexOf(el);
-            const delay = el.matches('.work-thumb') ? Math.min(index, 11) * 65 : Math.min(index, 4) * 90;
-            el.style.setProperty('--reveal-delay', `${delay}ms`);
-        }
-        revealObserver.observe(el);
-    });
-
     // === Framework Steps Animation ===
     const frameworkSteps = document.querySelectorAll('.framework-step');
     const timelineNodes = document.querySelectorAll('.timeline-node');
@@ -387,31 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === Brand items stagger animation ===
-    const brandsGrid = document.getElementById('brands-grid');
-    if (brandsGrid) {
-        const brandObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const items = brandsGrid.querySelectorAll('.brand-item');
-                    items.forEach((item, index) => {
-                        item.style.opacity = '0';
-                        item.style.transform = 'translateY(10px)';
-                        setTimeout(() => {
-                            item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                            item.style.opacity = '1';
-                            item.style.transform = 'translateY(0)';
-                        }, index * 50);
-                    });
-                    brandObserver.unobserve(brandsGrid);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        brandObserver.observe(brandsGrid);
-    }
-
-
     // === Counter animation for stats ===
     const statNumbers = document.querySelectorAll('.stat-number');
     const statsObserver = new IntersectionObserver((entries) => {
@@ -442,89 +313,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     statNumbers.forEach(el => statsObserver.observe(el));
 
-    // === Play button interaction ===
-    const playButton = document.getElementById('play-button');
-    if (playButton) {
-        playButton.addEventListener('click', () => {
-            // Placeholder: you can embed a YouTube/Vimeo iframe here
-            const videoPlayer = document.getElementById('video-player');
-            if (videoPlayer) {
-                videoPlayer.innerHTML = `
-                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#111119;color:#a78bfa;font-size:14px;font-family:var(--font-accent);">
-                        <p>Video will be embedded here</p>
-                    </div>
-                `;
+    // === Scroll Reveal Observer ===
+    const revealElements = document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right');
+    if (revealElements.length > 0) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('reveal-visible');
+            } else {
+                revealObserver.observe(el);
             }
         });
     }
 
-    // === Scroll-linked hero story ===
-    const heroStory = document.getElementById('hero-scroll-story');
-    const heroStoryStage = document.getElementById('hero-scroll-story-stage');
-    const heroIntro = document.getElementById('hero');
-    const heroSecondPanel = document.getElementById('academy-banner');
-
-    if (heroStory && heroStoryStage && heroIntro && heroSecondPanel) {
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let storyFrame = 0;
-        let storyStartY = 0;
-        let storyScrollRange = 1;
-
-        const resetHeroStory = () => {
-            heroStory.classList.remove('is-enhanced');
-            heroIntro.style.removeProperty('transform');
-            heroIntro.style.removeProperty('z-index');
-            heroSecondPanel.style.removeProperty('transform');
-            heroSecondPanel.style.removeProperty('z-index');
-        };
-
-        const updateHeroStoryMetrics = () => {
-            storyStartY = heroStory.getBoundingClientRect().top + window.scrollY;
-            storyScrollRange = Math.max(1, heroStory.offsetHeight - heroStoryStage.offsetHeight);
-        };
-
-        const renderHeroStory = () => {
-            storyFrame = 0;
-
-            if (reduceMotion.matches) {
-                resetHeroStory();
-                return;
-            }
-
-            const progress = Math.max(0, Math.min(1, (window.scrollY - storyStartY) / storyScrollRange));
-            const introScale = 1 - progress * 0.2;
-            const introRotation = progress * -5;
-            const showcaseScale = 0.8 + progress * 0.2;
-            const showcaseRotation = 5 * (1 - progress);
-
-            heroIntro.style.transform = `scale(${introScale}) rotate(${introRotation}deg)`;
-            heroSecondPanel.style.transform = `scale(${showcaseScale}) rotate(${showcaseRotation}deg)`;
-            heroIntro.style.zIndex = progress < 0.5 ? '2' : '1';
-            heroSecondPanel.style.zIndex = progress < 0.5 ? '1' : '2';
-        };
-
-        const scheduleHeroStory = () => {
-            if (!reduceMotion.matches && !storyFrame) storyFrame = requestAnimationFrame(renderHeroStory);
-        };
-
-        const enableHeroStory = () => {
-            if (reduceMotion.matches) {
-                resetHeroStory();
-                return;
-            }
-            heroStory.classList.add('is-enhanced');
-            updateHeroStoryMetrics();
-            scheduleHeroStory();
-        };
-
-        window.addEventListener('scroll', scheduleHeroStory, { passive: true });
-        window.addEventListener('resize', () => {
-            if (reduceMotion.matches) return;
-            updateHeroStoryMetrics();
-            scheduleHeroStory();
-        }, { passive: true });
-        reduceMotion.addEventListener('change', enableHeroStory);
-        enableHeroStory();
-    }
 
 });
+

@@ -10,7 +10,7 @@
     <meta property="og:description" content="A live, mentor-led Premiere Pro course — go from raw footage to reels, ads, podcasts and motion graphics.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Text&family=Darker+Grotesque:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Text&family=Darker+Grotesque:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -50,9 +50,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-scroll-story" id="hero-scroll-story">
-        <div class="hero-scroll-story__stage" id="hero-scroll-story-stage">
-    <section class="hero hero-scroll-story__panel" id="hero">
+    <section class="hero" id="hero">
         <div class="hero-bg-overlay"></div>
         <div class="hero-content">
             <div class="hero-badge">
@@ -71,7 +69,9 @@
             <div class="scroll-line"></div>
         </div>
     </section>
-    <section class="academy-banner hero-scroll-story__panel" id="academy-banner">
+
+    <!-- Academy Banner -->
+    <section class="academy-banner reveal" id="academy-banner">
         <div class="academy-banner-inner">
             <svg class="academy-icon" width="40" height="28" viewBox="0 0 40 28" fill="none">
                 <circle cx="12" cy="10" r="3" stroke="#a78bfa" stroke-width="1.5"/>
@@ -93,11 +93,9 @@
             </div>
         </div>
     </section>
-        </div>
-    </div>
    
     <!-- About Us Section -->
-    <section class="about-section" id="about">
+    <section class="about-section reveal" id="about">
         <span class="section-tag">🎬 About Us</span>
         <h2 class="section-heading-large">Built It <span class="text-gradient">Offline.</span><br>Now We're Bringing It <span class="text-gradient">Online.</span></h2>
         <div class="about-content">
@@ -109,7 +107,7 @@
     </section>
 
     <!-- Video Section -->
-    <section class="video-section" id="video-section">
+    <section class="video-section reveal" id="video-section">
         <h2 class="section-heading">See What You'll Learn Inside</h2>
         <div class="video-player" id="video-player">
             <div class="video-placeholder">
@@ -122,7 +120,7 @@
 
     <!-- Mentors Section -->
     <section class="mentors-section" id="mentors">
-        <div class="mentors-card">
+        <div class="mentors-card reveal reveal-scale">
             <h2 class="mentors-title">Live, Mentor-Led Classes — Not Pre-Recorded Videos</h2>
             <div class="mentor-image-placeholder">
                 <div class="mentor-avatar"></div>
@@ -133,7 +131,7 @@
     </section>
 
     <!-- Brands Section -->
-    <section class="brands-section" id="brands">
+    <section class="brands-section reveal" id="brands">
         <h2 class="brands-title"><span class="text-gradient">Skill Outcomes</span><br><span class="text-gradient">What You'll Learn</span></h2>
         <div class="brands-grid" id="brands-grid">
             <div class="brand-item">Visual Storytelling</div>
@@ -161,39 +159,22 @@
     </section>
 
     <!-- Tools Section -->
-    <section class="tools-section" id="tools">
-        <span class="section-tag">🎬 Software You'll Master</span>
+    <section class="tools-section reveal" id="tools">
         <h2 class="tools-title">Tools <em>You Will Learn</em></h2>
-        <div class="tools-carousel" role="region" aria-roledescription="carousel" aria-label="Courses and creative software">
-            <div class="tools-carousel-track" id="tools-carousel-track" tabindex="0" aria-label="Course tools">
-                <article class="tools-slide" id="tool-slide-premiere" role="group" aria-roledescription="slide" aria-label="1 of 2: Adobe Premiere Pro">
-                    <img src="assets/premiere-pro.webp" alt="" width="112" height="112" loading="lazy">
-                    <h3>Adobe Premiere Pro</h3>
-                </article>
-                <article class="tools-slide" id="tool-slide-after-effects" role="group" aria-roledescription="slide" aria-label="2 of 2: Adobe After Effects">
-                    <img src="assets/after-effects.webp" alt="" width="112" height="112" loading="lazy">
-                    <h3>Adobe After Effects</h3>
-                    <span class="tools-slide-status">Coming soon</span>
-                </article>
+        <div class="tools-row">
+            <div class="tools-item reveal-scale reveal-delay-1" id="tool-premiere">
+                <img src="assets/premiere-pro.webp" alt="Adobe Premiere Pro" width="80" height="80" loading="lazy">
+                <span>Adobe Premiere Pro</span>
             </div>
-            <div class="tools-carousel-controls" id="tools-carousel-controls">
-                <button class="tools-carousel-arrow" type="button" data-tools-direction="-1" aria-label="Previous tool" disabled>
-                    <span aria-hidden="true">←</span>
-                </button>
-                <div class="tools-carousel-dots" aria-label="Choose a tool">
-                    <button class="tools-carousel-dot" type="button" data-tools-slide="0" aria-label="Show Adobe Premiere Pro" aria-current="true"></button>
-                    <button class="tools-carousel-dot" type="button" data-tools-slide="1" aria-label="Show Adobe After Effects"></button>
-                </div>
-                <button class="tools-carousel-arrow" type="button" data-tools-direction="1" aria-label="Next tool">
-                    <span aria-hidden="true">→</span>
-                </button>
+            <div class="tools-item reveal-scale reveal-delay-2" id="tool-after-effects">
+                <img src="assets/after-effects.webp" alt="Adobe After Effects" width="80" height="80" loading="lazy">
+                <span>Adobe After Effects</span>
             </div>
-            <p class="sr-only" id="tools-carousel-status" aria-live="polite"></p>
         </div>
     </section>
 
     <!-- CTA Banner Mid -->
-    <section class="cta-mid" id="cta-mid">
+    <section class="cta-mid reveal" id="cta-mid">
         <p class="cta-mid-text">Ready to start editing like a pro?</p>
         <a href="#apply" class="btn-primary btn-wide" id="btn-mid-cta">Enroll Now — ₹18,500</a>
         <p class="cta-mid-meta">
@@ -202,7 +183,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section class="projects-section" id="projects">
+    <section class="projects-section reveal" id="projects">
         <h2 class="section-heading-large">Student Works</h2>
         <p class="projects-desc">A real project after every module — reviewed 1-on-1 by your mentor. Build a portfolio that proves your skill.</p>
         
@@ -248,7 +229,7 @@
 
     <!-- Showreel / Community Large Banner -->
     <section class="showreel-section" id="showreel">
-        <div class="showreel-card">
+        <div class="showreel-card reveal reveal-scale">
             <div class="showreel-silhouettes"></div>
             <p class="showreel-text">Build a portfolio-ready showreel with <strong>5 graded projects</strong></p>
             <h3 class="showreel-label"><span class="text-gradient">YOUR Portfolio</span></h3>
@@ -256,7 +237,7 @@
     </section>
 
     <!-- Problem Section -->
-    <section class="problem-section" id="problem">
+    <section class="problem-section reveal" id="problem">
         <span class="section-tag">🎬 Who This Is For</span>
         <h2 class="problem-title">Built for Beginners & Self-Taught Editors</h2>
         <p class="problem-desc">Whether you're starting from zero or want a structured skill upgrade, this course meets you where you are.</p>
@@ -268,11 +249,11 @@
     </section>
 
     <!-- Solution / Unfair Advantage Section -->
-    <section class="advantage-section" id="advantage">
+    <section class="advantage-section reveal" id="advantage">
         <h2 class="advantage-title"><span class="text-gradient">In Your</span> <span class="text-purple">Enrollment</span></h2>
         
         <div class="advantage-cards">
-            <div class="advantage-card" id="adv-1">
+            <div class="advantage-card reveal reveal-delay-1" id="adv-1">
                 <div class="adv-icon">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <!-- Broadcast Signal Waves -->
@@ -289,7 +270,7 @@
                 <h3>Live Classes</h3>
                 <p>Interactive sessions with your instructor, not pre-recorded lectures — ask questions in real time.</p>
             </div>
-            <div class="advantage-card" id="adv-2">
+            <div class="advantage-card reveal reveal-delay-2" id="adv-2">
                 <div class="adv-icon">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <!-- Video Tape / Recording Binder -->
@@ -304,7 +285,7 @@
                 <h3>Class Recordings</h3>
                 <p>Every live session is recorded and shared, so you can revisit any topic at your own pace.</p>
             </div>
-            <div class="advantage-card" id="adv-3">
+            <div class="advantage-card reveal reveal-delay-3" id="adv-3">
                 <div class="adv-icon">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <!-- Chat Bubble -->
@@ -319,7 +300,7 @@
                 <h3>1-on-1 Mentor Interaction</h3>
                 <p>Personal check-ins with your mentor to review your progress and guide your edits.</p>
             </div>
-            <div class="advantage-card" id="adv-4">
+            <div class="advantage-card reveal reveal-delay-4" id="adv-4">
                 <div class="adv-icon">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <!-- Document Sheet -->
@@ -339,7 +320,7 @@
     </section>
 
     <!-- Curriculum / Roadmap Section -->
-    <section class="curriculum-section" id="curriculum">
+    <section class="curriculum-section reveal" id="curriculum">
         <div class="curriculum-card">
             <span class="section-tag">🎬 Curriculum Snapshot</span>
             <h2 class="curriculum-title">5 Modules, Project by Project</h2>
@@ -408,7 +389,7 @@
     </section>
 
     <!-- After Effects Curriculum Section -->
-    <section class="curriculum-section ae-curriculum" id="ae-curriculum">
+    <section class="curriculum-section ae-curriculum reveal" id="ae-curriculum">
         <div class="curriculum-card">
             <span class="section-tag">🎬 After Effects Track</span>
             <h2 class="curriculum-title">After Effects — Motion Graphics & VFX</h2>
@@ -440,7 +421,7 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Text layers — character, paragraph, alignment, tracking, leading & text controls. Text animators — position, scale, rotation, opacity & range selector. Text reveals — masks, mattes, wipes & character-by-character animation. Kinetic typography — timing text to music, rhythm & visual hierarchy. Advanced typography — text transitions, overshoot, motion blur & secondary animation. Typography workflow — combining text, shapes, effects, transitions & sound. <strong>Assignment:</strong> Text Animation + Lower Third Animation.</p>
+                        <p>Text layers — character, vertical text, alignment, tracking, leading & text controls. Text animators — position, scale, rotation, opacity & range selector. Text reveals — masks, mattes, wipes & character-by-character animation. Kinetic typography — timing text to music, rhythm & visual hierarchy. Advanced typography — text transitions, overshoot, motion blur & secondary animation. Typography workflow — combining text, shapes, effects, transitions & sound. <strong>Assignment:</strong> Text Animation + Lower Third Animation.</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="ae-acc-4">
@@ -476,12 +457,10 @@
                 </div>
             </div>
         </div>
-            </div>
-        </div>
     </section>
 
     <!-- CTA Banner Mid 2 -->
-    <section class="cta-mid" id="pricing">
+    <section class="cta-mid reveal" id="pricing">
         <p class="cta-mid-text">Ready to start editing like a pro?</p>
         <a href="#apply" class="btn-primary btn-wide" id="btn-mid-cta-2">Enroll Now — ₹18,500</a>
         <p class="cta-mid-meta">
@@ -490,29 +469,27 @@
     </section>
 
     <!-- Student Work Section -->
-    <section class="student-work-section" id="student-work">
+    <section class="student-work-section reveal" id="student-work">
         <h2 class="section-heading-large">What<br><em>Students Say</em></h2>
         <p class="student-work-desc">Real feedback from students who completed the Artistbuilding Academy program.</p>
         <div class="student-work-grid" id="student-work-grid">
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
-            <div class="work-thumb"></div>
+            <div class="work-thumb reveal-scale reveal-delay-1"></div>
+            <div class="work-thumb reveal-scale reveal-delay-2"></div>
+            <div class="work-thumb reveal-scale reveal-delay-3"></div>
+            <div class="work-thumb reveal-scale reveal-delay-4"></div>
+            <div class="work-thumb reveal-scale reveal-delay-1"></div>
+            <div class="work-thumb reveal-scale reveal-delay-2"></div>
+            <div class="work-thumb reveal-scale reveal-delay-3"></div>
+            <div class="work-thumb reveal-scale reveal-delay-4"></div>
+            <div class="work-thumb reveal-scale reveal-delay-1"></div>
+            <div class="work-thumb reveal-scale reveal-delay-2"></div>
+            <div class="work-thumb reveal-scale reveal-delay-3"></div>
+            <div class="work-thumb reveal-scale reveal-delay-4"></div>
         </div>
     </section>
 
-
-
     <!-- Mentors Group Section -->
-    <section class="mentors-group-section" id="mentors-group">
+    <section class="mentors-group-section reveal" id="mentors-group">
         <div class="mentors-group-visual">
             <div class="mentor-group-placeholder">
                 <div class="mentor-tag" style="top: 15%; left: 8%;">Live + Recorded<br><small>Never miss a class</small></div>
@@ -525,7 +502,7 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="final-cta" id="apply">
+    <section class="final-cta reveal" id="apply">
         <p class="cta-mid-text">Ready to start editing like a pro?</p>
         <a href="#" class="btn-primary btn-wide" id="btn-final-cta">Enroll Now — ₹18,500</a>
         <p class="cta-mid-meta">
@@ -534,21 +511,21 @@
     </section>
 
     <!-- Process Section -->
-    <section class="process-section" id="process">
+    <section class="process-section reveal" id="process">
         <span class="section-tag">🎬 How to Enroll</span>
         <h2 class="section-heading-large">3 Simple Steps</h2>
         <div class="process-steps">
-            <div class="process-step" id="process-1">
+            <div class="process-step reveal reveal-delay-1" id="process-1">
                 <div class="process-number">01</div>
                 <h3>Choose Your Batch</h3>
                 <p>Pick a batch that fits your schedule. Seats are limited per batch to keep mentorship personal.</p>
             </div>
-            <div class="process-step" id="process-2">
+            <div class="process-step reveal reveal-delay-2" id="process-2">
                 <div class="process-number">02</div>
                 <h3>Complete Payment</h3>
                 <p>Enroll with a one-time fee of ₹18,500. No hidden charges, no recurring costs.</p>
             </div>
-            <div class="process-step" id="process-3">
+            <div class="process-step reveal reveal-delay-3" id="process-3">
                 <div class="process-number">03</div>
                 <h3>Start Learning</h3>
                 <p>Join your live classes, complete assignments, get mentor feedback, and build your portfolio.</p>
@@ -556,9 +533,8 @@
         </div>
     </section>
 
-
     <!-- Certification Section -->
-    <section class="certification-section" id="certification">
+    <section class="certification-section reveal" id="certification">
         <span class="section-tag">🏆 Certification</span>
         <h2 class="section-heading-large">Earn Your Certification. <span class="text-gradient">Build Your Portfolio.</span></h2>
         <p class="certification-desc">Successfully complete the program and earn a <strong>Certified Video Editor Certificate</strong> from Artistbuilding.</p>
@@ -566,7 +542,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
+    <section class="faq-section reveal" id="faq">
         <h2 class="section-heading-large">Frequently Asked Questions</h2>
         <div class="faq-accordion" id="faq-accordion">
             <div class="accordion-item" id="faq-1">
@@ -636,22 +612,22 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact-section" id="contact">
+    <section class="contact-section reveal" id="contact">
         <span class="section-tag">📞 Get In Touch</span>
         <h2 class="section-heading-large">Have a Question? <span class="text-gradient">Just Ask Us.</span></h2>
         <p class="contact-desc">No scripts. No pressure. We'll tell you honestly which course suits you, what it costs, and what you can expect to achieve.</p>
         <div class="contact-grid">
-            <a href="https://wa.me/917400624414" class="contact-card" target="_blank" rel="noopener">
+            <a href="https://wa.me/917400624414" class="contact-card reveal reveal-delay-1" target="_blank" rel="noopener">
                 <div class="contact-icon">💬</div>
                 <h3>WhatsApp</h3>
                 <p>+91 74006 24414</p>
             </a>
-            <a href="tel:+917400624414" class="contact-card">
+            <a href="tel:+917400624414" class="contact-card reveal reveal-delay-2" target="_blank" rel="noopener">
                 <div class="contact-icon">📞</div>
                 <h3>Call Us</h3>
                 <p>+91 74006 24414</p>
             </a>
-            <a href="mailto:artistbuildingacademy@gmail.com" class="contact-card">
+            <a href="mailto:artistbuildingacademy@gmail.com" class="contact-card reveal reveal-delay-3">
                 <div class="contact-icon">✉️</div>
                 <h3>Email</h3>
                 <p>artistbuildingacademy@gmail.com</p>
@@ -662,7 +638,7 @@
 
     <!-- Footer -->
     <footer class="footer" id="footer">
-        <div class="footer-inner">
+        <div class="footer-inner reveal">
             <div class="footer-logo">
                 <span class="logo-text">Artist<span class="logo-highlight">building</span></span>
             </div>
