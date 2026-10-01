@@ -1,0 +1,75 @@
+/* Skill Outcomes: mobile swipe-card animation only.
+   Original content, colours, typography, and desktop grid remain unchanged. */
+@media (max-width: 560px) {
+  #skills-grid.skill-swipe-active {
+    display: block;
+    position: relative;
+    width: min(100%, 330px);
+    height: clamp(520px, 145vw, 560px);
+    margin: 0 auto var(--space-2xl);
+    padding: 0;
+    perspective: 1000px;
+    isolation: isolate;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  #skills-grid.skill-swipe-active .skill-card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 1;
+    transform: translate3d(var(--swipe-x, 0px), var(--swipe-y, 0px), 0)
+      rotate(var(--swipe-rotate, 0deg)) scale(var(--swipe-scale, 1));
+    transform-origin: 50% 85%;
+    transition: transform 420ms cubic-bezier(.2,.75,.25,1), opacity 300ms ease,
+      box-shadow 300ms ease;
+    z-index: var(--swipe-z, 1);
+    pointer-events: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  #skills-grid.skill-swipe-active .skill-card.swipe-card-active {
+    pointer-events: auto;
+    cursor: grab;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, .42);
+  }
+
+  #skills-grid.skill-swipe-active .skill-card.swipe-card-active:active {
+    cursor: grabbing;
+  }
+
+  #skills-grid.skill-swipe-active .skill-card .skill-card-media {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  #skills-grid.skill-swipe-active .skill-card.swipe-exit-left {
+    --swipe-x: -125%;
+    --swipe-rotate: -13deg;
+    opacity: 0;
+    transition: transform 320ms cubic-bezier(.4,0,1,1), opacity 260ms ease;
+  }
+
+  #skills-grid.skill-swipe-active .skill-card.swipe-exit-right {
+    --swipe-x: 125%;
+    --swipe-rotate: 13deg;
+    opacity: 0;
+    transition: transform 320ms cubic-bezier(.4,0,1,1), opacity 260ms ease;
+  }
+
+  #skills-grid.skill-swipe-active .skill-card.swipe-card-active img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #skills-grid.skill-swipe-active .skill-card {
+      transition-duration: 1ms;
+    }
+  }
+}
