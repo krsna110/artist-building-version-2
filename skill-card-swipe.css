@@ -1,46 +1,54 @@
 /* Skill Outcomes: scroll-triggered stacking card animation.
-   Cards pin and stack as you scroll — each new card slides under the previous.
+   Cards pin and stack as you scroll — 9:16 vertical format for vertical videos.
    Original content, colours, typography preserved. */
 
 /* ── Stack container ── */
 .skills-stack {
   position: relative;
   width: 100%;
-  max-width: 900px;
+  max-width: 440px;
   margin: 0 auto var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ── Card wrapper — provides scroll height per card ── */
 .skill-card-wrapper {
   position: sticky;
-  top: 80px; /* below header */
-  margin-bottom: 24px;
+  top: 90px; /* below sticky header */
+  margin-bottom: 32px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-/* ponytail: last card doesn't need bottom margin */
 .skill-card-wrapper:last-child {
   margin-bottom: 0;
 }
 
-/* ── The card itself ── */
+/* ── The card itself (9:16 vertical aspect ratio) ── */
 .skills-stack .skill-card {
   position: relative;
   width: 100%;
-  border-radius: var(--radius-lg);
+  max-width: 440px;
+  aspect-ratio: 9 / 16;
+  max-height: calc(100vh - 120px);
+  border-radius: 24px;
   overflow: hidden;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.65);
-  aspect-ratio: 16 / 9;
+  background: var(--bg-card, #120d24);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(146, 85, 255, 0.1);
   display: flex;
   flex-direction: column;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
 }
 
 .skills-stack .skill-card:hover {
-  border-color: var(--purple-primary);
-  box-shadow: 0 16px 48px -10px rgba(0, 0, 0, 0.8), 0 0 24px rgba(146, 85, 255, 0.2);
+  border-color: var(--purple-primary, #9255FF);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(146, 85, 255, 0.3);
 }
 
 /* ── Background image / video slot ── */
@@ -66,97 +74,119 @@
   transform: scale(1.04);
 }
 
-/* ── Dark overlay ── */
+/* ── Dark overlay tailored for 9:16 vertical videos ── */
 .skills-stack .skill-card-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     180deg,
-    rgba(8, 8, 17, 0.15) 0%,
-    rgba(8, 8, 17, 0.5) 50%,
-    rgba(8, 8, 17, 0.85) 100%
+    rgba(8, 8, 17, 0.45) 0%,
+    rgba(8, 8, 17, 0.1) 35%,
+    rgba(8, 8, 17, 0.5) 65%,
+    rgba(8, 8, 17, 0.95) 100%
   );
   pointer-events: none;
 }
 
-/* ── Content layer ── */
+/* ── Content layer (Grid layout: Top badge / Bottom info & arrow) ── */
 .skills-stack .skill-card-content {
   position: relative;
   z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 28px 32px;
-  margin-top: auto;
-  flex: 1;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  padding: 26px 24px;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: end;
+  gap: 12px;
 }
 
-/* ── Number badge ── */
+/* ── Top row: Number badge ── */
+.skill-card-top {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: start;
+}
+
 .skill-card-num {
-  font-family: var(--font-display);
-  font-size: clamp(48px, 8vw, 72px);
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: clamp(34px, 5vw, 48px);
   font-weight: 800;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.08);
-  letter-spacing: -0.03em;
-  position: absolute;
-  top: 20px;
-  left: 28px;
-  z-index: 2;
+  letter-spacing: -0.02em;
+  display: inline-block;
   user-select: none;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.45) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
 }
 
-/* ── Title + tag block ── */
+/* ── Bottom row: Title + tag block ── */
 .skills-stack .skill-card-info {
+  grid-column: 1;
+  grid-row: 3;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  text-align: left;
 }
 
 .skills-stack .skill-card-title {
-  font-family: var(--font-heading);
-  font-size: clamp(18px, 3.5vw, 26px);
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(19px, 3.2vw, 24px);
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--text-primary, #FFFFFF);
   line-height: 1.25;
   margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .skills-stack .skill-card-tag {
-  font-family: var(--font-accent);
-  font-size: clamp(11px, 2vw, 13px);
-  color: var(--purple-300);
+  font-family: var(--font-accent, 'DM Sans', sans-serif);
+  font-size: clamp(12px, 2vw, 13.5px);
+  color: var(--purple-300, #CBB4FF);
   font-weight: 500;
   letter-spacing: 0.2px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
 }
 
-/* ── Arrow circle ── */
+/* ── Bottom row: Arrow circle ── */
 .skill-card-arrow {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: end;
   flex-shrink: 0;
 }
 
 .skill-card-arrow-circle {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-primary);
+  color: #FFFFFF;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  background: rgba(146, 85, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(146, 85, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.skill-card-arrow-circle svg {
+  width: 24px;
+  height: 24px;
 }
 
 .skills-stack .skill-card:hover .skill-card-arrow-circle {
-  background: var(--purple-primary);
-  border-color: var(--purple-primary);
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(146, 85, 255, 0.4);
+  background: var(--purple-primary, #9255FF);
+  border-color: var(--purple-primary, #9255FF);
+  transform: scale(1.1) translateX(3px);
+  box-shadow: 0 0 24px rgba(146, 85, 255, 0.6);
 }
 
 /* ── Placeholder cards (AE track) ── */
@@ -165,8 +195,8 @@
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(146, 85, 255, 0.22) 0%, transparent 65%),
-    linear-gradient(135deg, #17102B 0%, #080811 100%);
+    radial-gradient(ellipse at 50% 40%, rgba(146, 85, 255, 0.28) 0%, transparent 70%),
+    linear-gradient(135deg, #1A1230 0%, #0A0814 100%);
   position: relative;
 }
 
@@ -206,25 +236,26 @@
 
 /* ── Mobile adjustments ── */
 @media (max-width: 560px) {
+  .skills-stack {
+    max-width: 340px;
+  }
+
   .skill-card-wrapper {
-    top: 68px;
-    margin-bottom: 16px;
+    top: 75px;
+    margin-bottom: 20px;
   }
 
   .skills-stack .skill-card {
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-md);
+    max-height: calc(100vh - 110px);
+    border-radius: 20px;
   }
 
   .skills-stack .skill-card-content {
     padding: 20px 18px;
-    gap: 12px;
   }
 
   .skill-card-num {
-    font-size: 42px;
-    top: 14px;
-    left: 18px;
+    font-size: 32px;
   }
 
   .skill-card-arrow-circle {
@@ -233,13 +264,13 @@
   }
 
   .skill-card-arrow-circle svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 }
 
 @media (max-width: 360px) {
-  .skills-stack .skill-card {
-    aspect-ratio: 3 / 2.5;
+  .skills-stack {
+    max-width: 290px;
   }
 }
