@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="toolsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091410"/>
+      <stop offset="50%" stop-color="#121D24"/>
+      <stop offset="100%" stop-color="#080811"/>
+    </linearGradient>
+    <linearGradient id="phoneBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#221C38"/>
+      <stop offset="100%" stop-color="#0D0917"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1B1230"/>
+      <stop offset="100%" stop-color="#080612"/>
+    </linearGradient>
+    <linearGradient id="emeraldLime" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#C8FF4D"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#000000" flood-opacity="0.85"/>
+    </filter>
+    <filter id="emeraldGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="320" fill="url(#toolsBg)"/>
+
+  <!-- Botanical / Organic Ambient Aura (Matching green tones in screenshot!) -->
+  <circle cx="360" cy="160" r="150" fill="#10B981" opacity="0.18" filter="url(#emeraldGlow)"/>
+  <circle cx="120" cy="80" r="120" fill="#9255FF" opacity="0.15" filter="url(#emeraldGlow)"/>
+
+  <!-- Abstract Leaf Silhouettes in background -->
+  <path d="M420 30 C380 90 400 180 460 220 C480 160 470 70 420 30 Z" fill="#0E3324" opacity="0.45"/>
+  <path d="M460 120 C390 150 380 240 440 310 C480 260 490 190 460 120 Z" fill="#082419" opacity="0.4"/>
+  <path d="M40 260 C90 200 80 120 20 80 C-10 140 0 220 40 260 Z" fill="#20153B" opacity="0.4"/>
+
+  <!-- Centered Smartphone Mockup -->
+  <g transform="translate(145, 20)" filter="url(#phoneShadow)">
+    <!-- Phone Bezel / Chassis -->
+    <rect x="-4" y="-4" width="198" height="288" rx="34" fill="#3D3059" stroke="#9255FF" stroke-width="1.5"/>
+    <rect width="190" height="280" rx="30" fill="url(#phoneBody)" stroke="#110A1F" stroke-width="2"/>
+
+    <!-- Screen Glass -->
+    <rect x="6" y="6" width="178" height="268" rx="24" fill="url(#screenGrad)"/>
+
+    <!-- Dynamic Island / Speaker Notch -->
+    <rect x="60" y="14" width="70" height="18" rx="9" fill="#000000"/>
+    <circle cx="115" cy="23" r="3.5" fill="#1A1429"/>
+    <circle cx="115" cy="23" r="1.5" fill="#4B3B70"/>
+
+    <!-- Phone Screen Content -->
+    <!-- Top Status Bar -->
+    <text x="20" y="27" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#FFFFFF">9:41</text>
+    <g transform="translate(150, 19)" fill="#FFFFFF">
+      <rect width="14" height="8" rx="2" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+      <rect x="2" y="2" width="8" height="4" rx="1"/>
+      <path d="M15 3 L16 3 L16 5 L15 5 Z"/>
+    </g>
+
+    <!-- App Header -->
+    <g transform="translate(18, 48)">
+      <rect width="154" height="26" rx="13" fill="#281C45" stroke="#6227E6" stroke-width="0.8"/>
+      <circle cx="14" cy="13" r="5" fill="#C8FF4D"/>
+      <text x="25" y="17" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800" fill="#F6F3FF">AI CREATOR HUB</text>
+      <text x="126" y="17" font-size="11">⚡</text>
+    </g>
+
+    <!-- Center Hero Icon: AI -->
+    <g transform="translate(70, 86)">
+      <circle cx="25" cy="25" r="25" fill="url(#emeraldLime)"/>
+      <text x="15" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="900" fill="#080811">AI</text>
+    </g>
+
+    <!-- Tool Categories List on Screen -->
+    <!-- Item 1: Runway Gen-3 -->
+    <g transform="translate(18, 146)">
+      <rect width="154" height="34" rx="8" fill="#130C24" stroke="#35235A" stroke-width="1"/>
+      <rect x="8" y="7" width="20" height="20" rx="6" fill="#793BFF"/>
+      <text x="13" y="21" font-size="10">🎬</text>
+      <text x="34" y="19" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#F6F3FF">Runway Gen-3</text>
+      <text x="34" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="500" fill="#9691A8">Text to Cinematic Video</text>
+      <rect x="122" y="10" width="24" height="14" rx="7" fill="rgba(200, 255, 77, 0.15)"/>
+      <text x="126" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="800" fill="#C8FF4D">PRO</text>
+    </g>
+
+    <!-- Item 2: ElevenLabs -->
+    <g transform="translate(18, 186)">
+      <rect width="154" height="34" rx="8" fill="#130C24" stroke="#35235A" stroke-width="1"/>
+      <rect x="8" y="7" width="20" height="20" rx="6" fill="#10B981"/>
+      <text x="13" y="21" font-size="10">🎙️</text>
+      <text x="34" y="19" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#F6F3FF">ElevenLabs</text>
+      <text x="34" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="500" fill="#9691A8">AI Voice Cloning &amp; SFX</text>
+      <rect x="122" y="10" width="24" height="14" rx="7" fill="rgba(200, 255, 77, 0.15)"/>
+      <text x="126" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="800" fill="#C8FF4D">PRO</text>
+    </g>
+
+    <!-- Item 3: Topaz Video AI -->
+    <g transform="translate(18, 226)">
+      <rect width="154" height="34" rx="8" fill="#130C24" stroke="#35235A" stroke-width="1"/>
+      <rect x="8" y="7" width="20" height="20" rx="6" fill="#9255FF"/>
+      <text x="13" y="21" font-size="10">✨</text>
+      <text x="34" y="19" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#F6F3FF">Topaz Video AI</text>
+      <text x="34" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="500" fill="#9691A8">4K Upscaling &amp; 60 FPS</text>
+      <rect x="122" y="10" width="24" height="14" rx="7" fill="rgba(200, 255, 77, 0.15)"/>
+      <text x="126" y="20" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="800" fill="#C8FF4D">PRO</text>
+    </g>
+  </g>
+
+</svg>

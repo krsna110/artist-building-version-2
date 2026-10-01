@@ -338,6 +338,258 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // === Mentor Carousel Functionality ===
+    const mentorCarousel = document.getElementById('mentor-carousel');
+    if (mentorCarousel) {
+        const slides = Array.from(mentorCarousel.querySelectorAll('.mentor-slide'));
+        const prevBtn = document.getElementById('mentor-prev-btn');
+        const nextBtn = document.getElementById('mentor-next-btn');
+        const dots = Array.from(mentorCarousel.querySelectorAll('.mentor-dot'));
+        let currentSlide = 0;
+        let autoSlideTimer = null;
+
+        function updateSlide(index) {
+            currentSlide = (index + slides.length) % slides.length;
+            slides.forEach((slide, i) => {
+                const isActive = i === currentSlide;
+                slide.classList.toggle('active', isActive);
+                slide.setAttribute('aria-hidden', String(!isActive));
+            });
+            dots.forEach((dot, i) => {
+                const isActive = i === currentSlide;
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-selected', String(isActive));
+            });
+        }
+
+        function startAutoSlide() {
+            stopAutoSlide();
+            autoSlideTimer = setInterval(() => {
+                updateSlide(currentSlide + 1);
+            }, 6000);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = null;
+            }
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                updateSlide(currentSlide - 1);
+                startAutoSlide();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                updateSlide(currentSlide + 1);
+                startAutoSlide();
+            });
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                updateSlide(i);
+                startAutoSlide();
+            });
+        });
+
+        // Keyboard arrow support
+        mentorCarousel.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                updateSlide(currentSlide - 1);
+                startAutoSlide();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                updateSlide(currentSlide + 1);
+                startAutoSlide();
+            }
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        mentorCarousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoSlide();
+        }, { passive: true });
+
+        mentorCarousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 40) {
+                if (diff < 0) {
+                    updateSlide(currentSlide + 1);
+                } else {
+                    updateSlide(currentSlide - 1);
+                }
+            }
+            startAutoSlide();
+        }, { passive: true });
+
+        // Pause auto-sliding on hover
+        mentorCarousel.addEventListener('mouseenter', stopAutoSlide);
+        mentorCarousel.addEventListener('mouseleave', startAutoSlide);
+
+        // Start auto-rotation
+        startAutoSlide();
+    }
+
+    // === Exclusive Bonuses Deck & Spread Animation ===
+    const bonusesStage = document.getElementById('bonuses-stage');
+    const btnStackView = document.getElementById('btn-stack-view');
+    const btnSpreadView = document.getElementById('btn-spread-view');
+    const bonusesSection = document.getElementById('bonuses');
+
+    if (bonusesStage) {
+        let isSpread = false;
+        let userInteracted = false;
+        let bloomTimeout = null;
+
+        function setBonusView(spread, announce = false, isUserClick = false) {
+            if (isUserClick) {
+                userInteracted = true;
+                if (bloomTimeout) {
+                    clearTimeout(bloomTimeout);
+                    bloomTimeout = null;
+                }
+            }
+            isSpread = spread;
+            if (spread) {
+                bonusesStage.classList.remove('is-stacked');
+                bonusesStage.classList.add('is-spread');
+                if (btnSpreadView) {
+                    btnSpreadView.classList.add('active');
+                    btnSpreadView.setAttribute('aria-pressed', 'true');
+                }
+                if (btnStackView) {
+                    btnStackView.classList.remove('active');
+                    btnStackView.setAttribute('aria-pressed', 'false');
+                }
+            } else {
+                bonusesStage.classList.remove('is-spread');
+                bonusesStage.classList.add('is-stacked');
+                if (btnStackView) {
+                    btnStackView.classList.add('active');
+                    btnStackView.setAttribute('aria-pressed', 'true');
+                }
+                if (btnSpreadView) {
+                    btnSpreadView.classList.remove('active');
+                    btnSpreadView.setAttribute('aria-pressed', 'false');
+                }
+            }
+        }
+
+        // Initialize state to Deck (stacked) view
+        setBonusView(false);
+
+        if (btnStackView) {
+            btnStackView.addEventListener('click', () => setBonusView(false, true, true));
+        }
+
+        if (btnSpreadView) {
+            btnSpreadView.addEventListener('click', () => setBonusView(true, true, true));
+        }
+
+        // Clicking on any card while stacked blooms them out into spread view
+        bonusesStage.querySelectorAll('.bonus-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if (!isSpread) {
+                    setBonusView(true, true, true);
+                }
+            });
+        });
+
+        // Dynamic Scroll Triggered Animation:
+        // Starts stacked as the user approaches; once the cards enter view,
+        // they smoothly bloom and fan out into the spread view!
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            // For reduced motion preference, display in spread view immediately
+            setBonusView(true);
+        } else {
+            function checkBonusScroll() {
+                if (userInteracted) return;
+
+                const stageRect = bonusesStage.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+                // When cards stage enters comfortably into view (top is within 80% of viewport height)
+                const stageInView = stageRect.top < windowHeight * 0.80 && stageRect.bottom > 80;
+
+                // When scrolled completely back above the section (cards are below viewport)
+                const stageBelowView = stageRect.top > windowHeight;
+
+                if (stageInView && !isSpread) {
+                    if (!bloomTimeout) {
+                        bloomTimeout = setTimeout(() => {
+                            setBonusView(true);
+                            bloomTimeout = null;
+                        }, 220);
+                    }
+                } else if (stageBelowView && isSpread) {
+                    // Reset back to stacked deck when user scrolls back up
+                    if (bloomTimeout) {
+                        clearTimeout(bloomTimeout);
+                        bloomTimeout = null;
+                    }
+                    setBonusView(false);
+                }
+            }
+
+            // IntersectionObserver for modern high-performance viewport detection
+            if ('IntersectionObserver' in window) {
+                const stageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (userInteracted) return;
+
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+                            if (!isSpread && !bloomTimeout) {
+                                bloomTimeout = setTimeout(() => {
+                                    setBonusView(true);
+                                    bloomTimeout = null;
+                                }, 220);
+                            }
+                        } else if (!entry.isIntersecting) {
+                            const rect = entry.boundingClientRect;
+                            if (rect.top > (window.innerHeight || document.documentElement.clientHeight)) {
+                                if (bloomTimeout) {
+                                    clearTimeout(bloomTimeout);
+                                    bloomTimeout = null;
+                                }
+                                setBonusView(false);
+                            }
+                        }
+                    });
+                }, {
+                    threshold: [0, 0.15, 0.35, 0.6],
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                stageObserver.observe(bonusesStage);
+            }
+
+            // Passive scroll listener to guarantee trigger regardless of scroll speed
+            let scrollThrottle = false;
+            window.addEventListener('scroll', () => {
+                if (!scrollThrottle) {
+                    scrollThrottle = true;
+                    requestAnimationFrame(() => {
+                        checkBonusScroll();
+                        scrollThrottle = false;
+                    });
+                }
+            }, { passive: true });
+
+            // Initial check on load
+            checkBonusScroll();
+        }
+    }
 
 });
 
