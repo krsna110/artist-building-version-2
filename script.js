@@ -331,16 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    // === Video Testimonial Modal & Playback ===
-    // ponytail: Built with native CSS marquee animation and lightweight HTML5 video dialog. Ceiling: no inertial drag-to-scroll touch gestures. Upgrade path: Integrate Hammer.js or Swiper if free touch-drag physics are needed.
-    const testimonialModal = document.getElementById('testimonial-modal');
-    const modalBackdrop = document.getElementById('modal-backdrop');
-    const modalClose = document.getElementById('modal-close');
-    const modalVideo = document.getElementById('modal-video-player');
-    const modalNotice = document.getElementById('modal-notice');
-    const modalStudentName = document.getElementById('modal-student-name');
-    const modalStudentRole = document.getElementById('modal-student-role');
-    const noticeTitle = document.getElementById('notice-title');
+
     // === Mentor & Co-Founder Carousel Functionality ===
     document.querySelectorAll('.mentor-carousel').forEach((mentorCarousel) => {
         const slides = Array.from(mentorCarousel.querySelectorAll('.mentor-slide'));
