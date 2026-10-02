@@ -2112,6 +2112,36 @@ section[id],
     line-height: 1.7;
 }
 
+.accordion-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+}
+
+.accordion-body ul li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 6px;
+}
+
+.accordion-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--purple-primary);
+}
+
+.accordion-body ul li:last-child {
+    margin-bottom: 0;
+}
+
 /* === Student Video Testimonials - Horizontal Marquee === */
 .student-work-section {
     padding: var(--space-4xl) 0;
