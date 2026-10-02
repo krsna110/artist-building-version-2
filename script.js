@@ -652,16 +652,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Skill Outcome Cards hover preview & modal click
+    // Skill Outcome Cards auto-play on appearance & modal click
+    if ('IntersectionObserver' in window) {
+        const skillVideoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const bgVideo = entry.target.querySelector('.skill-video-bg');
+                if (!bgVideo) return;
+                if (entry.isIntersecting) {
+                    bgVideo.muted = true;
+                    bgVideo.play().catch(() => {});
+                } else {
+                    bgVideo.pause();
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '100px 0px 100px 0px'
+        });
+
+        document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
+            skillVideoObserver.observe(card);
+        });
+    }
+
     document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
         const bgVideo = card.querySelector('.skill-video-bg');
         if (bgVideo) {
             bgVideo.muted = true;
+            // Immediate initial trigger
+            bgVideo.play().catch(() => {});
             card.addEventListener('mouseenter', () => {
                 bgVideo.play().catch(() => {});
-            });
-            card.addEventListener('mouseleave', () => {
-                bgVideo.pause();
             });
         }
 
@@ -675,7 +696,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Ensure all muted in-card video reels autoplay seamlessly
-    document.querySelectorAll('.card-video').forEach(video => {
+    document.querySelectorAll('.card-video, .skill-video-bg').forEach(video => {
         video.muted = true;
         video.play().catch(() => {});
     });
