@@ -18,19 +18,24 @@
     <!-- Sticky Header -->
     <header class="header" id="header">
         <div class="header-inner">
-            <a href="#" class="logo" id="logo">
-                <span class="logo-text">Artist<span class="logo-highlight">building</span></span>
-                <svg class="logo-icon" width="20" height="16" viewBox="0 0 20 16" fill="none">
-                    <path d="M2 14L10 2L18 14" stroke="#9255FF" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="6" cy="8" r="1.5" fill="#9255FF"/>
-                    <circle cx="10" cy="5" r="1.5" fill="#9255FF"/>
-                    <circle cx="14" cy="8" r="1.5" fill="#9255FF"/>
-                    <line x1="6" y1="8" x2="10" y2="5" stroke="#9255FF" stroke-width="1"/>
-                    <line x1="10" y1="5" x2="14" y2="8" stroke="#9255FF" stroke-width="1"/>
-                </svg>
+            <!-- Left: Original Logo -->
+            <a href="#hero" class="navbar-logo" id="logo" aria-label="Artists Building Academy">
+                <img src="Asset 3@2x-8.webp" alt="Artists Building Logo" class="navbar-logo-img" width="1466" height="1114">
             </a>
+
+            <!-- Center: Navigation Links -->
+            <nav class="navbar-nav" id="navbar-nav" aria-label="Primary navigation">
+                <ul class="nav-links">
+                    <li><a href="#hero" class="nav-link">Home</a></li>
+                    <li><a href="#curriculum" class="nav-link">Curriculum</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                </ul>
+            </nav>
+
+            <!-- Right: Actions (Enroll Now CTA & Mobile Hamburger) -->
             <div class="header-actions">
-                <a href="#apply" class="btn-apply" id="btn-apply">Enroll Now</a>
+                <a href="#apply" class="btn-enroll" id="navbar-enroll-btn">Enroll Now</a>
                 <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
                     <span></span>
                     <span></span>
@@ -40,14 +45,19 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <nav class="mobile-menu" id="mobile-menu" aria-hidden="true">
-        <a href="#hero">Home</a>
-        <a href="#overview">Course</a>
-        <a href="#curriculum">Curriculum</a>
-        <a href="#projects">Projects</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#apply" class="btn-apply-menu">Enroll Now</a>
+    <!-- Mobile Drawer Menu -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+        <div class="mobile-menu-container">
+            <ul class="mobile-nav-links">
+                <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+                <li><a href="#curriculum" class="mobile-nav-link">Curriculum</a></li>
+                <li><a href="#projects" class="mobile-nav-link">Projects</a></li>
+                <li><a href="#reviews" class="mobile-nav-link">Reviews</a></li>
+            </ul>
+            <div class="mobile-menu-cta">
+                <a href="#apply" class="btn-enroll btn-enroll-mobile">Enroll Now</a>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -178,6 +188,79 @@
                             </svg>
                         </a>
                         <a href="https://www.linkedin.com/in/namandeshmukh/" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Naman Deshmukh on LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Co-Founder Card (Without separate heading) -->
+            <div class="mentor-card cofounder-card reveal reveal-scale">
+                <!-- Co-Founder Visual / Carousel Column -->
+                <div class="mentor-media-column">
+                    <div class="mentor-carousel" role="region" aria-roledescription="carousel" aria-label="Co-Founder Photos" tabindex="0">
+                        <div class="mentor-carousel-track">
+                            <div class="mentor-slide active" data-index="0" role="group" aria-roledescription="slide" aria-label="1 of 2">
+                                <img src="assets/visual-storytelling.webp" alt="Co-Founder - Artistbuilding Academy" width="640" height="420" loading="lazy">
+                            </div>
+                            <div class="mentor-slide" data-index="1" role="group" aria-roledescription="slide" aria-label="2 of 2">
+                                <img src="assets/long-form-editing.webp" alt="Co-Founder mentoring editing session" width="640" height="420" loading="lazy">
+                            </div>
+                        </div>
+
+                        <!-- Carousel Navigation Buttons -->
+                        <button class="mentor-carousel-btn prev-btn" aria-label="Previous photo" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="mentor-carousel-btn next-btn" aria-label="Next photo" type="button">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+
+                        <!-- Carousel Indicators -->
+                        <div class="mentor-carousel-dots" role="tablist" aria-label="Slide navigation">
+                            <button class="mentor-dot active" data-slide="0" aria-label="Slide 1" aria-selected="true" role="tab" type="button"></button>
+                            <button class="mentor-dot" data-slide="1" aria-label="Slide 2" aria-selected="false" role="tab" type="button"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Co-Founder Info Column -->
+                <div class="mentor-info-column">
+                    <h3 class="mentor-name">Co-Founder</h3>
+                    <p class="mentor-role">Co-Founder &amp; Creative Director — Artistbuilding Academy</p>
+
+                    <div class="mentor-achievements">
+                        <div class="mentor-achievement-item">
+                            <span class="achievement-icon" aria-hidden="true">🎬</span>
+                            <span class="achievement-text">Lead Post-Production Specialist</span>
+                        </div>
+                        <div class="mentor-achievement-item">
+                            <span class="achievement-icon" aria-hidden="true">🌟</span>
+                            <span class="achievement-text">Mentored 200+ Video Editors Across India</span>
+                        </div>
+                    </div>
+
+                    <p class="mentor-description">
+                        Pioneering practical, industry-focused visual training at Artistbuilding. Empowering aspiring editors with real-world project workflows, advanced pacing, motion design and commercial storytelling skills.
+                    </p>
+
+                    <div class="mentor-socials">
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Co-Founder on Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Co-Founder on LinkedIn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                                 <rect x="2" y="9" width="4" height="12"></rect>
@@ -854,23 +937,225 @@
         </p>
     </section>
 
-    <!-- Student Work Section -->
+    <!-- Student Work / Reviews Section - Video Testimonials Marquee -->
+    <div id="reviews" class="scroll-anchor"></div>
     <section class="student-work-section reveal" id="student-work">
         <h2 class="section-heading-large">What<br><em>Students Say</em></h2>
         <p class="student-work-desc">Real feedback from students who completed the Artistbuilding Academy program.</p>
-        <div class="student-work-grid" id="student-work-grid">
-            <div class="work-thumb reveal-scale reveal-delay-1"></div>
-            <div class="work-thumb reveal-scale reveal-delay-2"></div>
-            <div class="work-thumb reveal-scale reveal-delay-3"></div>
-            <div class="work-thumb reveal-scale reveal-delay-4"></div>
-            <div class="work-thumb reveal-scale reveal-delay-1"></div>
-            <div class="work-thumb reveal-scale reveal-delay-2"></div>
-            <div class="work-thumb reveal-scale reveal-delay-3"></div>
-            <div class="work-thumb reveal-scale reveal-delay-4"></div>
-            <div class="work-thumb reveal-scale reveal-delay-1"></div>
-            <div class="work-thumb reveal-scale reveal-delay-2"></div>
-            <div class="work-thumb reveal-scale reveal-delay-3"></div>
-            <div class="work-thumb reveal-scale reveal-delay-4"></div>
+        
+        <!-- Continuous Horizontal Video Testimonials Marquee -->
+        <div class="testimonials-marquee" id="testimonials-marquee" aria-label="Student Video Testimonials">
+            <div class="testimonials-track" id="testimonials-track">
+                <!-- Group 1 -->
+                <div class="testimonials-group">
+                    <article class="testimonial-card" data-video-src="" data-student="Aman Sharma" data-role="Freelance Commercial Editor" data-poster="assets/reels-shorts-editing.webp" tabindex="0" role="button" aria-label="Play Aman Sharma testimonial">
+                        <img src="assets/reels-shorts-editing.webp" alt="Aman Sharma testimonial preview" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Commercials</span>
+                            <span class="badge-duration">0:48</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Aman Sharma</div>
+                            <span class="student-role">Freelance Commercial Editor</span>
+                            <p class="student-quote">"Landed $2,500/mo retainer clients within 60 days of finishing the program."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Priya Nair" data-role="Motion & Ads Editor" data-poster="assets/ugc-ads-editing.webp" tabindex="0" role="button" aria-label="Play Priya Nair testimonial">
+                        <img src="assets/ugc-ads-editing.webp" alt="Priya Nair testimonial preview" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">UGC & Ads</span>
+                            <span class="badge-duration">1:12</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Priya Nair</div>
+                            <span class="student-role">Motion & Ads Editor</span>
+                            <p class="student-quote">"From total beginner to cutting high-converting D2C brand ads effortlessly."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Rohan Verma" data-role="YouTube Lead Editor" data-poster="assets/long-form-editing.webp" tabindex="0" role="button" aria-label="Play Rohan Verma testimonial">
+                        <img src="assets/long-form-editing.webp" alt="Rohan Verma testimonial preview" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Long-form</span>
+                            <span class="badge-duration">0:56</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Rohan Verma</div>
+                            <span class="student-role">YouTube Lead Editor</span>
+                            <p class="student-quote">"Now editing for top creators with over 1M+ subscribers with full confidence."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Sneha Patel" data-role="Short-Form Specialist" data-poster="assets/visual-storytelling.webp" tabindex="0" role="button" aria-label="Play Sneha Patel testimonial">
+                        <img src="assets/visual-storytelling.webp" alt="Sneha Patel testimonial preview" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Reels & Hooks</span>
+                            <span class="badge-duration">0:42</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Sneha Patel</div>
+                            <span class="student-role">Short-Form Specialist</span>
+                            <p class="student-quote">"Built a viral portfolio with 10M+ views across reels for international clients."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Kabir Mehta" data-role="Podcast & Narrative Editor" data-poster="assets/podcast-editing.webp" tabindex="0" role="button" aria-label="Play Kabir Mehta testimonial">
+                        <img src="assets/podcast-editing.webp" alt="Kabir Mehta testimonial preview" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Podcast</span>
+                            <span class="badge-duration">1:05</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Kabir Mehta</div>
+                            <span class="student-role">Podcast & Narrative Editor</span>
+                            <p class="student-quote">"Mastered pacing, multi-cam editing and sound design that keeps viewers glued."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Arjun Rao" data-role="Post-Production Artist" data-poster="assets/video-editing-fundamentals.webp" tabindex="0" role="button" aria-label="Play Arjun Rao testimonial">
+                        <img src="assets/video-editing-fundamentals.webp" alt="Arjun Rao testimonial preview" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Color & VFX</span>
+                            <span class="badge-duration">0:51</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Arjun Rao</div>
+                            <span class="student-role">Post-Production Artist</span>
+                            <p class="student-quote">"Advanced color grading & After Effects gave me an unfair advantage in the market."</p>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Group 2 (Duplicate for continuous seamless infinite loop) -->
+                <div class="testimonials-group" aria-hidden="true">
+                    <article class="testimonial-card" data-video-src="" data-student="Aman Sharma" data-role="Freelance Commercial Editor" data-poster="assets/reels-shorts-editing.webp" tabindex="-1">
+                        <img src="assets/reels-shorts-editing.webp" alt="" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Commercials</span>
+                            <span class="badge-duration">0:48</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Aman Sharma</div>
+                            <span class="student-role">Freelance Commercial Editor</span>
+                            <p class="student-quote">"Landed $2,500/mo retainer clients within 60 days of finishing the program."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Priya Nair" data-role="Motion & Ads Editor" data-poster="assets/ugc-ads-editing.webp" tabindex="-1">
+                        <img src="assets/ugc-ads-editing.webp" alt="" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">UGC & Ads</span>
+                            <span class="badge-duration">1:12</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Priya Nair</div>
+                            <span class="student-role">Motion & Ads Editor</span>
+                            <p class="student-quote">"From total beginner to cutting high-converting D2C brand ads effortlessly."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Rohan Verma" data-role="YouTube Lead Editor" data-poster="assets/long-form-editing.webp" tabindex="-1">
+                        <img src="assets/long-form-editing.webp" alt="" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Long-form</span>
+                            <span class="badge-duration">0:56</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Rohan Verma</div>
+                            <span class="student-role">YouTube Lead Editor</span>
+                            <p class="student-quote">"Now editing for top creators with over 1M+ subscribers with full confidence."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Sneha Patel" data-role="Short-Form Specialist" data-poster="assets/visual-storytelling.webp" tabindex="-1">
+                        <img src="assets/visual-storytelling.webp" alt="" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Reels & Hooks</span>
+                            <span class="badge-duration">0:42</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Sneha Patel</div>
+                            <span class="student-role">Short-Form Specialist</span>
+                            <p class="student-quote">"Built a viral portfolio with 10M+ views across reels for international clients."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Kabir Mehta" data-role="Podcast & Narrative Editor" data-poster="assets/podcast-editing.webp" tabindex="-1">
+                        <img src="assets/podcast-editing.webp" alt="" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Podcast</span>
+                            <span class="badge-duration">1:05</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Kabir Mehta</div>
+                            <span class="student-role">Podcast & Narrative Editor</span>
+                            <p class="student-quote">"Mastered pacing, multi-cam editing and sound design that keeps viewers glued."</p>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="" data-student="Arjun Rao" data-role="Post-Production Artist" data-poster="assets/video-editing-fundamentals.webp" tabindex="-1">
+                        <img src="assets/video-editing-fundamentals.webp" alt="" class="card-poster" loading="lazy">
+                        <div class="card-overlay"></div>
+                        <div class="card-badge-top">
+                            <span class="badge-tag">Color & VFX</span>
+                            <span class="badge-duration">0:51</span>
+                        </div>
+                        <div class="card-play-btn" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20"/></svg>
+                        </div>
+                        <div class="card-content-bottom">
+                            <div class="student-author">Arjun Rao</div>
+                            <span class="student-role">Post-Production Artist</span>
+                            <p class="student-quote">"Advanced color grading & After Effects gave me an unfair advantage in the market."</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1046,6 +1331,36 @@
     <!-- Sticky Bottom CTA (mobile) -->
     <div class="sticky-cta" id="sticky-cta">
         <a href="#apply" class="btn-sticky" id="btn-sticky">Enroll Now — ₹18,500 →</a>
+    </div>
+
+    <!-- Video Testimonial Modal Popup -->
+    <div class="testimonial-modal" id="testimonial-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Student Video Testimonial">
+        <div class="testimonial-modal-backdrop" id="modal-backdrop"></div>
+        <div class="testimonial-modal-dialog">
+            <button class="testimonial-modal-close" id="modal-close" aria-label="Close testimonial video">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="testimonial-modal-video-box">
+                <video id="modal-video-player" class="testimonial-modal-video" controls playsinline preload="auto">
+                    Your browser does not support video playback.
+                </video>
+                <!-- Notice shown when user has not yet specified a video source file -->
+                <div class="modal-placeholder-notice" id="modal-notice" style="display: none;">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <h4 id="notice-title">Video Testimonial Ready</h4>
+                    <p id="notice-desc">Place your student video .mp4 in <code>assets/</code> and set <code>data-video-src</code> on this card.</p>
+                </div>
+            </div>
+            <div class="testimonial-modal-footer">
+                <div class="modal-student-name" id="modal-student-name">Student Name</div>
+                <div class="modal-student-role" id="modal-student-role">Editor Role</div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

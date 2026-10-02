@@ -60,18 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let headerIsScrolled = null;
 
     window.addEventListener('scroll', () => {
-        const isScrolled = window.scrollY > 50;
+        const isScrolled = window.scrollY > 40;
         if (isScrolled === headerIsScrolled) return;
         headerIsScrolled = isScrolled;
 
         if (header) {
-            if (isScrolled) {
-                header.style.borderBottomColor = 'rgba(124, 58, 237, 0.1)';
-                header.style.background = 'rgba(10, 10, 15, 0.95)';
-            } else {
-                header.style.borderBottomColor = 'rgba(255, 255, 255, 0.05)';
-                header.style.background = 'rgba(10, 10, 15, 0.85)';
-            }
+            header.classList.toggle('header-scrolled', isScrolled);
         }
     }, { passive: true });
 
@@ -337,13 +331,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // === Mentor Carousel Functionality ===
-    const mentorCarousel = document.getElementById('mentor-carousel');
-    if (mentorCarousel) {
+    // === Video Testimonial Modal & Playback ===
+    // ponytail: Built with native CSS marquee animation and lightweight HTML5 video dialog. Ceiling: no inertial drag-to-scroll touch gestures. Upgrade path: Integrate Hammer.js or Swiper if free touch-drag physics are needed.
+    const testimonialModal = document.getElementById('testimonial-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+    const modalVideo = document.getElementById('modal-video-player');
+    const modalNotice = document.getElementById('modal-notice');
+    const modalStudentName = document.getElementById('modal-student-name');
+    const modalStudentRole = document.getElementById('modal-student-role');
+    const noticeTitle = document.getElementById('notice-title');
+    // === Mentor & Co-Founder Carousel Functionality ===
+    document.querySelectorAll('.mentor-carousel').forEach((mentorCarousel) => {
         const slides = Array.from(mentorCarousel.querySelectorAll('.mentor-slide'));
-        const prevBtn = document.getElementById('mentor-prev-btn');
-        const nextBtn = document.getElementById('mentor-next-btn');
+        if (slides.length <= 1) return;
+        const prevBtn = mentorCarousel.querySelector('.prev-btn');
+        const nextBtn = mentorCarousel.querySelector('.next-btn');
         const dots = Array.from(mentorCarousel.querySelectorAll('.mentor-dot'));
         let currentSlide = 0;
         let autoSlideTimer = null;
@@ -438,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Start auto-rotation
         startAutoSlide();
-    }
+    });
 
     // === Exclusive Bonuses Deck & Spread Animation ===
     const bonusesStage = document.getElementById('bonuses-stage');
@@ -590,6 +593,79 @@ document.addEventListener('DOMContentLoaded', () => {
             checkBonusScroll();
         }
     }
+
+    // === Video Testimonial Modal & Playback ===
+    // ponytail: Built with native CSS marquee animation and lightweight HTML5 video dialog. Ceiling: no inertial drag-to-scroll touch gestures. Upgrade path: Integrate Hammer.js or Swiper if free touch-drag physics are needed.
+    const testimonialModal = document.getElementById('testimonial-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+    const modalVideo = document.getElementById('modal-video-player');
+    const modalNotice = document.getElementById('modal-notice');
+    const modalStudentName = document.getElementById('modal-student-name');
+    const modalStudentRole = document.getElementById('modal-student-role');
+    const noticeTitle = document.getElementById('notice-title');
+
+    function openTestimonial(card) {
+        if (!testimonialModal || !modalVideo) return;
+        const videoSrc = card.dataset.videoSrc || '';
+        const student = card.dataset.student || 'Student';
+        const role = card.dataset.role || 'Video Editor';
+        const poster = card.dataset.poster || '';
+
+        if (modalStudentName) modalStudentName.textContent = student;
+        if (modalStudentRole) modalStudentRole.textContent = role;
+
+        if (videoSrc.trim()) {
+            if (modalNotice) modalNotice.style.display = 'none';
+            modalVideo.style.display = 'block';
+            modalVideo.poster = poster;
+            modalVideo.src = videoSrc;
+            modalVideo.currentTime = 0;
+            modalVideo.play().catch(() => {});
+        } else {
+            // Friendly preview when user has not yet dropped their .mp4 file
+            modalVideo.pause();
+            modalVideo.removeAttribute('src');
+            modalVideo.style.display = 'none';
+            if (modalNotice) {
+                modalNotice.style.display = 'flex';
+                if (noticeTitle) noticeTitle.textContent = `${student}'s Testimonial`;
+            }
+        }
+
+        testimonialModal.classList.add('active');
+        testimonialModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeTestimonial() {
+        if (!testimonialModal || !modalVideo) return;
+        modalVideo.pause();
+        modalVideo.removeAttribute('src');
+        modalVideo.load();
+        testimonialModal.classList.remove('active');
+        testimonialModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+        card.addEventListener('click', () => openTestimonial(card));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openTestimonial(card);
+            }
+        });
+    });
+
+    if (modalClose) modalClose.addEventListener('click', closeTestimonial);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeTestimonial);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && testimonialModal && testimonialModal.classList.contains('active')) {
+            closeTestimonial();
+        }
+    });
 
 });
 
