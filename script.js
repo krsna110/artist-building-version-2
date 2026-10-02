@@ -596,14 +596,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalStudentRole = document.getElementById('modal-student-role');
     const noticeTitle = document.getElementById('notice-title');
 
-    function openTestimonial(card) {
+    function openVideoModal(card) {
         if (!testimonialModal || !modalVideo) return;
         const videoSrc = card.dataset.videoSrc || '';
-        const student = card.dataset.student || 'Student';
-        const role = card.dataset.role || 'Video Editor';
+        const title = card.dataset.title || card.dataset.student || 'Video Reel';
+        const role = card.dataset.tag || card.dataset.role || '';
         const poster = card.dataset.poster || '';
 
-        if (modalStudentName) modalStudentName.textContent = student;
+        if (modalStudentName) modalStudentName.textContent = title;
         if (modalStudentRole) modalStudentRole.textContent = role;
 
         if (videoSrc.trim()) {
@@ -620,7 +620,9 @@ document.addEventListener('DOMContentLoaded', () => {
             modalVideo.style.display = 'none';
             if (modalNotice) {
                 modalNotice.style.display = 'flex';
-                if (noticeTitle) noticeTitle.textContent = `${student}'s Testimonial`;
+                if (noticeTitle) noticeTitle.textContent = `${title} Reel`;
+                const noticeDesc = document.getElementById('notice-desc');
+                if (noticeDesc) noticeDesc.innerHTML = `Video reel coming soon! Set <code>data-video-src</code> on this card.`;
             }
         }
 
@@ -629,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     }
 
-    function closeTestimonial() {
+    function closeVideoModal() {
         if (!testimonialModal || !modalVideo) return;
         modalVideo.pause();
         modalVideo.removeAttribute('src');
@@ -639,12 +641,35 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
+    // Testimonial Cards modal click
     document.querySelectorAll('.testimonial-card').forEach(card => {
-        card.addEventListener('click', () => openTestimonial(card));
+        card.addEventListener('click', () => openVideoModal(card));
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                openTestimonial(card);
+                openVideoModal(card);
+            }
+        });
+    });
+
+    // Skill Outcome Cards hover preview & modal click
+    document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
+        const bgVideo = card.querySelector('.skill-video-bg');
+        if (bgVideo) {
+            bgVideo.muted = true;
+            card.addEventListener('mouseenter', () => {
+                bgVideo.play().catch(() => {});
+            });
+            card.addEventListener('mouseleave', () => {
+                bgVideo.pause();
+            });
+        }
+
+        card.addEventListener('click', () => openVideoModal(card));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openVideoModal(card);
             }
         });
     });
@@ -655,12 +680,12 @@ document.addEventListener('DOMContentLoaded', () => {
         video.play().catch(() => {});
     });
 
-    if (modalClose) modalClose.addEventListener('click', closeTestimonial);
-    if (modalBackdrop) modalBackdrop.addEventListener('click', closeTestimonial);
+    if (modalClose) modalClose.addEventListener('click', closeVideoModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeVideoModal);
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && testimonialModal && testimonialModal.classList.contains('active')) {
-            closeTestimonial();
+            closeVideoModal();
         }
     });
 
