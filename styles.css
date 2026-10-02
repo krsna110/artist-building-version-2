@@ -1450,6 +1450,90 @@ section[id],
     }
 }
 
+/* === Our Faculty Section (Below Co-Founder) === */
+.faculty-section-wrap {
+    margin-top: clamp(44px, 5.5vw, 68px);
+    text-align: center;
+}
+
+.faculty-header {
+    margin-bottom: clamp(24px, 3.5vw, 36px);
+}
+
+.faculty-header .section-tag {
+    margin-bottom: var(--space-xs);
+}
+
+.faculty-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 4.5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(20px, 3vw, 32px);
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.faculty-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: #06040a;
+    border: 1px solid rgba(146, 85, 255, 0.25);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(146, 85, 255, 0.1);
+    aspect-ratio: 16 / 11;
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.faculty-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 5%, var(--purple-gradient-start) 40%, var(--lime-accent) 70%, transparent 95%);
+    opacity: 0.8;
+}
+
+.faculty-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(146, 85, 255, 0.6);
+    box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(146, 85, 255, 0.25);
+}
+
+.faculty-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faculty-card:hover img {
+    transform: scale(1.04);
+}
+
+@media (max-width: 768px) {
+    .faculty-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .faculty-card {
+        aspect-ratio: 16 / 10;
+        max-height: 320px;
+    }
+}
+
 /* === Skills / What You'll Learn Section === */
 .skills-section {
     padding: var(--space-3xl) var(--space-lg);
