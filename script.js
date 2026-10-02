@@ -649,6 +649,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Ensure all muted in-card video reels autoplay seamlessly
+    document.querySelectorAll('.card-video').forEach(video => {
+        video.muted = true;
+        video.play().catch(() => {});
+    });
+
     if (modalClose) modalClose.addEventListener('click', closeTestimonial);
     if (modalBackdrop) modalBackdrop.addEventListener('click', closeTestimonial);
 
