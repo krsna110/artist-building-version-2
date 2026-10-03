@@ -350,12 +350,19 @@ button:focus-visible {
 }
 
 .navbar-logo-img {
-    height: 52px;
+    height: 60px;
     width: auto;
-    max-height: 54px;
+    max-height: 64px;
     object-fit: contain;
     display: block;
     image-rendering: -webkit-optimize-contrast;
+    filter: drop-shadow(0 2px 14px rgba(146, 85, 255, 0.18));
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+}
+
+.navbar-logo:hover .navbar-logo-img,
+.logo:hover .navbar-logo-img {
+    filter: drop-shadow(0 4px 20px rgba(146, 85, 255, 0.4));
 }
 
 /* Right: Header Actions */
@@ -3482,12 +3489,32 @@ section[id],
 
 .footer-logo {
     margin-bottom: var(--space-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.footer-logo .logo-text {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 800;
+.footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.footer-logo-link:hover {
+    transform: scale(1.05);
+    opacity: 0.95;
+}
+
+.footer-logo-img {
+    height: 56px;
+    width: auto;
+    max-height: 60px;
+    object-fit: contain;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+    filter: drop-shadow(0 2px 12px rgba(146, 85, 255, 0.22));
 }
 
 .footer-tagline {
