@@ -5,36 +5,40 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // === Mobile Menu Toggle ===
+    // === Dropdown Menu Toggle ===
     const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const dropdownMenu = document.getElementById('dropdown-menu');
 
-    if (menuToggle && mobileMenu) {
-        const desktopNavigation = window.matchMedia('(min-width: 1024px)');
+    if (menuToggle && dropdownMenu) {
         const setMenuOpen = isOpen => {
             menuToggle.classList.toggle('active', isOpen);
-            mobileMenu.classList.toggle('active', isOpen);
+            dropdownMenu.classList.toggle('active', isOpen);
             menuToggle.setAttribute('aria-expanded', String(isOpen));
             menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-            mobileMenu.setAttribute('aria-hidden', String(!isOpen && !desktopNavigation.matches));
-            mobileMenu.inert = !isOpen && !desktopNavigation.matches;
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            dropdownMenu.setAttribute('aria-hidden', String(!isOpen));
         };
 
         setMenuOpen(false);
         menuToggle.addEventListener('click', () => {
-            setMenuOpen(!mobileMenu.classList.contains('active'));
+            setMenuOpen(!dropdownMenu.classList.contains('active'));
         });
 
-        mobileMenu.querySelectorAll('a').forEach(link => {
+        dropdownMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => setMenuOpen(false));
         });
 
         document.addEventListener('keydown', event => {
-            if (event.key === 'Escape' && mobileMenu.classList.contains('active')) setMenuOpen(false);
+            if (event.key === 'Escape' && dropdownMenu.classList.contains('active')) setMenuOpen(false);
         });
 
-        desktopNavigation.addEventListener('change', () => setMenuOpen(false));
+        // Close dropdown when clicking outside
+        document.addEventListener('click', event => {
+            if (dropdownMenu.classList.contains('active') &&
+                !dropdownMenu.contains(event.target) &&
+                !menuToggle.contains(event.target)) {
+                setMenuOpen(false);
+            }
+        });
     }
 
     // === Sticky CTA visibility ===
