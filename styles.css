@@ -109,12 +109,11 @@
     --sticky-height: calc(82px + env(safe-area-inset-bottom, 0px));
 }
 
-/* === Scroll Reveal Animation System === */
+/* === Scroll Reveal Animation System (Hardware Accelerated) === */
 .reveal {
     opacity: 0;
-    transform: translateY(36px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.reveal-visible {
@@ -122,18 +121,17 @@
     transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.08s; }
-.reveal-delay-2 { transition-delay: 0.16s; }
-.reveal-delay-3 { transition-delay: 0.24s; }
-.reveal-delay-4 { transition-delay: 0.32s; }
-.reveal-delay-5 { transition-delay: 0.4s; }
-.reveal-delay-6 { transition-delay: 0.48s; }
+.reveal-delay-1 { transition-delay: 0.06s; }
+.reveal-delay-2 { transition-delay: 0.12s; }
+.reveal-delay-3 { transition-delay: 0.18s; }
+.reveal-delay-4 { transition-delay: 0.24s; }
+.reveal-delay-5 { transition-delay: 0.3s; }
+.reveal-delay-6 { transition-delay: 0.36s; }
 
 .reveal-scale {
     opacity: 0;
-    transform: scale(0.94);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: scale(0.96);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-scale.reveal-visible {
@@ -143,9 +141,8 @@
 
 .reveal-left {
     opacity: 0;
-    transform: translateX(-36px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: translateX(-30px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-left.reveal-visible {
@@ -155,9 +152,8 @@
 
 .reveal-right {
     opacity: 0;
-    transform: translateX(36px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: translateX(30px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-right.reveal-visible {
@@ -188,18 +184,30 @@ html {
 body {
     font-family: var(--font-body);
     background-color: var(--bg-primary);
-    background-image:
-        radial-gradient(ellipse at 15% 10%, rgba(146, 85, 255, 0.12), transparent 40%),
-        radial-gradient(ellipse at 85% 45%, rgba(121, 59, 255, 0.08), transparent 45%),
-        radial-gradient(ellipse at 50% 90%, rgba(146, 85, 255, 0.09), transparent 45%),
-        repeating-linear-gradient(0deg, transparent 0 55px, rgba(41, 38, 58, 0.2) 56px, transparent 57px),
-        repeating-linear-gradient(90deg, transparent 0 55px, rgba(41, 38, 58, 0.2) 56px, transparent 57px);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-bottom: var(--sticky-height);
+    position: relative;
+}
+
+/* Fixed Hardware-Accelerated Background (Eliminates full-body repaint on scroll) */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--bg-primary);
+    background-image:
+        radial-gradient(ellipse at 15% 10%, rgba(146, 85, 255, 0.12), transparent 40%),
+        radial-gradient(ellipse at 85% 45%, rgba(121, 59, 255, 0.08), transparent 45%),
+        radial-gradient(ellipse at 50% 90%, rgba(146, 85, 255, 0.09), transparent 45%),
+        repeating-linear-gradient(0deg, transparent 0 55px, rgba(41, 38, 58, 0.16) 56px, transparent 57px),
+        repeating-linear-gradient(90deg, transparent 0 55px, rgba(41, 38, 58, 0.16) 56px, transparent 57px);
+    transform: translateZ(0);
 }
 
 img {
@@ -4173,3 +4181,21 @@ body::after {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* === Smooth Scrolling & Rendering Performance Boost === */
+.curriculum-section,
+.process-section,
+.certification-section,
+.faq-section,
+.contact-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+}
+
+/* Optimize video rendering composite layers */
+.skill-video-bg,
+.card-video {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+

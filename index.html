@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Text&family=Darker+Grotesque:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="skill-card-swipe.css">
+    <link rel="stylesheet" href="register-modal.css">
 </head>
 <body>
     <!-- Sticky Header -->
@@ -59,7 +60,7 @@
             </div>
             <h1 class="hero-title">Learn to <span class="text-gold">cut, grade and animate</span> like a professional editor.</h1>
             <p class="hero-subtitle">A live, mentor-led course from Artistbuilding Academy — go from raw footage to reels, ads, podcasts and motion graphics using <strong>After Effects & Adobe Premiere Pro.</strong></p>
-            <a href="#apply" class="btn-primary btn-hero" id="btn-hero-cta">Enroll Now — ₹18,500</a>
+            <a href="#apply" class="btn-primary btn-hero" id="btn-hero-cta">Register Now</a>
             <p class="hero-meta">
                 <span class="dot-green dot-gold"></span>
                 5 Modules · Live + Recorded · 1-on-1 Mentor Feedback
@@ -460,7 +461,7 @@
     <!-- CTA Banner Mid -->
     <section class="cta-mid reveal" id="cta-mid">
         <p class="cta-mid-text">Ready to start editing like a pro?</p>
-        <a href="#apply" class="btn-primary btn-wide" id="btn-mid-cta">Enroll Now — ₹18,500</a>
+        <a href="#apply" class="btn-primary btn-wide" id="btn-mid-cta">Register Now</a>
         <p class="cta-mid-meta">
             <span class="text-purple">Seats are limited</span> · per batch for personal mentorship
         </p>
@@ -664,7 +665,7 @@
                 <p>A graded project after every module, with detailed, personal feedback on your edit.</p>
             </div>
         </div>
-        <a href="#apply" class="btn-primary" id="btn-advantage-cta">Enroll Now — ₹18,500</a>
+        <a href="#apply" class="btn-primary" id="btn-advantage-cta">Register Now</a>
     </section>
 
     <!-- Curriculum / Roadmap Section -->
@@ -904,7 +905,7 @@
     <!-- CTA Banner Mid 2 -->
     <section class="cta-mid reveal" id="pricing">
         <p class="cta-mid-text">Ready to start editing like a pro?</p>
-        <a href="#apply" class="btn-primary btn-wide" id="btn-mid-cta-2">Enroll Now — ₹18,500</a>
+        <a href="#apply" class="btn-primary btn-wide" id="btn-mid-cta-2">Register Now</a>
         <p class="cta-mid-meta">
             <span class="text-purple">Seats are limited</span> · per batch for personal mentorship
         </p>
@@ -992,7 +993,7 @@
     <!-- Final CTA -->
     <section class="final-cta reveal" id="apply">
         <p class="cta-mid-text">Ready to start editing like a pro?</p>
-        <a href="#" class="btn-primary btn-wide" id="btn-final-cta">Enroll Now — ₹18,500</a>
+        <a href="#" class="btn-primary btn-wide" id="btn-final-cta">Register Now</a>
         <p class="cta-mid-meta">
             <span class="text-purple">Enrolling now</span> · Premiere Pro course open
         </p>
@@ -1176,7 +1177,313 @@
         </div>
     </div>
 
+    <!-- Advanced Video Editing Course — Registration Modal Popup -->
+    <div class="reg-modal" id="registration-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="reg-modal-title">
+        <div class="reg-modal-backdrop" id="reg-modal-backdrop"></div>
+        <div class="reg-modal-dialog">
+            <!-- Close Button -->
+            <button class="reg-modal-close" id="reg-modal-close" aria-label="Close registration form" type="button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="reg-modal-header">
+                <div class="reg-modal-badge">
+                    <span class="reg-badge-dot"></span>
+                    <span>Admissions Open · Limited Seats</span>
+                </div>
+                <h2 class="reg-modal-title" id="reg-modal-title">Advanced Video Editing Course</h2>
+                <p class="reg-modal-subtitle">Fill in the details below to reserve your seat and get instant batch timings & syllabus.</p>
+                
+                <!-- Progress Bar -->
+                <div class="reg-progress-wrapper" aria-hidden="true">
+                    <div class="reg-progress-track">
+                        <div class="reg-progress-bar" id="reg-progress-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="reg-progress-text">
+                        <span id="reg-progress-label">0 of 5 answered</span>
+                        <span id="reg-progress-percent">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Body (Form Container) -->
+            <div class="reg-modal-body" id="reg-modal-body">
+                <form class="reg-form" id="registration-form" novalidate>
+                    
+                    <!-- Question 1: What is your current status? -->
+                    <div class="reg-question-block" id="reg-q1-block">
+                        <div class="reg-question-head">
+                            <span class="reg-q-num">1</span>
+                            <label class="reg-q-label">What is your current status? <span class="reg-required">*</span></label>
+                        </div>
+                        <div class="reg-options-grid">
+                            <label class="reg-option">
+                                <input type="radio" name="current_status" value="Student" required>
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Student</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="current_status" value="Working Professional">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Working Professional</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="current_status" value="Freelancer">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Freelancer</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="current_status" value="Content Creator">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Content Creator</span>
+                                </span>
+                            </label>
+                            <label class="reg-option reg-option-other">
+                                <input type="radio" name="current_status" value="Other">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Other</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="reg-other-input-wrap" id="q1-other-wrap" style="display: none;">
+                            <input type="text" name="current_status_other" class="reg-text-input" placeholder="Please specify your status...">
+                        </div>
+                        <span class="reg-error-msg" id="q1-error">Please select your current status.</span>
+                    </div>
+
+                    <!-- Question 2: What is your current level of video editing? -->
+                    <div class="reg-question-block" id="reg-q2-block">
+                        <div class="reg-question-head">
+                            <span class="reg-q-num">2</span>
+                            <label class="reg-q-label">What is your current level of video editing? <span class="reg-required">*</span></label>
+                        </div>
+                        <div class="reg-options-grid">
+                            <label class="reg-option">
+                                <input type="radio" name="editing_level" value="Beginner" required>
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Beginner</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="editing_level" value="Basic">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Basic</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="editing_level" value="Intermediate">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Intermediate</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="editing_level" value="Advanced">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Advanced</span>
+                                </span>
+                            </label>
+                        </div>
+                        <span class="reg-error-msg" id="q2-error">Please select your current video editing level.</span>
+                    </div>
+
+                    <!-- Question 3: Why do you want to learn video editing? -->
+                    <div class="reg-question-block" id="reg-q3-block">
+                        <div class="reg-question-head">
+                            <span class="reg-q-num">3</span>
+                            <label class="reg-q-label">Why do you want to learn video editing? <span class="reg-required">*</span></label>
+                        </div>
+                        <div class="reg-options-grid">
+                            <label class="reg-option">
+                                <input type="radio" name="learning_reason" value="Get a Job" required>
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Get a Job</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="learning_reason" value="Start Freelancing">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Start Freelancing</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="learning_reason" value="Create My Own Content">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Create My Own Content</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="learning_reason" value="Improve My Professional Skills">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Improve My Professional Skills</span>
+                                </span>
+                            </label>
+                            <label class="reg-option reg-option-other">
+                                <input type="radio" name="learning_reason" value="Other">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Other</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="reg-other-input-wrap" id="q3-other-wrap" style="display: none;">
+                            <input type="text" name="learning_reason_other" class="reg-text-input" placeholder="Please specify your goal...">
+                        </div>
+                        <span class="reg-error-msg" id="q3-error">Please select your reason for learning.</span>
+                    </div>
+
+                    <!-- Question 4: When are you planning to join the course? -->
+                    <div class="reg-question-block" id="reg-q4-block">
+                        <div class="reg-question-head">
+                            <span class="reg-q-num">4</span>
+                            <label class="reg-q-label">When are you planning to join the course? <span class="reg-required">*</span></label>
+                        </div>
+                        <div class="reg-options-grid">
+                            <label class="reg-option">
+                                <input type="radio" name="joining_timeline" value="Immediately" required>
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Immediately</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="joining_timeline" value="Within 7 Days">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Within 7 Days</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="joining_timeline" value="Within 30 Days">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Within 30 Days</span>
+                                </span>
+                            </label>
+                            <label class="reg-option">
+                                <input type="radio" name="joining_timeline" value="Just Exploring">
+                                <span class="reg-option-card">
+                                    <span class="reg-radio-dot"></span>
+                                    <span class="reg-option-text">Just Exploring</span>
+                                </span>
+                            </label>
+                        </div>
+                        <span class="reg-error-msg" id="q4-error">Please select your timeline.</span>
+                    </div>
+
+                    <!-- Question 5: Your Details -->
+                    <div class="reg-question-block reg-details-block" id="reg-q5-block">
+                        <div class="reg-question-head">
+                            <span class="reg-q-num">5</span>
+                            <label class="reg-q-label">Your Details <span class="reg-required">*</span></label>
+                        </div>
+                        <div class="reg-inputs-grid">
+                            <div class="reg-field">
+                                <label class="reg-field-label" for="reg-fullname">Full Name</label>
+                                <div class="reg-input-wrapper">
+                                    <svg class="reg-field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <input type="text" id="reg-fullname" name="full_name" class="reg-text-input" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+                                </div>
+                                <span class="reg-error-msg" id="fullname-error">Please enter your full name.</span>
+                            </div>
+
+                            <div class="reg-field">
+                                <label class="reg-field-label" for="reg-phone">Phone / WhatsApp Number</label>
+                                <div class="reg-input-wrapper">
+                                    <svg class="reg-field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                    <input type="tel" id="reg-phone" name="phone" class="reg-text-input" placeholder="e.g. 98765 43210" required autocomplete="tel">
+                                </div>
+                                <span class="reg-error-msg" id="phone-error">Please enter a valid phone/WhatsApp number.</span>
+                            </div>
+
+                            <div class="reg-field">
+                                <label class="reg-field-label" for="reg-city">City</label>
+                                <div class="reg-input-wrapper">
+                                    <svg class="reg-field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <input type="text" id="reg-city" name="city" class="reg-text-input" placeholder="e.g. Mumbai, Delhi, Bengaluru" required autocomplete="address-level2">
+                                </div>
+                                <span class="reg-error-msg" id="city-error">Please enter your city.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button & Trust Subtext -->
+                    <div class="reg-modal-actions">
+                        <button type="submit" class="btn-primary reg-submit-btn" id="reg-submit-btn">
+                            <span class="reg-btn-text">Submit Registration</span>
+                            <svg class="reg-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <p class="reg-trust-note">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            100% Privacy Guaranteed · No Spam · Counselor will contact via WhatsApp
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Success State View (Initially hidden) -->
+                <div class="reg-success-card" id="reg-success-card" style="display: none;">
+                    <div class="reg-success-icon-wrap">
+                        <div class="reg-success-ring"></div>
+                        <svg class="reg-success-check" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="reg-success-title">Application Submitted! 🎉</h3>
+                    <p class="reg-success-desc">
+                        Thank you, <strong id="success-student-name">Student</strong>! We have received your application for the <strong>Advanced Video Editing Course</strong>.
+                    </p>
+                    <div class="reg-success-details-box">
+                        <div class="reg-success-detail-row">
+                            <span class="reg-detail-label">WhatsApp:</span>
+                            <span class="reg-detail-val" id="success-student-phone">+91 0000000000</span>
+                        </div>
+                        <div class="reg-success-detail-row">
+                            <span class="reg-detail-label">City:</span>
+                            <span class="reg-detail-val" id="success-student-city">-</span>
+                        </div>
+                        <div class="reg-success-detail-row">
+                            <span class="reg-detail-label">Timeline:</span>
+                            <span class="reg-detail-val" id="success-student-timeline">-</span>
+                        </div>
+                    </div>
+                    <p class="reg-success-subnote">Our counselor will reach out via WhatsApp with the curriculum overview, batch availability, and fee details.</p>
+                    <div class="reg-success-actions">
+                        <a href="#" id="success-wa-btn" class="reg-wa-action-btn" target="_blank" rel="noopener">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.031 2C6.516 2 2 6.516 2 12.031c0 1.97.574 3.805 1.564 5.352L2.094 22l4.781-1.438a9.97 9.97 0 0 0 5.156 1.438c5.516 0 10.031-4.516 10.031-10.031C22.062 6.516 17.547 2 12.031 2zm0 18.062a8.03 8.03 0 0 1-4.14-1.14l-.3-.18-3.078.922.938-3-.195-.312a8.026 8.026 0 1 1 6.775 3.71zm4.61-6.03c-.25-.125-1.484-.734-1.719-.82-.234-.086-.406-.125-.578.125-.172.25-.672.828-.828.984-.156.156-.312.172-.562.047-.25-.125-1.055-.39-2.016-1.242-.742-.664-1.242-1.484-1.39-1.734-.148-.25-.016-.39.11-.516.11-.11.25-.281.375-.422.125-.14.172-.234.25-.39.078-.156.04-.3-.02-.422s-.578-1.39-.797-1.906c-.21-.5-.43-.43-.594-.438-.156-.008-.328-.008-.5-.008s-.453.063-.688.313c-.234.25-.906.89-.906 2.172s.922 2.516 1.047 2.688c.125.172 1.812 2.766 4.39 3.875.61.266 1.086.422 1.453.547.61.195 1.164.172 1.602.11.492-.078 1.484-.61 1.695-1.195.21-.586.21-1.086.148-1.195-.062-.11-.234-.172-.484-.297z"/>
+                            </svg>
+                            <span>Chat Directly on WhatsApp</span>
+                        </a>
+                        <button type="button" class="reg-close-btn-secondary" id="success-close-btn">
+                            Close Window
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script src="skill-card-swipe.js"></script>
+    <script src="register-modal.js"></script>
 </body>
 </html>
