@@ -1,7 +1,8 @@
 /* Scroll-stacking animation for Skill Outcomes cards.
    Each card pins via CSS sticky. As you scroll, the next card slides
    under the previous one — achieved by incrementing the sticky top
-   offset per card and scaling down previous cards slightly. */
+   offset per card and scaling down previous cards slightly.
+   Optimized for 60/120fps smooth scrolling. */
 (() => {
   const init = () => {
     const stack = document.getElementById('skills-stack');
@@ -19,44 +20,58 @@
     const applyOffsets = () => {
       wrappers.forEach((wrapper, i) => {
         wrapper.style.top = `${HEADER_HEIGHT + i * STACK_GAP}px`;
-        wrapper.style.zIndex = String(i + 1); // later cards on top
+        wrapper.style.zIndex = String(i + 1);
       });
     };
 
-    // Optional: scale down cards as they get scrolled past (parallax feel)
+    // Track whether skills-stack is near or inside viewport to eliminate idle scroll overhead
+    let isStackInView = false;
     let ticking = false;
+
     const onScroll = () => {
-      if (ticking) return;
+      if (ticking || !isStackInView) return;
       ticking = true;
+
       requestAnimationFrame(() => {
-        const stackRect = stack.getBoundingClientRect();
         wrappers.forEach((wrapper, i) => {
           const card = wrapper.querySelector('.skill-card');
           if (!card) return;
 
           const rect = wrapper.getBoundingClientRect();
           const stickyTop = HEADER_HEIGHT + i * STACK_GAP;
-
-          // How far this card has been pushed into its sticky position
-          // (negative = card is pinned and being covered by next card)
           const distFromTop = rect.top - stickyTop;
 
           if (distFromTop <= 0 && i < wrappers.length - 1) {
-            // Card is pinned — scale it down slightly based on how many
-            // cards are stacked above it
             const coverAmount = Math.min(Math.abs(distFromTop) / 300, 1);
             const scale = 1 - coverAmount * 0.03;
-            const brightness = 1 - coverAmount * 0.25;
+            // Use transform (compositor thread) - do NOT use filter: brightness (forces CPU/GPU re-raster)
             card.style.transform = `scale(${scale})`;
-            card.style.filter = `brightness(${brightness})`;
+            const overlay = card.querySelector('.skill-card-overlay');
+            if (overlay) {
+              overlay.style.opacity = String(0.75 + coverAmount * 0.25);
+            }
           } else {
             card.style.transform = '';
-            card.style.filter = '';
+            const overlay = card.querySelector('.skill-card-overlay');
+            if (overlay) overlay.style.opacity = '';
           }
         });
         ticking = false;
       });
     };
+
+    // IntersectionObserver so scroll calculations ONLY run when skills stack is in view
+    if ('IntersectionObserver' in window) {
+      const stackObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isStackInView = entry.isIntersecting;
+          if (isStackInView) onScroll();
+        });
+      }, { rootMargin: '250px 0px 250px 0px' });
+      stackObserver.observe(stack);
+    } else {
+      isStackInView = true;
+    }
 
     // Respect reduced motion
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -65,10 +80,7 @@
         window.removeEventListener('scroll', onScroll);
         wrappers.forEach(w => {
           const card = w.querySelector('.skill-card');
-          if (card) {
-            card.style.transform = '';
-            card.style.filter = '';
-          }
+          if (card) card.style.transform = '';
         });
       } else {
         window.addEventListener('scroll', onScroll, { passive: true });
@@ -83,7 +95,7 @@
     // Recompute on resize
     window.addEventListener('resize', () => {
       applyOffsets();
-      if (!reducedMotion.matches) onScroll();
+      if (!reducedMotion.matches && isStackInView) onScroll();
     }, { passive: true });
   };
 
