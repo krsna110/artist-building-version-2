@@ -18,20 +18,17 @@
     <!-- Sticky Header -->
     <header class="header" id="header">
         <div class="header-inner">
-            <a href="#" class="logo" id="logo">
-                <span class="logo-text">Artist<span class="logo-highlight">building</span></span>
-                <svg class="logo-icon" width="20" height="16" viewBox="0 0 20 16" fill="none">
-                    <path d="M2 14L10 2L18 14" stroke="#9255FF" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="6" cy="8" r="1.5" fill="#9255FF"/>
-                    <circle cx="10" cy="5" r="1.5" fill="#9255FF"/>
-                    <circle cx="14" cy="8" r="1.5" fill="#9255FF"/>
-                    <line x1="6" y1="8" x2="10" y2="5" stroke="#9255FF" stroke-width="1"/>
-                    <line x1="10" y1="5" x2="14" y2="8" stroke="#9255FF" stroke-width="1"/>
-                </svg>
+            <!-- Left spacer for centering -->
+            <div class="header-spacer"></div>
+
+            <!-- Center: Logo -->
+            <a href="#hero" class="navbar-logo" id="logo" aria-label="Artists Building Academy">
+                <img src="Asset 3@2x-8.webp" alt="Artists Building Logo" class="navbar-logo-img" width="1466" height="1114">
             </a>
+
+            <!-- Right: Hamburger Toggle (always visible) -->
             <div class="header-actions">
-                <a href="#apply" class="btn-apply" id="btn-apply">Enroll Now</a>
-                <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-controls="dropdown-menu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -40,14 +37,16 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <nav class="mobile-menu" id="mobile-menu" aria-hidden="true">
-        <a href="#hero">Home</a>
-        <a href="#overview">Course</a>
-        <a href="#curriculum">Curriculum</a>
-        <a href="#projects">Projects</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#apply" class="btn-apply-menu">Enroll Now</a>
+    <!-- Dropdown Panel Menu -->
+    <nav class="dropdown-menu" id="dropdown-menu" aria-label="Site navigation" aria-hidden="true">
+        <div class="dropdown-menu-inner">
+            <ul class="dropdown-nav-links">
+                <li><a href="#hero" class="dropdown-nav-link">Home</a></li>
+                <li><a href="#curriculum" class="dropdown-nav-link">Curriculum</a></li>
+                <li><a href="#projects" class="dropdown-nav-link">Projects</a></li>
+                <li><a href="#reviews" class="dropdown-nav-link">Reviews</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -55,14 +54,14 @@
         <div class="hero-bg-overlay"></div>
         <div class="hero-content">
             <div class="hero-badge">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z" fill="#C8FF4D" opacity="0.95"/></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z" fill="#F4B942" opacity="0.95"/></svg>
                 <span>Online Video Editing Program</span>
             </div>
-            <h1 class="hero-title">Learn to cut, grade and animate like a professional editor.</h1>
+            <h1 class="hero-title">Learn to <span class="text-gold">cut, grade and animate</span> like a professional editor.</h1>
             <p class="hero-subtitle">A live, mentor-led course from Artistbuilding Academy — go from raw footage to reels, ads, podcasts and motion graphics using <strong>After Effects & Adobe Premiere Pro.</strong></p>
             <a href="#apply" class="btn-primary btn-hero" id="btn-hero-cta">Enroll Now — ₹18,500</a>
             <p class="hero-meta">
-                <span class="dot-green"></span>
+                <span class="dot-green dot-gold"></span>
                 5 Modules · Live + Recorded · 1-on-1 Mentor Feedback
             </p>
         </div>
@@ -71,29 +70,8 @@
         </div>
     </section>
 
-    <!-- Academy Banner -->
-    <section class="academy-banner reveal" id="academy-banner">
-        <div class="academy-banner-inner">
-            <svg class="academy-icon" width="40" height="28" viewBox="0 0 40 28" fill="none">
-                <circle cx="12" cy="10" r="3" stroke="#9255FF" stroke-width="1.5"/>
-                <circle cx="20" cy="10" r="3" stroke="#9255FF" stroke-width="1.5"/>
-                <circle cx="28" cy="10" r="3" stroke="#9255FF" stroke-width="1.5"/>
-                <line x1="15" y1="10" x2="17" y2="10" stroke="#9255FF" stroke-width="1.5"/>
-                <line x1="23" y1="10" x2="25" y2="10" stroke="#9255FF" stroke-width="1.5"/>
-            </svg>
-            <p class="academy-label">ARTISTBUILDING</p>
-            <div class="academy-courses">
-                <div class="academy-course">
-                    <h2 class="academy-course-title"><span class="text-gradient">Premiere Pro</span></h2>
-                    <p class="academy-course-status">EDITING COURSE · ENROLLING NOW</p>
-                </div>
-                <div class="academy-course">
-                    <h2 class="academy-course-title"><span class="text-gradient">After Effects</span></h2>
-                    <p class="academy-course-status">MOTION GRAPHICS &amp; VFX · COMING SOON</p>
-                </div>
-            </div>
-        </div>
-    </section>
+
+
    
     <!-- About Us Section -->
     <section class="about-section reveal" id="about">
@@ -105,89 +83,6 @@
             <p class="about-highlight">Don't just watch tutorials.<br><strong>Learn to edit like a professional.</strong></p>
         </div>
 
-    </section>
-
-    <!-- Our Mentors Section -->
-    <section class="mentors-section reveal" id="mentors">
-        <div class="mentors-container">
-            <div class="mentors-header">
-                <span class="section-tag">🏆 Mentorship</span>
-                <h2 class="mentors-heading">Our <span class="text-gradient">Mentors</span></h2>
-                <p class="mentors-subheading">Learn from the best in the Industry</p>
-            </div>
-
-            <div class="mentor-card">
-                <!-- Mentor Visual / Carousel Column -->
-                <div class="mentor-media-column">
-                    <div class="mentor-carousel" id="mentor-carousel" role="region" aria-roledescription="carousel" aria-label="Mentor Photos" tabindex="0">
-                        <div class="mentor-carousel-track" id="mentor-carousel-track">
-                            <div class="mentor-slide active" data-index="0" role="group" aria-roledescription="slide" aria-label="1 of 2">
-                                <img src="assets/naman-deshmukh-stage.jpg" alt="Naman Deshmukh speaking at TEDx LNCT Bhopal" width="640" height="420" loading="lazy">
-                            </div>
-                            <div class="mentor-slide" data-index="1" role="group" aria-roledescription="slide" aria-label="2 of 2">
-                                <img src="assets/naman-deshmukh-award.jpg" alt="Naman Deshmukh receiving National Creators Award from PM Narendra Modi" width="640" height="420" loading="lazy">
-                            </div>
-                        </div>
-
-                        <!-- Carousel Navigation Buttons -->
-                        <button class="mentor-carousel-btn prev-btn" id="mentor-prev-btn" aria-label="Previous photo" type="button">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                        <button class="mentor-carousel-btn next-btn" id="mentor-next-btn" aria-label="Next photo" type="button">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-
-                        <!-- Carousel Indicators -->
-                        <div class="mentor-carousel-dots" id="mentor-carousel-dots" role="tablist" aria-label="Slide navigation">
-                            <button class="mentor-dot active" data-slide="0" aria-label="Slide 1: TEDx Talk" aria-selected="true" role="tab" type="button"></button>
-                            <button class="mentor-dot" data-slide="1" aria-label="Slide 2: National Creators Award" aria-selected="false" role="tab" type="button"></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mentor Info Column -->
-                <div class="mentor-info-column">
-                    <h3 class="mentor-name">Naman Deshmukh</h3>
-                    <p class="mentor-role">Founder - The Growth Plus, Tech Plus Gadgets, Tech Plus AI</p>
-
-                    <div class="mentor-achievements">
-                        <div class="mentor-achievement-item">
-                            <span class="achievement-icon" aria-hidden="true">🏆</span>
-                            <span class="achievement-text">National Creator Awardee</span>
-                        </div>
-                        <div class="mentor-achievement-item">
-                            <span class="achievement-icon" aria-hidden="true">🏅</span>
-                            <span class="achievement-text">Forbes Top 100 Creators 23 &amp; 24 ✨</span>
-                        </div>
-                    </div>
-
-                    <p class="mentor-description">
-                        He built a community of over 10+ Million followers by pioneering accessible tech education, simplifying complex gadgets and digital trends in easy to understand language.
-                    </p>
-
-                    <div class="mentor-socials">
-                        <a href="https://www.instagram.com/techplusgadgets" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Naman Deshmukh on Instagram">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="https://www.linkedin.com/in/namandeshmukh/" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Naman Deshmukh on LinkedIn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- Video Section -->
@@ -202,6 +97,140 @@
         </div>
     </section>
 
+    <!-- Our Mentors Section -->
+    <section class="mentors-section reveal" id="mentors">
+        <div class="mentors-container">
+            <div class="mentors-header">
+                <span class="section-tag">🏆 Mentorship</span>
+                <h2 class="mentors-heading">Our <span class="text-gradient">Mentors</span></h2>
+                <p class="mentors-subheading">Learn from the best in the Industry</p>
+            </div>
+
+
+            <!-- Founder Card -->
+            <div class="mentor-card founder-card reveal reveal-scale">
+                <!-- Founder Visual Column -->
+                <div class="mentor-media-column">
+                    <div class="mentor-carousel" role="img" aria-label="Shivam Solanki - Founder &amp; VFX Supervisor">
+                        <div class="mentor-carousel-track">
+                            <div class="mentor-slide active" role="img">
+                                <img src="founder co fouder/IMG_8494.webp" alt="Shivam Solanki - Founder &amp; VFX Supervisor" width="640" height="420" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Founder Info Column -->
+                <div class="mentor-info-column">
+                    <h3 class="mentor-name">Shivam Solanki</h3>
+                    <p class="mentor-role">FOUNDER, ARTIST BUILDING ACADEMY | VFX SUPERVISOR</p>
+
+                    <div class="mentor-achievements">
+                        <div class="mentor-achievement-item">
+                            <span class="achievement-icon" aria-hidden="true">🎬</span>
+                            <span class="achievement-text">Lead VFX Supervisor &amp; Technical Director</span>
+                        </div>
+                        <div class="mentor-achievement-item">
+                            <span class="achievement-icon" aria-hidden="true">✨</span>
+                            <span class="achievement-text">Concept to Final Frame Execution</span>
+                        </div>
+                    </div>
+
+                    <p class="mentor-description">
+                        As the VFX Supervisor at The ArtistBuilding, he oversees the creative and technical execution of every project. From concept to final frame, he ensures high-quality visual effects and seamless execution.
+                    </p>
+
+                    <div class="mentor-socials">
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Shivam Solanki on Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Shivam Solanki on LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Co-Founder Card -->
+            <div class="mentor-card cofounder-card reveal reveal-scale">
+                <!-- Co-Founder Visual Column -->
+                <div class="mentor-media-column">
+                    <div class="mentor-carousel" role="img" aria-label="Yash Agarwal - Co-Founder &amp; VFX Producer">
+                        <div class="mentor-carousel-track">
+                            <div class="mentor-slide active" role="img">
+                                <img src="founder co fouder/IMG_1532.webp" alt="Yash Agarwal - Co-Founder &amp; VFX Producer" width="640" height="420" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Co-Founder Info Column -->
+                <div class="mentor-info-column">
+                    <h3 class="mentor-name">Yash Agarwal</h3>
+                    <p class="mentor-role">CO-FOUNDER, ARTIST BUILDING ACADEMY | VFX PRODUCER</p>
+
+                    <div class="mentor-achievements">
+                        <div class="mentor-achievement-item">
+                            <span class="achievement-icon" aria-hidden="true">🎬</span>
+                            <span class="achievement-text">VFX Producer &amp; Pipeline Specialist</span>
+                        </div>
+                        <div class="mentor-achievement-item">
+                            <span class="achievement-icon" aria-hidden="true">⚡</span>
+                            <span class="achievement-text">High-Quality Visuals &amp; Smooth Project Execution</span>
+                        </div>
+                    </div>
+
+                    <p class="mentor-description">
+                        Manages the complete VFX pipeline, from planning and scheduling to coordinating artists and ensuring smooth project execution. Focused on delivering high-quality visuals while bringing the creative vision to life efficiently.
+                    </p>
+
+                    <div class="mentor-socials">
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Yash Agarwal on Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="mentor-social-link" aria-label="Yash Agarwal on LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Our Faculty Section -->
+            <div class="faculty-section-wrap reveal">
+                <div class="faculty-header">
+                    <span class="section-tag">🎓 Expert Guidance</span>
+                    <h3 class="faculty-heading">Our <span class="text-gradient">Faculty</span></h3>
+                </div>
+
+                <div class="faculty-grid">
+                    <div class="faculty-card">
+                        <img src="founder co fouder/_DSC0034-3.jpg.webp" alt="Artistbuilding Academy Faculty Member" width="600" height="420" loading="lazy">
+                    </div>
+                    <div class="faculty-card">
+                        <img src="founder co fouder/IMG_8494 (1).webp" alt="Artistbuilding Academy Faculty Member" width="600" height="420" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- What You Will Learn / Skills Section -->
     <section class="skills-section reveal" id="brands">
         <span class="section-tag">🎬 Core Modules</span>
@@ -210,9 +239,9 @@
         <div class="skills-stack" id="skills-stack">
             <!-- 1. Visual Storytelling -->
             <article class="skill-card-wrapper" data-index="0">
-                <div class="skill-card">
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/1Visual%20storytelling%20.mp4" data-title="Visual Storytelling" data-tag="Cinematic Narrative & Mood" tabindex="0" role="button" aria-label="Play Visual Storytelling reel">
                     <div class="skill-card-bg">
-                        <img src="assets/visual-storytelling.webp" alt="Visual Storytelling" width="896" height="1200" loading="lazy">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/1Visual%20storytelling%20.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/visual-storytelling.webp"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -234,7 +263,7 @@
 
             <!-- 2. Video Editing Fundamentals -->
             <article class="skill-card-wrapper" data-index="1">
-                <div class="skill-card">
+                <div class="skill-card" data-video-src="" data-title="Editing Fundamentals" data-tag="Pacing, Cuts & Workflows" tabindex="0" role="button" aria-label="Play Editing Fundamentals reel">
                     <div class="skill-card-bg">
                         <img src="assets/video-editing-fundamentals.webp" alt="Video Editing Fundamentals" width="896" height="1200" loading="lazy">
                     </div>
@@ -258,9 +287,9 @@
 
             <!-- 3. Reels & Shorts Editing -->
             <article class="skill-card-wrapper" data-index="2">
-                <div class="skill-card">
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/3reels%20%26%20YOUTUBE%20SHORTS%20EDITING%20.mp4" data-title="Reels & Shorts" data-tag="Vertical Video & Hook Timing" tabindex="0" role="button" aria-label="Play Reels & Shorts reel">
                     <div class="skill-card-bg">
-                        <img src="assets/reels-shorts-editing.webp" alt="Reels & YouTube Shorts Editing" width="896" height="1200" loading="lazy">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/3reels%20%26%20YOUTUBE%20SHORTS%20EDITING%20.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/reels-shorts-editing.webp"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -282,9 +311,9 @@
 
             <!-- 4. UGC Ads Editing -->
             <article class="skill-card-wrapper" data-index="3">
-                <div class="skill-card">
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/4UGC%20ads%20editing.mp4" data-title="UGC Ads" data-tag="Conversion & Commercial Edits" tabindex="0" role="button" aria-label="Play UGC Ads reel">
                     <div class="skill-card-bg">
-                        <img src="assets/ugc-ads-editing.webp" alt="UGC Ads Editing" width="896" height="1200" loading="lazy">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/4UGC%20ads%20editing.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/ugc-ads-editing.webp"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -306,7 +335,7 @@
 
             <!-- 5. Long-Form Content Editing -->
             <article class="skill-card-wrapper" data-index="4">
-                <div class="skill-card">
+                <div class="skill-card" data-video-src="" data-title="Long-Form Content" data-tag="Documentary & Master Timelines" tabindex="0" role="button" aria-label="Play Long-Form Content reel">
                     <div class="skill-card-bg">
                         <img src="assets/long-form-editing.webp" alt="Long-Form Content Editing" width="896" height="1200" loading="lazy">
                     </div>
@@ -330,9 +359,9 @@
 
             <!-- 6. Podcast Editing -->
             <article class="skill-card-wrapper" data-index="5">
-                <div class="skill-card">
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/6%20Podcast%20edit%20.mp4" data-title="Podcast Editing" data-tag="Multi-Cam Sync & Audio Cleanup" tabindex="0" role="button" aria-label="Play Podcast Editing reel">
                     <div class="skill-card-bg">
-                        <img src="assets/podcast-editing.webp" alt="Podcast Editing" width="896" height="1200" loading="lazy">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/6%20Podcast%20edit%20.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/podcast-editing.webp"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -354,16 +383,9 @@
 
             <!-- 7. Typography Animation -->
             <article class="skill-card-wrapper" data-index="6">
-                <div class="skill-card skill-card-placeholder">
-                    <div class="skill-card-bg placeholder-media">
-                        <div class="placeholder-graphic">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9255FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="4 7 4 4 20 4 20 7"></polyline>
-                                <line x1="9" y1="20" x2="15" y2="20"></line>
-                                <line x1="12" y1="4" x2="12" y2="20"></line>
-                            </svg>
-                            <span class="placeholder-badge">After Effects Track</span>
-                        </div>
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/7typography%20animation%20mp4.mp4" data-title="Typography Animation" data-tag="Kinetic Type & Lower Thirds" tabindex="0" role="button" aria-label="Play Typography Animation reel">
+                    <div class="skill-card-bg">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/7typography%20animation%20mp4.mp4" autoplay muted loop playsinline preload="metadata"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -385,16 +407,9 @@
 
             <!-- 8. Motion Graphics -->
             <article class="skill-card-wrapper" data-index="7">
-                <div class="skill-card skill-card-placeholder">
-                    <div class="skill-card-bg placeholder-media">
-                        <div class="placeholder-graphic">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9255FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                <polyline points="2 17 12 22 22 17"></polyline>
-                                <polyline points="2 12 12 17 22 12"></polyline>
-                            </svg>
-                            <span class="placeholder-badge">After Effects Track</span>
-                        </div>
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/8motion%20graphcs.mp4" data-title="Motion Graphics" data-tag="Shape Layers & Keyframe Curves" tabindex="0" role="button" aria-label="Play Motion Graphics reel">
+                    <div class="skill-card-bg">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/8motion%20graphcs.mp4" autoplay muted loop playsinline preload="metadata"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -416,17 +431,9 @@
 
             <!-- 9. 2D Animation Basics -->
             <article class="skill-card-wrapper" data-index="8">
-                <div class="skill-card skill-card-placeholder">
-                    <div class="skill-card-bg placeholder-media">
-                        <div class="placeholder-graphic">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9255FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                            </svg>
-                            <span class="placeholder-badge">After Effects Track</span>
-                        </div>
+                <div class="skill-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/9%2C%202d%20animation.mp4" data-title="2D Animation" data-tag="Principles & Rigging Basics" tabindex="0" role="button" aria-label="Play 2D Animation reel">
+                    <div class="skill-card-bg">
+                        <video class="skill-video-bg" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/9%20-%20reels/9%2C%202d%20animation.mp4" autoplay muted loop playsinline preload="metadata"></video>
                     </div>
                     <div class="skill-card-overlay" aria-hidden="true"></div>
                     <div class="skill-card-content">
@@ -448,21 +455,6 @@
         </div>
 
         <p class="skills-desc">By the end of the program you'll be confident editing across every major short and long-form format — from reels to music videos to interviews.</p>
-    </section>
-
-    <!-- Tools Section -->
-    <section class="tools-section reveal" id="tools">
-        <h2 class="tools-title">Tools <em>You Will Learn</em></h2>
-        <div class="tools-row">
-            <div class="tools-item reveal-scale reveal-delay-1" id="tool-premiere">
-                <img src="assets/premiere-pro.webp" alt="Adobe Premiere Pro" width="80" height="80" loading="lazy">
-                <span>Adobe Premiere Pro</span>
-            </div>
-            <div class="tools-item reveal-scale reveal-delay-2" id="tool-after-effects">
-                <img src="assets/after-effects.webp" alt="Adobe After Effects" width="80" height="80" loading="lazy">
-                <span>Adobe After Effects</span>
-            </div>
-        </div>
     </section>
 
     <!-- CTA Banner Mid -->
@@ -600,7 +592,7 @@
                         <path d="M8 7h6" />
                         <path d="M8 11h4" />
                         <!-- Checkmark Badge -->
-                        <circle cx="17.5" cy="16.5" r="4.5" fill="#17102B" stroke="#9255FF" />
+                        <circle cx="17.5" cy="16.5" r="4.5" fill="#191729" stroke="#9255FF" />
                         <polyline points="15.5 16.5 17 18 20 15" stroke="#9255FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
@@ -628,7 +620,14 @@
                         <span class="accordion-icon">×</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Camera types, controls & the exposure triangle. Starting a project, workspace tour, importing & organizing media. Sequences, the source window & timeline workflow. Effect Controls — scale, position, opacity, trimming. Match cut effect, nesting, rate stretch, basic export. <strong>Assignment:</strong> Match Cut.</p>
+                        <ul>
+                            <li>Camera types, controls & exposure triangle</li>
+                            <li>Project setup, workspace & media organization</li>
+                            <li>Sequences, source window & timeline workflow</li>
+                            <li>Effect Controls — scale, position, opacity, trimming</li>
+                            <li>Match cuts, nesting, rate stretch & export</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Match Cut</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="acc-2">
@@ -637,7 +636,14 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Razor cuts, ripple edits, slips & advanced trim tools. Masking & mask transitions. Track matte key & luma mattes (compositing). Effects panel, transitions & importing presets. Zoom keyframe effects & preset saving. <strong>Assignment:</strong> Movie Trailer project.</p>
+                        <ul>
+                            <li>Razor cuts, ripple edits & advanced trim tools</li>
+                            <li>Masking & mask transitions</li>
+                            <li>Track matte key & luma mattes</li>
+                            <li>Effects panel, transitions & presets</li>
+                            <li>Zoom keyframe effects & preset saving</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Movie Trailer</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="acc-3">
@@ -646,7 +652,13 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Keyframing with the pen tool, audio keyframes. Speed & duration, speed ramping. Speed ramping curves. Cinematic overlays, split-screen & stabilization. Green screen removal (Ultra Key/Luma Key), blend modes. <strong>Assignment:</strong> Speed Ramping project.</p>
+                        <ul>
+                            <li>Keyframing with pen tool & audio keyframes</li>
+                            <li>Speed ramping & speed curves</li>
+                            <li>Cinematic overlays, split-screen & stabilization</li>
+                            <li>Green screen removal & blend modes</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Speed Ramping</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="acc-4">
@@ -655,7 +667,13 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Audio-video sync & talking-head editing. B-roll & multi-camera editing. Types of cuts — theory (straight, jump, cutaway, match cut & more). Types of cuts in practice — J-cuts & L-cuts. Titles & graphics with Essential Graphics, importing Mogrts. <strong>Assignment:</strong> Interview Editing project.</p>
+                        <ul>
+                            <li>Audio-video sync & talking-head editing</li>
+                            <li>B-roll & multi-camera editing</li>
+                            <li>Types of cuts — J-cuts, L-cuts, jump, cutaway & more</li>
+                            <li>Titles & graphics with Essential Graphics & Mogrts</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Interview Editing</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="acc-5">
@@ -664,7 +682,14 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Music video timeline arrangement. Multi-camera cuts, B-rolls & effects between cuts. Understanding log footage. Color correction with Lumetri — white balance, exposure, saturation. Color grading with Lumetri Creative. Audio editing & SFX. <strong>Assignment:</strong> Music Video Edit project.</p>
+                        <ul>
+                            <li>Music video timeline arrangement</li>
+                            <li>Multi-camera cuts, B-rolls & transition effects</li>
+                            <li>Log footage & color correction with Lumetri</li>
+                            <li>Color grading with Lumetri Creative</li>
+                            <li>Audio editing & SFX</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Music Video Edit</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="acc-6">
@@ -695,7 +720,15 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>AE interface, workspace, composition, layers & timeline. Transform properties — position, scale, rotation, opacity, anchor point. Keyframes & keyframe interpolation — easy ease, speed graph & value graph. 12 Principles of Animation — squash & stretch, anticipation, staging, follow through & overlapping action. Parenting, null objects, pick whip & pre-compositions. Rigid-body motion design — overshoot, bounce, follow through & secondary animation. <strong>Assignment:</strong> Bouncing Ball + Car Animation.</p>
+                        <ul>
+                            <li>AE interface, workspace, compositions & timeline</li>
+                            <li>Transform properties & anchor points</li>
+                            <li>Keyframes & interpolation — easy ease, speed/value graph</li>
+                            <li>12 Principles of Animation</li>
+                            <li>Parenting, null objects & pre-compositions</li>
+                            <li>Rigid-body motion — overshoot, bounce & secondary animation</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Bouncing Ball + Car Animation</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="ae-acc-2">
@@ -704,7 +737,13 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Shape layers — rectangle, ellipse, polygon, star, fill & stroke. Shape layer animation — trim paths, repeater, merge paths & offset paths. Parenting shapes & creating complex motion from simple objects. Shape morphing — transforming one shape into another. Loops & expressions — loopOut(), simple repeating animations & controls. <strong>Assignment:</strong> Butterfly Animation.</p>
+                        <ul>
+                            <li>Shape layers — rectangle, ellipse, polygon, fill & stroke</li>
+                            <li>Trim paths, repeater, merge & offset paths</li>
+                            <li>Complex motion from simple objects & shape morphing</li>
+                            <li>Loops & expressions — loopOut() & controls</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Butterfly Animation</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="ae-acc-3">
@@ -713,7 +752,14 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Text layers — character, vertical text, alignment, tracking, leading & text controls. Text animators — position, scale, rotation, opacity & range selector. Text reveals — masks, mattes, wipes & character-by-character animation. Kinetic typography — timing text to music, rhythm & visual hierarchy. Advanced typography — text transitions, overshoot, motion blur & secondary animation. Typography workflow — combining text, shapes, effects, transitions & sound. <strong>Assignment:</strong> Text Animation + Lower Third Animation.</p>
+                        <ul>
+                            <li>Text layers, character controls & text animators</li>
+                            <li>Text reveals — masks, mattes & character-by-character</li>
+                            <li>Kinetic typography — timing to music & rhythm</li>
+                            <li>Advanced typography — transitions, motion blur & overshoot</li>
+                            <li>Full typography workflow with shapes, effects & sound</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Text Animation + Lower Third</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="ae-acc-4">
@@ -722,7 +768,16 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>Animated icons, illustrations & graphic elements. Graphic/logo prep — Illustrator/Photoshop assets, vector layers & asset organization. Reveals — masks, track mattes, luma mattes & animated reveals. Glow, CC Light Sweep, blur & light-based effects. Fractal noise, turbulent noise — procedural backgrounds & textures. Turbulent displace, wave warp & displacement map — distortion techniques. Motion tile & CC Repetile — seamless backgrounds & infinite motion. Gradient ramp, fill, tint & stylization. Gaussian, directional & radial blur — speed, zoom & transition effects. Expressions deep dive — wiggle(), time, valueAtTime, linking properties & pick-whip. Sound design basics for motion graphics — syncing whooshes, impacts & foley to animation. <strong>Assignment:</strong> Motion Poster.</p>
+                        <ul>
+                            <li>Animated icons, illustrations & graphic elements</li>
+                            <li>Logo prep — Illustrator/Photoshop assets & vectors</li>
+                            <li>Reveals — masks, track mattes & animated reveals</li>
+                            <li>Glow, blur, noise & distortion effects</li>
+                            <li>Motion tile, gradient ramp & stylization</li>
+                            <li>Expressions — wiggle(), time & property linking</li>
+                            <li>Sound design basics — syncing SFX to animation</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Motion Poster</p>
                     </div>
                 </div>
                 <div class="accordion-item" id="ae-acc-5">
@@ -731,7 +786,16 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p>3D layers, cameras & lights — basics of 3D space in After Effects. Building a 2.5D parallax environment from flat 2D artwork (layer splitting & depth placement). Camera rigging with null objects, depth of field & focus pulls. Camera movement techniques — dolly, pan, truck & orbit. Native 3D extrusion — extruding text & shapes with the Cinema 4D renderer. Materials, lighting & shadows in 3D space. Compositing 3D elements with 2D footage (product/commercial style). Rendering & delivery — Render Queue vs. Media Encoder, codecs & alpha channels. Building Motion Graphics Templates (MOGRTs) for Premiere Pro's Essential Graphics panel. <strong>Assignment:</strong> Camera Animation (Depth & 2D Environment) + 3D Commercial — Final Project.</p>
+                        <ul>
+                            <li>3D layers, cameras & lights</li>
+                            <li>2.5D parallax environments from 2D artwork</li>
+                            <li>Camera rigging — depth of field & focus pulls</li>
+                            <li>Camera movements — dolly, pan, truck & orbit</li>
+                            <li>3D extrusion, materials & lighting</li>
+                            <li>Compositing 3D with 2D footage</li>
+                            <li>Rendering — Render Queue, Media Encoder & MOGRTs</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Camera Animation + 3D Commercial</p>
                     </div>
                 </div>
 
@@ -742,108 +806,36 @@
                         <span class="accordion-icon">+</span>
                     </button>
                     <div class="accordion-body">
-                        <p><strong>Classes 1–5:</strong> Intro to VFX compositing — layer blending modes, track mattes & alpha channels. Manual masking — pen tool, bezier masks, mask modes & feathering. Roto Brush 2 & Refine Edge — fast subject isolation. 2D point tracking — single point, multi-point & perspective corner pin. Attaching & blending graphics/screens onto tracked footage. Warp Stabilizer. <strong>Assignment:</strong> Mask Transition + TV Screen / Hoarding Replacement.</p>
-                        <p><strong>Classes 6–10:</strong> 3D camera tracker workflow — solving camera motion from 2D footage. Placing 3D text, solids & CG elements into tracked scenes. Color correction fundamentals — Lumetri Color, curves & color balance. Color grading & cinematic look development. Speed ramping & speed curves. <strong>Assignment:</strong> Speed Ramping with Color Grade & Elements.</p>
-                        <p><strong>Classes 11–16:</strong> Chroma keying — Keylight, screen matte controls & core matte cleanup. Advanced keying — spill suppression, edge refinement & choking. Color matching & integration — garbage mattes, shadows & reflections. Displacement map, fractal noise & compositing practical stock elements. Basic CG passes overview. Matching lighting, shadows & perspective for CG-to-live-action integration. <strong>Assignment:</strong> Green Screen Scene Build Up + Basic CG Integration.</p>
+                        <p><strong>Classes 1–5:</strong></p>
+                        <ul>
+                            <li>VFX compositing — blending modes, mattes & alpha channels</li>
+                            <li>Manual masking & Roto Brush 2</li>
+                            <li>2D point tracking & corner pin</li>
+                            <li>Screen replacement & Warp Stabilizer</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Mask Transition + Screen Replacement</p>
+                        <p><strong>Classes 6–10:</strong></p>
+                        <ul>
+                            <li>3D camera tracker & placing CG elements</li>
+                            <li>Color correction & cinematic grading</li>
+                            <li>Speed ramping & speed curves</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Speed Ramping with Color Grade</p>
+                        <p><strong>Classes 11–16:</strong></p>
+                        <ul>
+                            <li>Chroma keying — Keylight & advanced spill suppression</li>
+                            <li>Color matching, shadows & reflections</li>
+                            <li>Displacement maps & compositing stock elements</li>
+                            <li>CG-to-live-action integration</li>
+                        </ul>
+                        <p><strong>Assignment:</strong> Green Screen Scene + CG Integration</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Exclusive Bonuses Section -->
-    <section class="bonuses-section reveal" id="bonuses">
-        <div class="bonuses-container">
-            <div class="bonuses-header">
-                <div class="bonuses-badge">
-                    <span class="bonuses-badge-dot">✦</span>
-                    <span>Content Worth 20,000 INR</span>
-                </div>
-                <h2 class="bonuses-heading">Get These <span class="text-gradient">Exclusive Bonuses</span></h2>
-                <p class="bonuses-subheading">Included 100% free when you enroll in the program today</p>
-                
-                <!-- Interactive Animation Trigger / Status Control -->
-                <div class="bonuses-controls" aria-label="Card view switcher">
-                    <button class="bonus-view-btn active" id="btn-stack-view" type="button" aria-pressed="true" aria-label="View cards stacked like a deck">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span>Deck View</span>
-                    </button>
-                    <button class="bonus-view-btn" id="btn-spread-view" type="button" aria-pressed="false" aria-label="View cards spread out in a row">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
-                        <span>Spread View</span>
-                    </button>
-                </div>
-            </div>
 
-            <!-- Cards Deck / Row Stage with Animation State -->
-            <div class="bonuses-stage is-stacked" id="bonuses-stage" role="region" aria-label="Exclusive bonus cards">
-                <!-- Card 1: Recordings & Notes -->
-                <article class="bonus-card" data-card-index="0">
-                    <div class="bonus-card-visual">
-                        <img src="assets/bonus-recordings.svg" alt="Class Recordings and Chapter-wise Notes" width="480" height="320" loading="lazy">
-                        <div class="bonus-visual-overlay" aria-hidden="true"></div>
-                        <span class="bonus-tag">Bonus #1</span>
-                    </div>
-                    <div class="bonus-card-body">
-                        <h3 class="bonus-card-title">Class Recordings &amp; Notes</h3>
-                        <p class="bonus-card-desc">Exclusive notes and recorded sessions from your mentor — chapter-wise and super easy to follow.</p>
-                        <div class="bonus-card-footer">
-                            <span class="bonus-price-old">₹3,000</span>
-                            <span class="bonus-price-free">FREE</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Card 2: 1,000+ Pre-defined Prompts (Center / Front in Stack) -->
-                <article class="bonus-card is-center" data-card-index="1">
-                    <div class="bonus-card-visual">
-                        <img src="assets/bonus-prompts.svg" alt="1000+ Pre-defined Prompts" width="480" height="320" loading="lazy">
-                        <div class="bonus-visual-overlay" aria-hidden="true"></div>
-                        <span class="bonus-tag bonus-tag-highlight">Popular Bonus #2</span>
-                    </div>
-                    <div class="bonus-card-body">
-                        <h3 class="bonus-card-title">1,000+ Pre-defined Prompts</h3>
-                        <p class="bonus-card-desc">Grab practical prompts used daily by the Techplusgadgets &amp; TechPlusAI teams to boost your productivity and content.</p>
-                        <div class="bonus-card-footer">
-                            <span class="bonus-price-old">₹9,000</span>
-                            <span class="bonus-price-free">FREE</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Card 3: 200+ AI Tools Guide -->
-                <article class="bonus-card" data-card-index="2">
-                    <div class="bonus-card-visual">
-                        <img src="assets/bonus-ai-tools.svg" alt="200+ AI Tools Guide" width="480" height="320" loading="lazy">
-                        <div class="bonus-visual-overlay" aria-hidden="true"></div>
-                        <span class="bonus-tag">Bonus #3</span>
-                    </div>
-                    <div class="bonus-card-body">
-                        <h3 class="bonus-card-title">200+ AI Tools Guide</h3>
-                        <p class="bonus-card-desc">Learn how to use 200+ AI tools through real demos and practice — with real use cases to stay ahead of the curve.</p>
-                        <div class="bonus-card-footer">
-                            <span class="bonus-price-old">₹8,000</span>
-                            <span class="bonus-price-free">FREE</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            
-            <!-- Value Summary Bar -->
-            <div class="bonuses-summary">
-                <div class="bonuses-summary-inner">
-                    <div class="summary-left">
-                        <span class="summary-icon">🎁</span>
-                        <div class="summary-text">
-                            <strong>Total Value Included Free: ₹20,000 INR</strong>
-                            <span>Lifetime access to all prompts, notes &amp; AI workflows</span>
-                        </div>
-                    </div>
-                    <a href="#apply" class="btn-primary btn-bonus-claim" id="btn-bonus-enroll">Claim All 3 Bonuses</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- CTA Banner Mid 2 -->
     <section class="cta-mid reveal" id="pricing">
@@ -854,23 +846,69 @@
         </p>
     </section>
 
-    <!-- Student Work Section -->
+    <!-- Student Work / Reviews Section - Video Testimonials Marquee -->
+    <div id="reviews" class="scroll-anchor"></div>
     <section class="student-work-section reveal" id="student-work">
         <h2 class="section-heading-large">What<br><em>Students Say</em></h2>
         <p class="student-work-desc">Real feedback from students who completed the Artistbuilding Academy program.</p>
-        <div class="student-work-grid" id="student-work-grid">
-            <div class="work-thumb reveal-scale reveal-delay-1"></div>
-            <div class="work-thumb reveal-scale reveal-delay-2"></div>
-            <div class="work-thumb reveal-scale reveal-delay-3"></div>
-            <div class="work-thumb reveal-scale reveal-delay-4"></div>
-            <div class="work-thumb reveal-scale reveal-delay-1"></div>
-            <div class="work-thumb reveal-scale reveal-delay-2"></div>
-            <div class="work-thumb reveal-scale reveal-delay-3"></div>
-            <div class="work-thumb reveal-scale reveal-delay-4"></div>
-            <div class="work-thumb reveal-scale reveal-delay-1"></div>
-            <div class="work-thumb reveal-scale reveal-delay-2"></div>
-            <div class="work-thumb reveal-scale reveal-delay-3"></div>
-            <div class="work-thumb reveal-scale reveal-delay-4"></div>
+        
+        <!-- Continuous Horizontal Video Testimonials Marquee -->
+        <div class="testimonials-marquee" id="testimonials-marquee" aria-label="Student Video Testimonials">
+            <div class="testimonials-track" id="testimonials-track">
+                <!-- Group 1 -->
+                <div class="testimonials-group">
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1.mp4" tabindex="0" role="button" aria-label="Play Student Testimonial 1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2.mp4" tabindex="0" role="button" aria-label="Play Student Testimonial 2">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3.mp4" tabindex="0" role="button" aria-label="Play Student Testimonial 3">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4.mp4" tabindex="0" role="button" aria-label="Play Student Testimonial 4">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5.mp4" tabindex="0" role="button" aria-label="Play Student Testimonial 5">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6.mp4" tabindex="0" role="button" aria-label="Play Student Testimonial 6">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+                </div>
+
+                <!-- Group 2 (Duplicate for continuous seamless infinite loop) -->
+                <div class="testimonials-group" aria-hidden="true">
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1.mp4" tabindex="-1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2.mp4" tabindex="-1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3.mp4" tabindex="-1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4.mp4" tabindex="-1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5.mp4" tabindex="-1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+
+                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6.mp4" tabindex="-1">
+                        <video class="card-video" src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </article>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1046,6 +1084,32 @@
     <!-- Sticky Bottom CTA (mobile) -->
     <div class="sticky-cta" id="sticky-cta">
         <a href="#apply" class="btn-sticky" id="btn-sticky">Enroll Now — ₹18,500 →</a>
+    </div>
+
+    <!-- Video Testimonial Modal Popup -->
+    <div class="testimonial-modal" id="testimonial-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Student Video Testimonial">
+        <div class="testimonial-modal-backdrop" id="modal-backdrop"></div>
+        <div class="testimonial-modal-dialog">
+            <button class="testimonial-modal-close" id="modal-close" aria-label="Close testimonial video">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="testimonial-modal-video-box">
+                <video id="modal-video-player" class="testimonial-modal-video" controls playsinline preload="auto">
+                    Your browser does not support video playback.
+                </video>
+                <!-- Notice shown when user has not yet specified a video source file -->
+                <div class="modal-placeholder-notice" id="modal-notice" style="display: none;">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <h4 id="notice-title">Video Testimonial Ready</h4>
+                    <p id="notice-desc">Place your student video .mp4 in <code>assets/</code> and set <code>data-video-src</code> on this card.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

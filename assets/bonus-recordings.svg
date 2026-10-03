@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="100%" height="100%">
   <defs>
     <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#140E24"/>
-      <stop offset="50%" stop-color="#1E1538"/>
-      <stop offset="100%" stop-color="#0B0816"/>
+      <stop offset="0%" stop-color="#12111F"/>
+      <stop offset="50%" stop-color="#191729"/>
+      <stop offset="100%" stop-color="#0B0A14"/>
     </linearGradient>
     <linearGradient id="deskGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D1E45"/>
-      <stop offset="50%" stop-color="#3D2B5E"/>
-      <stop offset="100%" stop-color="#201533"/>
+      <stop offset="0%" stop-color="#221B35"/>
+      <stop offset="50%" stop-color="#2E2447"/>
+      <stop offset="100%" stop-color="#191729"/>
     </linearGradient>
     <linearGradient id="paperGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#FAF7EE"/>
@@ -18,9 +18,9 @@
       <stop offset="0%" stop-color="#B69AFF"/>
       <stop offset="100%" stop-color="#9255FF"/>
     </linearGradient>
-    <linearGradient id="limeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E2FF80"/>
-      <stop offset="100%" stop-color="#C8FF4D"/>
+    <linearGradient id="goldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD580"/>
+      <stop offset="100%" stop-color="#E5A52E"/>
     </linearGradient>
     <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
@@ -36,7 +36,7 @@
 
   <!-- Ambient Light Orbs -->
   <circle cx="100" cy="80" r="140" fill="#9255FF" opacity="0.12" filter="url(#softGlow)"/>
-  <circle cx="380" cy="180" r="120" fill="#C8FF4D" opacity="0.08" filter="url(#softGlow)"/>
+  <circle cx="380" cy="180" r="120" fill="#F4B942" opacity="0.08" filter="url(#softGlow)"/>
 
   <!-- Desk Surface -->
   <path d="M0 190 L480 150 L480 320 L0 320 Z" fill="url(#deskGrad)" opacity="0.85"/>
@@ -44,9 +44,9 @@
 
   <!-- Coffee Cup / Studio Element -->
   <g transform="translate(380, 80)">
-    <ellipse cx="25" cy="45" rx="30" ry="12" fill="#0A0713" opacity="0.4"/>
-    <circle cx="25" cy="30" r="22" fill="#201533" stroke="#483366" stroke-width="2"/>
-    <circle cx="25" cy="30" r="18" fill="#120B20"/>
+    <ellipse cx="25" cy="45" rx="30" ry="12" fill="#0B0A14" opacity="0.4"/>
+    <circle cx="25" cy="30" r="22" fill="#191729" stroke="#3D2E55" stroke-width="2"/>
+    <circle cx="25" cy="30" r="18" fill="#12111F"/>
     <circle cx="25" cy="30" r="14" fill="#3A1E0C"/>
     <!-- Steam -->
     <path d="M20 18 Q17 10 22 2" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" fill="none"/>
@@ -100,17 +100,17 @@
     <!-- Chapter 1 -->
     <circle cx="48" cy="50" r="4.5" fill="#793BFF"/>
     <text x="58" y="54" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#1E1538">01. Cuts, Pacing &amp; J-Cuts</text>
-    <path d="M190 48 L194 52 L202 44" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+    <path d="M190 48 L194 52 L202 44" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round"/>
 
     <!-- Chapter 2 -->
     <circle cx="48" cy="74" r="4.5" fill="#793BFF"/>
     <text x="58" y="78" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#1E1538">02. Lumetri Color Curves</text>
-    <path d="M190 72 L194 76 L202 68" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+    <path d="M190 72 L194 76 L202 68" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round"/>
 
     <!-- Chapter 3 -->
     <circle cx="48" cy="98" r="4.5" fill="#793BFF"/>
     <text x="58" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#1E1538">03. Speed Ramp Keyframes</text>
-    <path d="M190 96 L194 100 L202 92" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+    <path d="M190 96 L194 100 L202 92" fill="none" stroke="#F4B942" stroke-width="2" stroke-linecap="round"/>
 
     <!-- Audio Waveform Sketch -->
     <path d="M52 134 Q60 120 68 134 T84 134 T100 134 T116 134 T132 134 T148 134 T164 134 T180 134 T196 134" fill="none" stroke="#9255FF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
@@ -128,13 +128,13 @@
     <!-- Pen Shadow -->
     <rect x="2" y="8" width="130" height="10" rx="5" fill="#000" opacity="0.35"/>
     <!-- Pen Body -->
-    <rect x="0" y="0" width="110" height="11" rx="4" fill="#0A0812" stroke="#9255FF" stroke-width="1.2"/>
-    <!-- Gold / Lime Accent Band -->
-    <rect x="75" y="0" width="8" height="11" fill="url(#limeGlow)"/>
+    <rect x="0" y="0" width="110" height="11" rx="4" fill="#0B0A14" stroke="#9255FF" stroke-width="1.2"/>
+    <!-- Gold Accent Band -->
+    <rect x="75" y="0" width="8" height="11" fill="url(#goldGlow)"/>
     <!-- Pen Grip -->
     <polygon points="110,1 130,5.5 110,10" fill="#B69AFF"/>
     <!-- Nib -->
-    <polygon points="130,4 140,5.5 130,7" fill="#C8FF4D"/>
+    <polygon points="130,4 140,5.5 130,7" fill="#F4B942"/>
   </g>
 
 </svg>

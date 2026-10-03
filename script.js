@@ -5,36 +5,40 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // === Mobile Menu Toggle ===
+    // === Dropdown Menu Toggle ===
     const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const dropdownMenu = document.getElementById('dropdown-menu');
 
-    if (menuToggle && mobileMenu) {
-        const desktopNavigation = window.matchMedia('(min-width: 1024px)');
+    if (menuToggle && dropdownMenu) {
         const setMenuOpen = isOpen => {
             menuToggle.classList.toggle('active', isOpen);
-            mobileMenu.classList.toggle('active', isOpen);
+            dropdownMenu.classList.toggle('active', isOpen);
             menuToggle.setAttribute('aria-expanded', String(isOpen));
             menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-            mobileMenu.setAttribute('aria-hidden', String(!isOpen && !desktopNavigation.matches));
-            mobileMenu.inert = !isOpen && !desktopNavigation.matches;
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            dropdownMenu.setAttribute('aria-hidden', String(!isOpen));
         };
 
         setMenuOpen(false);
         menuToggle.addEventListener('click', () => {
-            setMenuOpen(!mobileMenu.classList.contains('active'));
+            setMenuOpen(!dropdownMenu.classList.contains('active'));
         });
 
-        mobileMenu.querySelectorAll('a').forEach(link => {
+        dropdownMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => setMenuOpen(false));
         });
 
         document.addEventListener('keydown', event => {
-            if (event.key === 'Escape' && mobileMenu.classList.contains('active')) setMenuOpen(false);
+            if (event.key === 'Escape' && dropdownMenu.classList.contains('active')) setMenuOpen(false);
         });
 
-        desktopNavigation.addEventListener('change', () => setMenuOpen(false));
+        // Close dropdown when clicking outside
+        document.addEventListener('click', event => {
+            if (dropdownMenu.classList.contains('active') &&
+                !dropdownMenu.contains(event.target) &&
+                !menuToggle.contains(event.target)) {
+                setMenuOpen(false);
+            }
+        });
     }
 
     // === Sticky CTA visibility ===
@@ -60,18 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let headerIsScrolled = null;
 
     window.addEventListener('scroll', () => {
-        const isScrolled = window.scrollY > 50;
+        const isScrolled = window.scrollY > 40;
         if (isScrolled === headerIsScrolled) return;
         headerIsScrolled = isScrolled;
 
         if (header) {
-            if (isScrolled) {
-                header.style.borderBottomColor = 'rgba(124, 58, 237, 0.1)';
-                header.style.background = 'rgba(10, 10, 15, 0.95)';
-            } else {
-                header.style.borderBottomColor = 'rgba(255, 255, 255, 0.05)';
-                header.style.background = 'rgba(10, 10, 15, 0.85)';
-            }
+            header.classList.toggle('header-scrolled', isScrolled);
         }
     }, { passive: true });
 
@@ -338,12 +336,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === Mentor Carousel Functionality ===
-    const mentorCarousel = document.getElementById('mentor-carousel');
-    if (mentorCarousel) {
+    // === Mentor & Co-Founder Carousel Functionality ===
+    document.querySelectorAll('.mentor-carousel').forEach((mentorCarousel) => {
         const slides = Array.from(mentorCarousel.querySelectorAll('.mentor-slide'));
-        const prevBtn = document.getElementById('mentor-prev-btn');
-        const nextBtn = document.getElementById('mentor-next-btn');
+        if (slides.length <= 1) return;
+        const prevBtn = mentorCarousel.querySelector('.prev-btn');
+        const nextBtn = mentorCarousel.querySelector('.next-btn');
         const dots = Array.from(mentorCarousel.querySelectorAll('.mentor-dot'));
         let currentSlide = 0;
         let autoSlideTimer = null;
@@ -438,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Start auto-rotation
         startAutoSlide();
-    }
+    });
 
     // === Exclusive Bonuses Deck & Spread Animation ===
     const bonusesStage = document.getElementById('bonuses-stage');
@@ -590,6 +588,131 @@ document.addEventListener('DOMContentLoaded', () => {
             checkBonusScroll();
         }
     }
+
+    // === Video Testimonial Modal & Playback ===
+    // ponytail: Built with native CSS marquee animation and lightweight HTML5 video dialog. Ceiling: no inertial drag-to-scroll touch gestures. Upgrade path: Integrate Hammer.js or Swiper if free touch-drag physics are needed.
+    const testimonialModal = document.getElementById('testimonial-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+    const modalVideo = document.getElementById('modal-video-player');
+    const modalNotice = document.getElementById('modal-notice');
+    const modalStudentName = document.getElementById('modal-student-name');
+    const modalStudentRole = document.getElementById('modal-student-role');
+    const noticeTitle = document.getElementById('notice-title');
+
+    function openVideoModal(card) {
+        if (!testimonialModal || !modalVideo) return;
+        const videoSrc = card.dataset.videoSrc || '';
+        const title = card.dataset.title || card.dataset.student || 'Video Reel';
+        const role = card.dataset.tag || card.dataset.role || '';
+        const poster = card.dataset.poster || '';
+
+        if (modalStudentName) modalStudentName.textContent = title;
+        if (modalStudentRole) modalStudentRole.textContent = role;
+
+        if (videoSrc.trim()) {
+            if (modalNotice) modalNotice.style.display = 'none';
+            modalVideo.style.display = 'block';
+            modalVideo.poster = poster;
+            modalVideo.src = videoSrc;
+            modalVideo.currentTime = 0;
+            modalVideo.play().catch(() => {});
+        } else {
+            // Friendly preview when user has not yet dropped their .mp4 file
+            modalVideo.pause();
+            modalVideo.removeAttribute('src');
+            modalVideo.style.display = 'none';
+            if (modalNotice) {
+                modalNotice.style.display = 'flex';
+                if (noticeTitle) noticeTitle.textContent = `${title} Reel`;
+                const noticeDesc = document.getElementById('notice-desc');
+                if (noticeDesc) noticeDesc.innerHTML = `Video reel coming soon! Set <code>data-video-src</code> on this card.`;
+            }
+        }
+
+        testimonialModal.classList.add('active');
+        testimonialModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+        if (!testimonialModal || !modalVideo) return;
+        modalVideo.pause();
+        modalVideo.removeAttribute('src');
+        modalVideo.load();
+        testimonialModal.classList.remove('active');
+        testimonialModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    // Testimonial Cards modal click
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+        card.addEventListener('click', () => openVideoModal(card));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openVideoModal(card);
+            }
+        });
+    });
+
+    // Skill Outcome Cards auto-play on appearance & modal click
+    if ('IntersectionObserver' in window) {
+        const skillVideoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const bgVideo = entry.target.querySelector('.skill-video-bg');
+                if (!bgVideo) return;
+                if (entry.isIntersecting) {
+                    bgVideo.muted = true;
+                    bgVideo.play().catch(() => {});
+                } else {
+                    bgVideo.pause();
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '100px 0px 100px 0px'
+        });
+
+        document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
+            skillVideoObserver.observe(card);
+        });
+    }
+
+    document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
+        const bgVideo = card.querySelector('.skill-video-bg');
+        if (bgVideo) {
+            bgVideo.muted = true;
+            // Immediate initial trigger
+            bgVideo.play().catch(() => {});
+            card.addEventListener('mouseenter', () => {
+                bgVideo.play().catch(() => {});
+            });
+        }
+
+        card.addEventListener('click', () => openVideoModal(card));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openVideoModal(card);
+            }
+        });
+    });
+
+    // Ensure all muted in-card video reels autoplay seamlessly
+    document.querySelectorAll('.card-video, .skill-video-bg').forEach(video => {
+        video.muted = true;
+        video.play().catch(() => {});
+    });
+
+    if (modalClose) modalClose.addEventListener('click', closeVideoModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeVideoModal);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && testimonialModal && testimonialModal.classList.contains('active')) {
+            closeVideoModal();
+        }
+    });
 
 });
 
