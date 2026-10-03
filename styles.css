@@ -1762,6 +1762,7 @@ section[id],
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     transition: var(--transition-base);
+    cursor: pointer;
 }
 
 .project-card:hover {
@@ -1779,8 +1780,16 @@ section[id],
     transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.project-card:hover .project-thumb {
-    transform: scale(1.045);
+.project-card-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card:hover .project-card-video {
+    transform: scale(1.06);
 }
 
 .project-thumb::before {
@@ -1791,9 +1800,10 @@ section[id],
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    background: rgba(146, 85, 255, 0.25);
-    border: 1px solid var(--border-color);
-    z-index: 1;
+    background: rgba(15, 10, 30, 0.75);
+    border: 1px solid rgba(146, 85, 255, 0.45);
+    backdrop-filter: blur(8px);
+    z-index: 3;
 }
 
 .project-thumb-1::before { content: '01'; }
@@ -1802,6 +1812,8 @@ section[id],
 .project-thumb-4::before { content: '04'; }
 .project-thumb-5::before { content: '05'; }
 .project-thumb-6::before { content: '06'; }
+.project-thumb-7::before { content: '07'; }
+.project-thumb-8::before { content: '08'; }
 
 .project-thumb[class*='project-thumb-']::before {
     display: flex;
@@ -1812,6 +1824,41 @@ section[id],
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: 0.5px;
+}
+
+.project-play-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(15, 10, 30, 0.75);
+    border: 1px solid rgba(146, 85, 255, 0.35);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 3;
+    transition: var(--transition-base);
+}
+
+.project-play-badge svg {
+    margin-left: 2px;
+    fill: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-play-badge {
+    background: var(--purple-primary);
+    border-color: var(--purple-light);
+    transform: scale(1.1);
+    box-shadow: 0 0 16px rgba(146, 85, 255, 0.6);
+}
+
+.project-card:hover .project-play-badge svg {
+    transform: scale(1.15);
 }
 
 .project-thumb::after {
@@ -1826,6 +1873,7 @@ section[id],
     background-position: 100% 0, 0 0;
     pointer-events: none;
     animation: project-film-sheen 12s ease-in-out infinite;
+    z-index: 2;
 }
 
 .project-thumb-2::after { animation-delay: 1.5s; }
@@ -1833,6 +1881,8 @@ section[id],
 .project-thumb-4::after { animation-delay: 4.5s; }
 .project-thumb-5::after { animation-delay: 6s; }
 .project-thumb-6::after { animation-delay: 7.5s; }
+.project-thumb-7::after { animation-delay: 9s; }
+.project-thumb-8::after { animation-delay: 10.5s; }
 
 .project-thumb-1 { background: linear-gradient(135deg, #191729, #12111F); }
 .project-thumb-2 { background: linear-gradient(135deg, #12111F, #191729); }
@@ -1840,6 +1890,8 @@ section[id],
 .project-thumb-4 { background: linear-gradient(135deg, #191729, #100e1e); }
 .project-thumb-5 { background: linear-gradient(135deg, #251944, #0B0A14); }
 .project-thumb-6 { background: linear-gradient(135deg, #191729, #12111F); }
+.project-thumb-7 { background: linear-gradient(135deg, #221a3a, #0B0A14); }
+.project-thumb-8 { background: linear-gradient(135deg, #251944, #12111F); }
 
 .project-card h3 {
     position: absolute;
@@ -1852,6 +1904,7 @@ section[id],
     font-size: 18px;
     color: var(--purple-300);
     text-align: left;
+    z-index: 3;
 }
 
 /* === Showreel Section === */

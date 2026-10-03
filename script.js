@@ -645,8 +645,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
-    // Testimonial Cards modal click
-    document.querySelectorAll('.testimonial-card').forEach(card => {
+    // Testimonial Cards & Project Cards modal click
+    document.querySelectorAll('.testimonial-card, .project-card').forEach(card => {
         card.addEventListener('click', () => openVideoModal(card));
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -660,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('IntersectionObserver' in window) {
         const skillVideoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                const bgVideo = entry.target.querySelector('.skill-video-bg');
+                const bgVideo = entry.target.querySelector('.skill-video-bg, .project-card-video');
                 if (!bgVideo) return;
                 if (entry.isIntersecting) {
                     bgVideo.muted = true;
@@ -674,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rootMargin: '100px 0px 100px 0px'
         });
 
-        document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
+        document.querySelectorAll('.skills-stack .skill-card, .project-cards .project-card').forEach(card => {
             skillVideoObserver.observe(card);
         });
     }
@@ -700,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Ensure all muted in-card video reels autoplay seamlessly
-    document.querySelectorAll('.card-video, .skill-video-bg').forEach(video => {
+    document.querySelectorAll('.card-video, .skill-video-bg, .project-card-video').forEach(video => {
         video.muted = true;
         video.play().catch(() => {});
     });
