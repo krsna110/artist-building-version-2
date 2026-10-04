@@ -589,8 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // === Video Testimonial Modal & Playback ===
-    // ponytail: Built with native CSS marquee animation and lightweight HTML5 video dialog. Ceiling: no inertial drag-to-scroll touch gestures. Upgrade path: Integrate Hammer.js or Swiper if free touch-drag physics are needed.
+    // === Intelligent Video Playback & Performance Manager ===
     const testimonialModal = document.getElementById('testimonial-modal');
     const modalBackdrop = document.getElementById('modal-backdrop');
     const modalClose = document.getElementById('modal-close');
@@ -599,9 +598,150 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalStudentName = document.getElementById('modal-student-name');
     const modalStudentRole = document.getElementById('modal-student-role');
     const noticeTitle = document.getElementById('notice-title');
+    let isModalOpen = false;
 
+    // Track active intersecting cards for responsive playback management
+    const intersectingCards = new Set();
+
+    function safePlayVideo(video) {
+        if (!video || !video.src || isModalOpen || document.hidden) return;
+        video.muted = true;
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // Autoplay blocked or interrupted gracefully
+            });
+        }
+    }
+
+    function safePauseVideo(video) {
+        if (!video) return;
+        try {
+            if (!video.paused) {
+                video.pause();
+            }
+        } catch (_) {}
+    }
+
+    function loadCardVideo(video) {
+        if (!video) return;
+        if (video.dataset && video.dataset.src && !video.src) {
+            video.src = video.dataset.src;
+            video.preload = 'metadata';
+            video.load();
+        }
+    }
+
+    // Proximity observer: lazily loads MP4 streams only when card approaches viewport (300px buffer)
+    let preloadObserver = null;
+    let playbackObserver = null;
+
+    if ('IntersectionObserver' in window) {
+        preloadObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target.querySelector('video');
+                    if (video) {
+                        loadCardVideo(video);
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: '350px 0px 350px 0px',
+            threshold: 0.01
+        });
+
+        playbackObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const card = entry.target;
+                const video = card.querySelector('video');
+                if (!video) return;
+
+                if (entry.isIntersecting) {
+                    intersectingCards.add(card);
+                    loadCardVideo(video);
+                    safePlayVideo(video);
+                } else {
+                    intersectingCards.delete(card);
+                    safePauseVideo(video);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px 0px 0px'
+        });
+    }
+
+    // Register all video cards with performance observers
+    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, .project-cards .project-card, .testimonials-track .testimonial-card');
+
+    allVideoCards.forEach(card => {
+        const video = card.querySelector('video');
+        if (video) {
+            video.muted = true;
+            video.playsInline = true;
+
+            // Handle network/decode errors gracefully without breaking layout
+            video.addEventListener('error', () => {
+                video.style.opacity = '0';
+            }, { once: true });
+
+            video.addEventListener('loadeddata', () => {
+                video.style.opacity = '1';
+            }, { once: true });
+
+            // Hover to play/focus enhancement
+            card.addEventListener('mouseenter', () => {
+                if (!isModalOpen && !document.hidden) {
+                    loadCardVideo(video);
+                    safePlayVideo(video);
+                }
+            });
+        }
+
+        if (preloadObserver) preloadObserver.observe(card);
+        if (playbackObserver) playbackObserver.observe(card);
+
+        // Card modal click binding
+        card.addEventListener('click', () => openVideoModal(card));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openVideoModal(card);
+            }
+        });
+    });
+
+    // Pause all background video streams when user navigates away from tab
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            intersectingCards.forEach(card => {
+                const video = card.querySelector('video');
+                safePauseVideo(video);
+            });
+            if (modalVideo && !modalVideo.paused) {
+                safePauseVideo(modalVideo);
+            }
+        } else if (!isModalOpen) {
+            intersectingCards.forEach(card => {
+                const video = card.querySelector('video');
+                safePlayVideo(video);
+            });
+        }
+    });
+
+    // === Video Reel Modal Coordinator ===
     function openVideoModal(card) {
         if (!testimonialModal || !modalVideo) return;
+        isModalOpen = true;
+
+        // Pause all background video loops to allocate maximum bandwidth & GPU to the modal player
+        intersectingCards.forEach(c => {
+            const video = c.querySelector('video');
+            safePauseVideo(video);
+        });
+
         const videoSrc = card.dataset.videoSrc || '';
         const title = card.dataset.title || card.dataset.student || 'Video Reel';
         const role = card.dataset.tag || card.dataset.role || '';
@@ -616,9 +756,12 @@ document.addEventListener('DOMContentLoaded', () => {
             modalVideo.poster = poster;
             modalVideo.src = videoSrc;
             modalVideo.currentTime = 0;
-            modalVideo.play().catch(() => {});
+            const modalPlayPromise = modalVideo.play();
+            if (modalPlayPromise !== undefined) {
+                modalPlayPromise.catch(() => {});
+            }
         } else {
-            // Friendly preview when user has not yet dropped their .mp4 file
+            // Placeholder notice if videoSrc is blank
             modalVideo.pause();
             modalVideo.removeAttribute('src');
             modalVideo.style.display = 'none';
@@ -643,67 +786,16 @@ document.addEventListener('DOMContentLoaded', () => {
         testimonialModal.classList.remove('active');
         testimonialModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
-    }
+        isModalOpen = false;
 
-    // Testimonial Cards & Project Cards modal click
-    document.querySelectorAll('.testimonial-card, .project-card').forEach(card => {
-        card.addEventListener('click', () => openVideoModal(card));
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openVideoModal(card);
-            }
-        });
-    });
-
-    // Skill Outcome Cards auto-play on appearance & modal click
-    if ('IntersectionObserver' in window) {
-        const skillVideoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const bgVideo = entry.target.querySelector('.skill-video-bg, .project-card-video');
-                if (!bgVideo) return;
-                if (entry.isIntersecting) {
-                    bgVideo.muted = true;
-                    bgVideo.play().catch(() => {});
-                } else {
-                    bgVideo.pause();
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '100px 0px 100px 0px'
-        });
-
-        document.querySelectorAll('.skills-stack .skill-card, .project-cards .project-card').forEach(card => {
-            skillVideoObserver.observe(card);
-        });
-    }
-
-    document.querySelectorAll('.skills-stack .skill-card').forEach(card => {
-        const bgVideo = card.querySelector('.skill-video-bg');
-        if (bgVideo) {
-            bgVideo.muted = true;
-            // Immediate initial trigger
-            bgVideo.play().catch(() => {});
-            card.addEventListener('mouseenter', () => {
-                bgVideo.play().catch(() => {});
+        // Resume playback for in-view background videos
+        if (!document.hidden) {
+            intersectingCards.forEach(card => {
+                const video = card.querySelector('video');
+                safePlayVideo(video);
             });
         }
-
-        card.addEventListener('click', () => openVideoModal(card));
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openVideoModal(card);
-            }
-        });
-    });
-
-    // Ensure all muted in-card video reels autoplay seamlessly
-    document.querySelectorAll('.card-video, .skill-video-bg, .project-card-video').forEach(video => {
-        video.muted = true;
-        video.play().catch(() => {});
-    });
+    }
 
     if (modalClose) modalClose.addEventListener('click', closeVideoModal);
     if (modalBackdrop) modalBackdrop.addEventListener('click', closeVideoModal);
