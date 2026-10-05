@@ -1,333 +1,58 @@
-/* ==========================================================================
-   STACKING CARDS ON SCROLL ENGINE
-   Sections: Student Works (#projects), Mentors (#mentors), 
-             Skill Outcomes (#brands), Testimonials (#student-work), 
-             How to Enroll (#process)
-   ========================================================================== */
+/* Skill Outcomes: scroll-triggered stacking card animation.
+   Cards pin and stack as you scroll — 9:16 vertical format for vertical videos.
+   Original content, colours, typography preserved. */
 
-:root {
-  --sw-header-offset-desktop: 88px;
-  --sw-header-offset-mobile: 72px;
-  --sw-card-gap: 28px;
-  --sw-radius: 24px;
-  --sw-radius-sm: 16px;
-}
-
-/* --------------------------------------------------------------------------
-   0. Global Stacking & Sticky Robustness
-   -------------------------------------------------------------------------- */
-.mentors-section,
-.skills-section,
-.projects-section,
-.student-work-section,
-.process-section {
-  overflow: visible !important;
-  transform: none !important;
-}
-
-.mentors-stack,
-.skills-stack,
-.sw-stack,
-.testimonials-stack,
-.process-stack {
+/* ── Stack container ── */
+.skills-stack {
   position: relative;
   width: 100%;
-  margin: 0 auto;
+  max-width: 440px;
+  margin: 0 auto var(--space-2xl);
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: visible;
 }
 
-/* Base Card Wrapper (Sticky Controller) */
-.mentor-card-wrapper,
-.skill-card-wrapper,
-.sw-card-wrapper,
-.testimonial-card-wrapper,
-.process-card-wrapper {
-  position: -webkit-sticky;
+/* ── Card wrapper — provides scroll height per card ── */
+.skill-card-wrapper {
   position: sticky;
-  top: var(--sw-header-offset-desktop);
+  top: 90px; /* below sticky header */
+  margin-bottom: 32px;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: clamp(32px, 6vh, 56px);
-  will-change: transform, filter;
 }
 
-.mentor-card-wrapper:last-child,
-.skill-card-wrapper:last-child,
-.sw-card-wrapper:last-child,
-.testimonial-card-wrapper:last-child,
-.process-card-wrapper:last-child {
+.skill-card-wrapper:last-child {
   margin-bottom: 0;
 }
 
-/* --------------------------------------------------------------------------
-   1. STUDENT WORKS SECTION (#projects) — 16:9 Stacking Video Cards
-   -------------------------------------------------------------------------- */
-.sw-stack {
-  max-width: 860px;
-}
-
-.sw-card-wrapper {
-  max-width: 860px;
-}
-
-.sw-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: calc(100dvh - 160px);
-  border-radius: var(--sw-radius);
-  overflow: hidden;
-  background: #0B0A14;
-  border: 1px solid var(--border-color, #29263A);
-  box-shadow: 0 16px 45px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(146, 85, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.28s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
-}
-
-.sw-card:hover,
-.sw-card:focus-visible {
-  border-color: var(--gold-primary, #F4B942);
-  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(244, 185, 66, 0.3);
-}
-
-.sw-video-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  z-index: 0;
-  background: #06040a;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.sw-card:hover .sw-video-bg {
-  transform: scale(1.035);
-}
-
-.sw-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(11, 10, 20, 0.65) 0%,
-    rgba(11, 10, 20, 0.1) 40%,
-    rgba(11, 10, 20, 0.55) 70%,
-    rgba(11, 10, 20, 0.95) 100%
-  );
-  pointer-events: none;
-}
-
-.sw-card-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: clamp(18px, 3.5vw, 32px);
-  pointer-events: none;
-}
-
-.sw-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.sw-badge-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sw-num-badge {
-  font-family: var(--font-display, 'Syne', sans-serif);
-  font-size: clamp(14px, 2vw, 17px);
-  font-weight: 800;
-  color: #FFFFFF;
-  background: rgba(146, 85, 255, 0.35);
-  border: 1px solid rgba(146, 85, 255, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 4px 12px;
-  border-radius: var(--radius-full, 999px);
-  letter-spacing: 0.05em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.sw-status-pill {
-  font-family: var(--font-accent, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(11px, 1.6vw, 13px);
-  font-weight: 600;
-  color: var(--gold-highlight, #FFD580);
-  background: rgba(244, 185, 66, 0.15);
-  border: 1px solid rgba(244, 185, 66, 0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 4px 12px;
-  border-radius: var(--radius-full, 999px);
-  letter-spacing: 0.02em;
-}
-
-.sw-bottom-bar {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  width: 100%;
-}
-
-.sw-info {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  text-align: left;
-}
-
-.sw-title {
-  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(20px, 3.2vw, 30px);
-  font-weight: 800;
-  color: var(--text-primary, #FFFFFF);
-  line-height: 1.18;
-  margin: 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
-}
-
-.sw-tag {
-  font-family: var(--font-accent, 'DM Sans', sans-serif);
-  font-size: clamp(12px, 1.8vw, 14.5px);
-  color: var(--gold-highlight, #FFD580);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
-}
-
-.sw-play-btn {
-  width: clamp(44px, 6vw, 56px);
-  height: clamp(44px, 6vw, 56px);
-  min-width: 44px;
-  min-height: 44px;
-  border-radius: 50%;
-  background: rgba(244, 185, 66, 0.25);
-  border: 1px solid rgba(244, 185, 66, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-  flex-shrink: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-
-.sw-card:hover .sw-play-btn {
-  background: var(--gold-primary, #F4B942);
-  border-color: var(--gold-primary, #F4B942);
-  color: var(--gold-dark-text, #17120A);
-  transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(244, 185, 66, 0.7);
-}
-
-/* --------------------------------------------------------------------------
-   2. MENTORS SECTION (#mentors) — Stacking Mentor Cards
-   -------------------------------------------------------------------------- */
-.mentors-stack {
-  max-width: 1040px;
-}
-
-.mentor-card-wrapper {
-  max-width: 1040px;
-}
-
-.mentor-card-wrapper .mentor-card {
-  width: 100%;
-  margin-top: 0 !important;
-  background: linear-gradient(160deg, rgba(23, 16, 43, 0.97) 0%, rgba(16, 11, 32, 0.99) 100%);
-  border: 1px solid var(--border-color);
-  border-radius: var(--sw-radius);
-  box-shadow: 0 20px 55px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(146, 85, 255, 0.12);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.28s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
-}
-
-.faculty-mentor-card {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(24px, 4vw, 40px);
-  gap: 24px;
-}
-
-.faculty-card-header {
-  text-align: center;
-}
-
-.faculty-card-header .faculty-sub {
-  font-size: 15px;
-  color: var(--text-secondary);
-  margin-top: 6px;
-}
-
-/* --------------------------------------------------------------------------
-   3. SKILL OUTCOMES SECTION (#brands) — 9:16 Stacking Vertical Reel Cards
-   -------------------------------------------------------------------------- */
-.skills-stack {
-  max-width: 440px;
-}
-
-.skill-card-wrapper {
-  max-width: 440px;
-}
-
+/* ── The card itself (9:16 vertical aspect ratio) ── */
 .skills-stack .skill-card {
   position: relative;
   width: 100%;
   max-width: 440px;
   aspect-ratio: 9 / 16;
-  max-height: calc(100dvh - 170px);
-  border-radius: var(--sw-radius);
+  max-height: calc(100vh - 220px);
+  border-radius: 24px;
   overflow: hidden;
   background: var(--bg-card, #191729);
   border: 1px solid var(--border-color, #29263A);
-  box-shadow: 0 16px 45px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(146, 85, 255, 0.1);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(146, 85, 255, 0.1);
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.28s ease,
-              box-shadow 0.3s ease,
-              border-color 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
 }
 
-.skills-stack .skill-card:hover,
-.skills-stack .skill-card:focus-visible {
+.skills-stack .skill-card:hover {
   border-color: var(--gold-primary, #F4B942);
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(244, 185, 66, 0.3);
+  cursor: pointer;
 }
 
+/* ── Background image / video slot ── */
 .skills-stack .skill-card-bg {
   position: absolute;
   inset: 0;
@@ -353,13 +78,14 @@
   transform: scale(1.04);
 }
 
+/* ── Dark overlay tailored for 9:16 vertical videos ── */
 .skills-stack .skill-card-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     180deg,
-    rgba(11, 10, 20, 0.5) 0%,
+    rgba(11, 10, 20, 0.45) 0%,
     rgba(11, 10, 20, 0.1) 35%,
     rgba(11, 10, 20, 0.5) 65%,
     rgba(11, 10, 20, 0.95) 100%
@@ -367,6 +93,7 @@
   pointer-events: none;
 }
 
+/* ── Content layer (Grid layout: Top badge / Bottom info & arrow) ── */
 .skills-stack .skill-card-content {
   position: relative;
   z-index: 2;
@@ -381,6 +108,7 @@
   pointer-events: none;
 }
 
+/* ── Top row: Number badge ── */
 .skill-card-top {
   grid-column: 1 / -1;
   grid-row: 1;
@@ -401,6 +129,7 @@
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
 }
 
+/* ── Bottom row: Title + tag block ── */
 .skills-stack .skill-card-info {
   grid-column: 1;
   grid-row: 3;
@@ -429,6 +158,7 @@
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
 }
 
+/* ── Bottom row: Arrow circle ── */
 .skill-card-arrow {
   grid-column: 2;
   grid-row: 3;
@@ -439,8 +169,6 @@
 .skill-card-arrow-circle {
   width: 48px;
   height: 48px;
-  min-width: 44px;
-  min-height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.25);
   display: flex;
@@ -467,413 +195,88 @@
   box-shadow: 0 0 24px rgba(244, 185, 66, 0.6);
 }
 
-/* --------------------------------------------------------------------------
-   4. TESTIMONIALS SECTION (#student-work) — 9:16 Stacking Student Video Cards
-   -------------------------------------------------------------------------- */
-.testimonials-stack {
-  max-width: 440px;
-}
-
-.testimonial-card-wrapper {
-  max-width: 440px;
-}
-
-.testimonials-stack .testimonial-card {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  aspect-ratio: 9 / 16;
-  max-height: calc(100dvh - 170px);
-  border-radius: var(--sw-radius);
-  overflow: hidden;
-  background: #0B0A14;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 16px 45px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(146, 85, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.28s ease,
-              box-shadow 0.3s ease,
-              border-color 0.3s ease;
-}
-
-.testimonials-stack .testimonial-card:hover,
-.testimonials-stack .testimonial-card:focus-visible {
-  border-color: var(--gold-primary, #F4B942);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(244, 185, 66, 0.3);
-}
-
-.testimonial-video-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  z-index: 0;
-  background: #06040a;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.testimonials-stack .testimonial-card:hover .testimonial-video-bg {
-  transform: scale(1.035);
-}
-
-.testimonial-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(11, 10, 20, 0.55) 0%,
-    rgba(11, 10, 20, 0.1) 40%,
-    rgba(11, 10, 20, 0.5) 70%,
-    rgba(11, 10, 20, 0.95) 100%
-  );
-  pointer-events: none;
-}
-
-.testimonial-card-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 24px 22px;
-  pointer-events: none;
-}
-
-.testimonial-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.testimonial-badge {
-  font-family: var(--font-accent, 'Plus Jakarta Sans', sans-serif);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--gold-highlight, #FFD580);
-  background: rgba(244, 185, 66, 0.18);
-  border: 1px solid rgba(244, 185, 66, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 4px 12px;
-  border-radius: var(--radius-full, 999px);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.testimonial-num {
-  font-family: var(--font-display, 'Syne', sans-serif);
-  font-size: 16px;
-  font-weight: 800;
-  color: #FFFFFF;
-  background: rgba(146, 85, 255, 0.3);
-  border: 1px solid rgba(146, 85, 255, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 3px 10px;
-  border-radius: var(--radius-full, 999px);
-}
-
-.testimonial-bottom {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.testimonial-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: left;
-}
-
-.testimonial-title {
-  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(18px, 3vw, 22px);
-  font-weight: 700;
-  color: #FFFFFF;
-  margin: 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
-}
-
-.testimonial-role {
-  font-family: var(--font-accent, 'DM Sans', sans-serif);
-  font-size: 13px;
-  color: var(--text-secondary, #B8B4C7);
-  font-weight: 500;
-}
-
-.testimonial-play-btn {
-  width: 48px;
-  height: 48px;
-  min-width: 44px;
-  min-height: 44px;
-  border-radius: 50%;
-  background: rgba(244, 185, 66, 0.25);
-  border: 1px solid rgba(244, 185, 66, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* ── Placeholder cards (AE track) ── */
+.skills-stack .skill-card-placeholder .placeholder-media {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
-  flex-shrink: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.testimonials-stack .testimonial-card:hover .testimonial-play-btn {
-  background: var(--gold-primary, #F4B942);
-  border-color: var(--gold-primary, #F4B942);
-  color: var(--gold-dark-text, #17120A);
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(244, 185, 66, 0.6);
-}
-
-/* --------------------------------------------------------------------------
-   5. HOW TO ENROLL SECTION (#process) — Stacking Step Cards
-   -------------------------------------------------------------------------- */
-.process-stack {
-  max-width: 680px;
-}
-
-.process-card-wrapper {
-  max-width: 680px;
-}
-
-.process-card {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(146, 85, 255, 0.28) 0%, transparent 70%),
+    linear-gradient(135deg, #191729 0%, #0B0A14 100%);
   position: relative;
-  width: 100%;
-  background: linear-gradient(160deg, rgba(25, 23, 41, 0.98) 0%, rgba(18, 17, 31, 0.99) 100%);
-  border: 1px solid var(--border-color);
-  border-radius: var(--sw-radius);
-  padding: clamp(28px, 4.5vw, 44px);
-  box-shadow: 0 18px 50px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(146, 85, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  text-align: left;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  overflow: hidden;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.28s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
 }
 
-.process-card::before {
+.skills-stack .skill-card-placeholder .placeholder-media::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 5%, var(--purple-gradient-start) 40%, var(--gold-primary) 70%, transparent 95%);
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 28px, rgba(146, 85, 255, 0.04) 29px, transparent 30px),
+    repeating-linear-gradient(90deg, transparent 0 28px, rgba(146, 85, 255, 0.04) 29px, transparent 30px);
+  pointer-events: none;
 }
 
-.process-card:hover {
-  border-color: rgba(146, 85, 255, 0.5);
-  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(146, 85, 255, 0.2);
-}
-
-.process-card-head {
+.skills-stack .placeholder-graphic {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 14px;
+  z-index: 2;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.process-step-num {
-  font-family: var(--font-display, 'Syne', sans-serif);
-  font-size: clamp(38px, 5.5vw, 54px);
-  font-weight: 800;
-  line-height: 1;
-  background: linear-gradient(135deg, var(--gold-highlight, #FFD580) 0%, var(--gold-primary, #F4B942) 60%, var(--purple-300, #B69AFF) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+.skills-stack .skill-card:hover .placeholder-graphic {
+  transform: scale(1.08);
 }
 
-.process-step-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--sw-radius-sm);
-  background: rgba(146, 85, 255, 0.15);
-  border: 1px solid rgba(146, 85, 255, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  box-shadow: 0 4px 16px rgba(146, 85, 255, 0.2);
-}
-
-.process-card-title {
-  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(22px, 3.2vw, 28px);
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.015em;
-  margin: 0;
-}
-
-.process-card-desc {
-  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(14px, 2vw, 15.5px);
-  line-height: 1.68;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.process-card-highlight {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: var(--radius-md, 12px);
-  background: rgba(146, 85, 255, 0.1);
-  border: 1px solid rgba(146, 85, 255, 0.25);
-  color: var(--gold-highlight, #FFD580);
-  font-family: var(--font-accent);
-  font-size: 13.5px;
-  font-weight: 600;
-  width: fit-content;
-}
-
-/* --------------------------------------------------------------------------
-   6. Responsive Device Breakpoints (360px - 1920px)
-   -------------------------------------------------------------------------- */
-@media (max-width: 860px) {
-  :root {
-    --sw-header-offset-desktop: 78px;
-    --sw-header-offset-mobile: 72px;
-  }
-
-  .mentor-card-wrapper,
-  .skill-card-wrapper,
-  .sw-card-wrapper,
-  .testimonial-card-wrapper,
-  .process-card-wrapper {
-    top: var(--sw-header-offset-mobile);
-    margin-bottom: clamp(22px, 4vh, 36px);
-  }
-
-  .sw-card {
-    aspect-ratio: 16 / 9;
-    max-height: calc(100dvh - 140px);
-    border-radius: 18px;
-  }
-
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
   .skills-stack .skill-card,
-  .testimonials-stack .testimonial-card {
-    max-width: 360px;
-    max-height: calc(100dvh - 140px);
+  .skills-stack .skill-card-bg img,
+  .skills-stack .skill-card-bg video,
+  .skill-card-arrow-circle,
+  .skills-stack .placeholder-graphic {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ── Mobile adjustments ── */
+@media (max-width: 560px) {
+  .skills-stack {
+    max-width: 340px;
+  }
+
+  .skill-card-wrapper {
+    top: 75px;
+    margin-bottom: 20px;
+  }
+
+  .skills-stack .skill-card {
+    max-height: 60vh;
     border-radius: 20px;
   }
-}
 
-@media (max-width: 560px) {
-  .sw-card-content {
-    padding: 14px 14px;
-  }
-
-  .sw-title {
-    font-size: 17px;
-  }
-
-  .sw-tag {
-    font-size: 11.5px;
-  }
-
-  .sw-num-badge {
-    font-size: 12px;
-    padding: 3px 9px;
-  }
-
-  .sw-status-pill {
-    font-size: 11px;
-    padding: 3px 9px;
-  }
-
-  .sw-play-btn {
-    width: 44px;
-    height: 44px;
-  }
-
-  .skills-stack {
-    max-width: 320px;
-  }
-
-  .testimonials-stack {
-    max-width: 320px;
-  }
-
-  .skills-stack .skill-card-content,
-  .testimonial-card-content {
-    padding: 18px 16px;
+  .skills-stack .skill-card-content {
+    padding: 20px 18px;
   }
 
   .skill-card-num {
     font-size: 32px;
   }
 
-  .process-card {
-    padding: 22px 18px;
-    border-radius: 18px;
+  .skill-card-arrow-circle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .skill-card-arrow-circle svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
 @media (max-width: 360px) {
-  .skills-stack,
-  .testimonials-stack {
-    max-width: 285px;
-  }
-
-  .sw-card-content {
-    padding: 12px 10px;
-  }
-
-  .sw-title {
-    font-size: 15px;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   7. Reduced Motion Accessibility
-   -------------------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .mentor-card-wrapper,
-  .skill-card-wrapper,
-  .sw-card-wrapper,
-  .testimonial-card-wrapper,
-  .process-card-wrapper {
-    position: relative !important;
-    top: auto !important;
-    transform: none !important;
-    filter: none !important;
-    margin-bottom: 24px !important;
-  }
-
-  .sw-card,
-  .mentor-card,
-  .skills-stack .skill-card,
-  .testimonials-stack .testimonial-card,
-  .process-card,
-  .sw-video-bg,
-  .testimonial-video-bg,
-  .skill-video-bg {
-    transform: none !important;
-    filter: none !important;
-    transition: none !important;
+  .skills-stack {
+    max-width: 290px;
   }
 }

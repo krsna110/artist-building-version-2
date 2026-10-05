@@ -1,0 +1,282 @@
+/* ==========================================================================
+   STUDENT WORKS STACKING CARDS ENGINE
+   Scoped EXCLUSIVELY to #projects (#projects .sw-stack, #projects .sw-card-wrapper, #projects .sw-card)
+   ========================================================================== */
+
+#projects.projects-section,
+#projects {
+  overflow: visible !important;
+  transform: none !important;
+  position: relative;
+}
+
+#projects .sw-stack {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+#projects .sw-card-wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  top: calc(90px + var(--i, 0) * 18px);
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: clamp(32px, 6vh, 56px);
+  will-change: transform, filter;
+  z-index: calc(var(--i, 0) + 1);
+}
+
+#projects .sw-card-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+#projects .sw-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100dvh - 160px);
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0B0A14;
+  border: 1px solid var(--border-color, #29263A);
+  box-shadow: 0 16px 45px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(146, 85, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.28s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+#projects .sw-card:hover,
+#projects .sw-card:focus-visible {
+  border-color: var(--gold-primary, #F4B942);
+  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(244, 185, 66, 0.3);
+}
+
+#projects .sw-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  z-index: 0;
+  background: #06040a;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#projects .sw-card:hover .sw-video-bg {
+  transform: scale(1.035);
+}
+
+#projects .sw-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 10, 20, 0.65) 0%,
+    rgba(11, 10, 20, 0.1) 40%,
+    rgba(11, 10, 20, 0.55) 70%,
+    rgba(11, 10, 20, 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+#projects .sw-card-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: clamp(18px, 3.5vw, 32px);
+  pointer-events: none;
+}
+
+#projects .sw-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#projects .sw-badge-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#projects .sw-num-badge {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: 15px;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: rgba(146, 85, 255, 0.3);
+  border: 1px solid rgba(146, 85, 255, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 999px);
+}
+
+#projects .sw-status-pill {
+  font-family: var(--font-accent, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gold-highlight, #FFD580);
+  background: rgba(244, 185, 66, 0.18);
+  border: 1px solid rgba(244, 185, 66, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 999px);
+}
+
+#projects .sw-bottom-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+#projects .sw-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+#projects .sw-title {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(20px, 3.2vw, 26px);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+#projects .sw-tag {
+  font-family: var(--font-accent, 'DM Sans', sans-serif);
+  font-size: clamp(12.5px, 1.8vw, 14px);
+  color: var(--text-secondary, #B8B4C7);
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+#projects .sw-play-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: rgba(244, 185, 66, 0.25);
+  border: 1px solid rgba(244, 185, 66, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#projects .sw-card:hover .sw-play-btn {
+  background: var(--gold-primary, #F4B942);
+  border-color: var(--gold-primary, #F4B942);
+  color: var(--gold-dark-text, #17120A);
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(244, 185, 66, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints (360px - 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  #projects .sw-card-wrapper {
+    top: calc(72px + var(--i, 0) * 12px);
+    margin-bottom: clamp(20px, 4vh, 32px);
+  }
+
+  #projects .sw-card {
+    aspect-ratio: 16 / 9;
+    max-height: calc(100dvh - 140px);
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  #projects .sw-card-content {
+    padding: 14px 14px;
+  }
+
+  #projects .sw-title {
+    font-size: 17px;
+  }
+
+  #projects .sw-tag {
+    font-size: 11.5px;
+  }
+
+  #projects .sw-num-badge {
+    font-size: 12px;
+    padding: 3px 9px;
+  }
+
+  #projects .sw-status-pill {
+    font-size: 11px;
+    padding: 3px 9px;
+  }
+
+  #projects .sw-play-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 360px) {
+  #projects .sw-card-content {
+    padding: 12px 10px;
+  }
+
+  #projects .sw-title {
+    font-size: 15px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #projects .sw-card-wrapper {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+    filter: none !important;
+    margin-bottom: 24px !important;
+  }
+
+  #projects .sw-card,
+  #projects .sw-video-bg {
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
