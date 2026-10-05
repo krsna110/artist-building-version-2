@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, #projects .sw-card, .testimonial-card');
+    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, #projects .sw-card');
 
     allVideoCards.forEach(card => {
         const video = card.querySelector('video');
@@ -712,12 +712,157 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // === Student Testimonials Horizontal Marquee & Inline Player ===
+    const testimonialCarouselWrapper = document.getElementById('testimonials-carousel-wrapper');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+
+    if (testimonialCards.length > 0) {
+        function resetTestimonialCard(c) {
+            c.classList.remove('is-playing');
+            const v = c.querySelector('video');
+            if (v && !v.paused) {
+                v.pause();
+            }
+            const playIcon = c.querySelector('.play-icon');
+            const pauseIcon = c.querySelector('.pause-icon');
+            const soundBtn = c.querySelector('.card-sound-badge');
+            if (playIcon) playIcon.style.display = 'block';
+            if (pauseIcon) pauseIcon.style.display = 'none';
+            if (soundBtn) soundBtn.style.display = 'none';
+        }
+
+        function syncSoundUI(card, isMuted) {
+            const soundBtn = card.querySelector('.card-sound-badge');
+            if (!soundBtn) return;
+            const soundOn = soundBtn.querySelector('.sound-on-icon');
+            const soundOff = soundBtn.querySelector('.sound-off-icon');
+            if (soundOn) soundOn.style.display = isMuted ? 'none' : 'block';
+            if (soundOff) soundOff.style.display = isMuted ? 'block' : 'none';
+            soundBtn.setAttribute('aria-label', isMuted ? 'Unmute' : 'Mute');
+        }
+
+        testimonialCards.forEach(card => {
+            const video = card.querySelector('video');
+            const soundBtn = card.querySelector('.card-sound-badge');
+            const playIcon = card.querySelector('.play-icon');
+            const pauseIcon = card.querySelector('.pause-icon');
+
+            // Sound button click
+            if (soundBtn && video) {
+                soundBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    video.muted = !video.muted;
+                    syncSoundUI(card, video.muted);
+                });
+            }
+
+            // Inline Play / Pause on Card Click
+            function toggleCardPlayback() {
+                if (!video) return;
+
+                if (card.classList.contains('is-playing')) {
+                    // Pause currently playing card
+                    video.pause();
+                    card.classList.remove('is-playing');
+                    if (playIcon) playIcon.style.display = 'block';
+                    if (pauseIcon) pauseIcon.style.display = 'none';
+                    if (soundBtn) soundBtn.style.display = 'none';
+
+                    // Check if any other cards are playing
+                    const anyPlaying = Array.from(testimonialCards).some(c => c.classList.contains('is-playing'));
+                    if (!anyPlaying && testimonialCarouselWrapper) {
+                        testimonialCarouselWrapper.classList.remove('has-playing-video');
+                    }
+                } else {
+                    // Reset all other testimonial cards
+                    testimonialCards.forEach(c => {
+                        if (c !== card) resetTestimonialCard(c);
+                    });
+
+                    // Pause background cards in other sections to optimize performance
+                    intersectingCards.forEach(c => {
+                        const bgVid = c.querySelector('video');
+                        safePauseVideo(bgVid);
+                    });
+
+                    // Load video stream if not yet loaded
+                    if (!video.src || video.src === window.location.href) {
+                        const targetSrc = card.dataset.videoSrc || (video.dataset && video.dataset.src);
+                        if (targetSrc) {
+                            video.src = targetSrc;
+                            video.load();
+                        }
+                    }
+
+                    // Activate playing state and pause auto-scrolling
+                    card.classList.add('is-playing');
+                    if (playIcon) playIcon.style.display = 'none';
+                    if (pauseIcon) pauseIcon.style.display = 'block';
+                    if (soundBtn) {
+                        soundBtn.style.display = 'flex';
+                        syncSoundUI(card, video.muted);
+                    }
+
+                    if (testimonialCarouselWrapper) {
+                        testimonialCarouselWrapper.classList.add('has-playing-video');
+                    }
+
+                    // Play video with audio
+                    video.muted = false;
+                    syncSoundUI(card, false);
+
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {
+                            // If unmuted playback is restricted by browser gesture policy, play muted and let user click unmute
+                            video.muted = true;
+                            syncSoundUI(card, true);
+                            video.play().catch(() => {});
+                        });
+                    }
+
+                    video.onended = () => {
+                        resetTestimonialCard(card);
+                        if (testimonialCarouselWrapper) {
+                            testimonialCarouselWrapper.classList.remove('has-playing-video');
+                        }
+                    };
+                }
+            }
+
+            card.addEventListener('click', toggleCardPlayback);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleCardPlayback();
+                }
+            });
+        });
+
+        // Touch & Hold Pause handling on mobile devices
+        if (testimonialCarouselWrapper) {
+            testimonialCarouselWrapper.addEventListener('touchstart', () => {
+                testimonialCarouselWrapper.classList.add('is-paused');
+            }, { passive: true });
+
+            testimonialCarouselWrapper.addEventListener('touchend', () => {
+                testimonialCarouselWrapper.classList.remove('is-paused');
+            }, { passive: true });
+        }
+    }
+
     // Pause all background video streams when user navigates away from tab
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             intersectingCards.forEach(card => {
                 const video = card.querySelector('video');
                 safePauseVideo(video);
+            });
+            testimonialCards.forEach(c => {
+                const video = c.querySelector('video');
+                if (video && !video.paused) {
+                    video.pause();
+                }
             });
             if (modalVideo && !modalVideo.paused) {
                 safePauseVideo(modalVideo);
