@@ -4407,6 +4407,171 @@ body::after {
     }
 }
 
+/* ============================================
+   Sticky Floating Instagram Button
+   ============================================ */
+
+.sticky-instagram-container {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 997;
+    pointer-events: auto;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.btn-floating-instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px 10px 14px;
+    background: rgba(18, 15, 32, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(225, 48, 108, 0.4);
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 22px rgba(225, 48, 108, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-floating-instagram::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    transform: skewX(-25deg);
+    animation: insta-sheen 4.5s ease-in-out infinite 0.7s;
+}
+
+@keyframes insta-sheen {
+    0%, 20% { left: -100%; }
+    50%, 100% { left: 200%; }
+}
+
+.btn-floating-instagram:hover {
+    background: rgba(28, 20, 42, 0.95);
+    border-color: rgba(253, 29, 29, 0.75);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 28px rgba(225, 48, 108, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.btn-floating-instagram:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.insta-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-radius: 50%;
+    color: #FFFFFF;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(225, 48, 108, 0.4);
+}
+
+.insta-svg {
+    stroke: #FFFFFF;
+}
+
+.insta-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #e1306c;
+    animation: insta-pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite 0.5s;
+    opacity: 0;
+}
+
+@keyframes insta-pulse-ring {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    70%, 100% { transform: scale(1.6); opacity: 0; }
+}
+
+.insta-text-wrap {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.insta-sub {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #f77737;
+}
+
+.insta-title {
+    font-family: var(--font-accent);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+}
+
+.insta-arrow-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease;
+    margin-left: 2px;
+}
+
+.btn-floating-instagram:hover .insta-arrow-wrap {
+    transform: translateX(3px);
+    color: #fd1d1d;
+    background: rgba(225, 48, 108, 0.18);
+}
+
+@media (max-width: 768px) {
+    .sticky-instagram-container {
+        bottom: calc(var(--sticky-height, 82px) + 12px);
+        right: 14px;
+    }
+    
+    .btn-floating-instagram {
+        padding: 8px 14px 8px 10px;
+        gap: 8px;
+    }
+    
+    .insta-icon-wrap {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .insta-svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .insta-title {
+        font-size: 12px;
+    }
+    
+    .insta-sub {
+        font-size: 9px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
