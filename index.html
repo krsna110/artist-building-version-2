@@ -626,9 +626,15 @@
     <!-- Showreel / Community Large Banner -->
     <section class="showreel-section" id="showreel">
         <div class="showreel-card reveal reveal-scale">
-            <div class="showreel-silhouettes"></div>
-            <p class="showreel-text">Build a portfolio-ready showreel with <strong>5 graded projects</strong></p>
-            <h3 class="showreel-label"><span class="text-gradient">YOUR Portfolio</span></h3>
+            <picture class="showreel-picture">
+                <source srcset="img/portfolio.webp" type="image/webp">
+                <img src="img/portfolio.jpg" alt="Build a portfolio-ready showreel with 5 graded projects - YOUR Portfolio" class="showreel-bg-img" width="1920" height="1080" loading="lazy">
+            </picture>
+            <div class="showreel-overlay" aria-hidden="true"></div>
+            <div class="showreel-content">
+                <p class="showreel-text">Build a portfolio-ready showreel with <strong>5 graded projects</strong></p>
+                <h3 class="showreel-label"><span class="text-gradient">YOUR Portfolio</span></h3>
+            </div>
         </div>
     </section>
 
