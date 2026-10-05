@@ -2070,12 +2070,12 @@ section[id],
     margin-bottom: 0;
 }
 
-/* === Student Video Testimonials - Horizontal Marquee === */
+/* === Student Video Testimonials - 3x2 Responsive Grid === */
 .student-work-section {
     padding: var(--space-4xl) 0;
     text-align: center;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
 }
 
 .student-work-desc {
@@ -2088,49 +2088,25 @@ section[id],
     padding: 0 var(--space-lg);
 }
 
-.testimonials-marquee {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    padding: 16px 0 28px;
-    /* Soft edge masking for smooth fade */
-    mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+.testimonials-grid-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
 }
 
-.testimonials-track {
-    display: flex;
-    width: max-content;
-    animation: testimonials-scroll 36s linear infinite;
-    will-change: transform;
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    justify-items: center;
 }
 
-/* Pause scroll when hovering over the marquee */
-.testimonials-track:hover {
-    animation-play-state: paused;
-}
-
-.testimonials-group {
-    display: flex;
-    gap: 22px;
-    padding-right: 22px;
-}
-
-@keyframes testimonials-scroll {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-/* Card Styling - 9:16 Vertical Reel */
+/* Card Styling - 9:16 Vertical Reel in Grid */
 .testimonial-card {
     position: relative;
-    width: 235px;
-    height: 390px;
-    flex-shrink: 0;
+    width: 100%;
+    max-width: 330px;
+    aspect-ratio: 9 / 14.5;
     border-radius: 20px;
     background: #0B0A14;
     border: 1px solid var(--border-color);
@@ -2143,12 +2119,66 @@ section[id],
     user-select: none;
 }
 
+.testimonial-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(11, 10, 20, 0.85) 100%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
 .testimonial-card:hover,
 .testimonial-card:focus-visible {
     transform: translateY(-8px) scale(1.02);
-    border-color: var(--gold-primary);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(244, 185, 66, 0.3);
+    border-color: rgba(146, 85, 255, 0.6);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 28px rgba(146, 85, 255, 0.28);
     outline: none;
+}
+
+.card-num-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--gold-primary);
+    background: rgba(15, 12, 28, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(244, 185, 66, 0.25);
+    padding: 4px 10px;
+    border-radius: 999px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.card-play-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(15, 12, 28, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.testimonial-card:hover .card-play-badge {
+    transform: scale(1.12);
+    background: rgba(146, 85, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 16px rgba(146, 85, 255, 0.6);
 }
 
 .card-video {
@@ -2165,6 +2195,45 @@ section[id],
 
 .testimonial-card:hover .card-video {
     transform: scale(1.04);
+}
+
+@media (max-width: 900px) {
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 680px;
+        margin: 0 auto;
+    }
+    .testimonial-card {
+        max-width: 310px;
+    }
+}
+
+@media (max-width: 540px) {
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .testimonial-card {
+        border-radius: 14px;
+        aspect-ratio: 9 / 14.5;
+    }
+    .card-num-badge {
+        top: 10px;
+        left: 10px;
+        font-size: 10px;
+        padding: 2px 7px;
+    }
+    .card-play-badge {
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+    }
+    .card-play-badge svg {
+        width: 13px;
+        height: 13px;
+    }
 }
 
 /* === Testimonial Video Modal Popup === */
@@ -2311,19 +2380,6 @@ section[id],
     font-weight: 600;
 }
 
-@media (max-width: 767px) {
-    .testimonial-card {
-        width: 195px;
-        height: 330px;
-    }
-    .card-play-btn {
-        width: 44px;
-        height: 44px;
-    }
-    .testimonials-marquee {
-        padding: 10px 0 20px;
-    }
-}
 
 /* ============================================
    EXCLUSIVE BONUSES SECTION & STACK/SPREAD ANIMATION

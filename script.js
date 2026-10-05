@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, #projects .sw-card, .testimonials-track .testimonial-card');
+    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, #projects .sw-card, .testimonial-card');
 
     allVideoCards.forEach(card => {
         const video = card.querySelector('video');
