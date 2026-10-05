@@ -4161,6 +4161,252 @@ body::after {
     100% { background-position: 0% 0, 0 0; opacity: 0.58; }
 }
 
+/* ============================================
+   Sticky Floating Brochure Button & Curriculum Download
+   ============================================ */
+
+.sticky-brochure-container {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 997;
+    pointer-events: auto;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.btn-floating-brochure {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px 10px 14px;
+    background: rgba(18, 15, 32, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(146, 85, 255, 0.35);
+    border-radius: 9999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(146, 85, 255, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-floating-brochure::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(-25deg);
+    animation: brochure-sheen 4.5s ease-in-out infinite;
+}
+
+@keyframes brochure-sheen {
+    0%, 20% { left: -100%; }
+    50%, 100% { left: 200%; }
+}
+
+.btn-floating-brochure:hover {
+    background: rgba(28, 23, 50, 0.95);
+    border-color: rgba(244, 185, 66, 0.7);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(244, 185, 66, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.btn-floating-brochure:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.brochure-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, rgba(146, 85, 255, 0.25), rgba(244, 185, 66, 0.2));
+    border: 1px solid rgba(244, 185, 66, 0.4);
+    border-radius: 50%;
+    color: var(--gold-primary);
+    flex-shrink: 0;
+}
+
+.brochure-icon-wrap svg {
+    stroke: var(--gold-primary);
+}
+
+.brochure-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--gold-primary);
+    animation: brochure-pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    opacity: 0;
+}
+
+@keyframes brochure-pulse-ring {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    70%, 100% { transform: scale(1.6); opacity: 0; }
+}
+
+.brochure-text-wrap {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.brochure-sub {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple-300);
+}
+
+.brochure-title {
+    font-family: var(--font-accent);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+}
+
+.brochure-arrow-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease;
+    margin-left: 2px;
+}
+
+.btn-floating-brochure:hover .brochure-arrow-wrap {
+    transform: translateX(3px);
+    color: var(--gold-primary);
+    background: rgba(244, 185, 66, 0.15);
+}
+
+/* Curriculum Section Brochure Card */
+.curriculum-brochure-box {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, rgba(146, 85, 255, 0.08), rgba(244, 185, 66, 0.05));
+    border: 1px dashed rgba(146, 85, 255, 0.4);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+.curriculum-brochure-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex: 1;
+    min-width: 260px;
+}
+
+.curriculum-brochure-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(146, 85, 255, 0.2);
+    border: 1px solid rgba(146, 85, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-primary);
+    flex-shrink: 0;
+}
+
+.curriculum-brochure-text h4 {
+    font-family: var(--font-accent);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.curriculum-brochure-text p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.btn-curriculum-brochure {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: linear-gradient(135deg, var(--purple-primary), var(--purple-600));
+    color: #FFFFFF;
+    font-family: var(--font-accent);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(182, 154, 255, 0.4);
+    box-shadow: 0 4px 18px rgba(146, 85, 255, 0.3);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+}
+
+.btn-curriculum-brochure:hover {
+    background: linear-gradient(135deg, var(--purple-300), var(--purple-primary));
+    color: #0B0A14;
+    box-shadow: 0 6px 24px rgba(146, 85, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .sticky-brochure-container {
+        bottom: calc(var(--sticky-height, 82px) + 12px);
+        left: 14px;
+    }
+    
+    .btn-floating-brochure {
+        padding: 8px 14px 8px 10px;
+        gap: 8px;
+    }
+    
+    .brochure-icon-wrap {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .brochure-title {
+        font-size: 12px;
+    }
+    
+    .brochure-sub {
+        font-size: 9px;
+    }
+    
+    .curriculum-brochure-box {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space-lg);
+    }
+    
+    .btn-curriculum-brochure {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
