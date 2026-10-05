@@ -97,10 +97,57 @@
   inset: 0;
   z-index: 2;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: clamp(16px, 3.2vw, 26px);
+  pointer-events: none;
+}
+
+#projects .sw-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+#projects .sw-badge-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#projects .sw-num-badge {
+  font-family: var(--font-display, 'Syne', sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: rgba(146, 85, 255, 0.35);
+  border: 1px solid rgba(146, 85, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 999px);
+}
+
+#projects .sw-status-pill {
+  font-family: var(--font-accent, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold-highlight, #FFD580);
+  background: rgba(244, 185, 66, 0.18);
+  border: 1px solid rgba(244, 185, 66, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full, 999px);
+}
+
+#projects .sw-bottom-bar {
+  display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: clamp(16px, 3vw, 24px);
-  pointer-events: none;
+  width: 100%;
 }
 
 #projects .sw-play-btn {
