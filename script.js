@@ -128,116 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // === Student projects carousel ===
-    const projectTrack = document.getElementById('project-cards');
-    const projectControls = document.getElementById('project-carousel-controls');
-    const projectDots = document.getElementById('project-carousel-dots');
-    const projectStatus = document.getElementById('project-carousel-status');
-
-    if (projectTrack && projectControls && projectDots) {
-        const projectCards = Array.from(projectTrack.querySelectorAll('.project-card'));
-        const previousButton = projectControls.querySelector('[data-carousel-direction="-1"]');
-        const nextButton = projectControls.querySelector('[data-carousel-direction="1"]');
-        let pageCount = 1;
-        let currentPage = 0;
-        let scrollFrame = 0;
-        let cardsPerPage = 1;
-        let pageStep = projectTrack.clientWidth;
-        const scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-
-        const pagePosition = page => Math.min(page * pageStep, projectTrack.scrollWidth - projectTrack.clientWidth);
-
-        function visiblePage() {
-            const maxScroll = projectTrack.scrollWidth - projectTrack.clientWidth;
-            if (projectTrack.scrollLeft >= maxScroll - 4) return pageCount - 1;
-            return Math.max(0, Math.min(pageCount - 1, Math.round(projectTrack.scrollLeft / pageStep)));
-        }
-
-        function syncActiveCard() {
-            const trackCenter = projectTrack.getBoundingClientRect().left + projectTrack.clientWidth / 2;
-            let closestCard = null;
-            let closestDistance = Infinity;
-
-            projectCards.forEach(card => {
-                const bounds = card.getBoundingClientRect();
-                const distance = Math.abs(bounds.left + bounds.width / 2 - trackCenter);
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestCard = card;
-                }
-            });
-
-            projectCards.forEach(card => card.classList.toggle('is-active', card === closestCard));
-        }
-
-        function setPage(page, announce = false) {
-            currentPage = Math.max(0, Math.min(pageCount - 1, page));
-            projectTrack.scrollTo({ left: pagePosition(currentPage), behavior: scrollBehavior });
-            updateControls(announce);
-        }
-
-        function updateControls(announce = false) {
-            syncActiveCard();
-            const pageDots = projectDots.querySelectorAll('button');
-            pageDots.forEach((dot, index) => {
-                if (index === currentPage) dot.setAttribute('aria-current', 'true');
-                else dot.removeAttribute('aria-current');
-            });
-            previousButton.disabled = currentPage === 0;
-            nextButton.disabled = currentPage === pageCount - 1;
-            if (announce && projectStatus) projectStatus.textContent = `Page ${currentPage + 1} of ${pageCount}`;
-        }
-
-        function configureCarousel() {
-            const previousPosition = projectTrack.scrollLeft;
-            const wasAtEnd = previousPosition >= projectTrack.scrollWidth - projectTrack.clientWidth - 4;
-            const gap = parseFloat(getComputedStyle(projectTrack).columnGap) || 0;
-            const cardStep = (projectCards[0]?.getBoundingClientRect().width || projectTrack.clientWidth) + gap;
-            cardsPerPage = Math.max(1, Math.floor((projectTrack.clientWidth + gap) / cardStep));
-            pageStep = cardsPerPage * cardStep;
-            pageCount = Math.max(1, Math.ceil(projectCards.length / cardsPerPage));
-            projectDots.replaceChildren();
-            for (let page = 0; page < pageCount; page += 1) {
-                const dot = document.createElement('button');
-                dot.type = 'button';
-                dot.className = 'project-carousel-dot';
-                dot.setAttribute('aria-label', `Go to project page ${page + 1} of ${pageCount}`);
-                dot.addEventListener('click', () => setPage(page, true));
-                projectDots.append(dot);
-            }
-            currentPage = wasAtEnd
-                ? pageCount - 1
-                : Math.min(pageCount - 1, Math.round(previousPosition / pageStep));
-            projectTrack.scrollLeft = pagePosition(currentPage);
-            projectControls.hidden = projectCards.length < 2 || projectTrack.scrollWidth <= projectTrack.clientWidth + 1;
-            updateControls();
-        }
-
-        previousButton.addEventListener('click', () => setPage(currentPage - 1, true));
-        nextButton.addEventListener('click', () => setPage(currentPage + 1, true));
-
-        projectTrack.addEventListener('scroll', () => {
-            cancelAnimationFrame(scrollFrame);
-            scrollFrame = requestAnimationFrame(() => {
-                currentPage = visiblePage();
-                updateControls();
-            });
-        }, { passive: true });
-
-        projectTrack.addEventListener('keydown', event => {
-            if (event.key === 'ArrowRight') {
-                event.preventDefault();
-                setPage(currentPage + 1, true);
-            } else if (event.key === 'ArrowLeft') {
-                event.preventDefault();
-                setPage(currentPage - 1, true);
-            }
-        });
-
-        const resizeObserver = new ResizeObserver(configureCarousel);
-        resizeObserver.observe(projectTrack);
-        configureCarousel();
-    }
+    // Accordions initialized above
 
     // === Framework Steps Animation ===
     const frameworkSteps = document.querySelectorAll('.framework-step');
@@ -632,49 +523,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Proximity observer: lazily loads MP4 streams only when card approaches viewport (300px buffer)
-    let preloadObserver = null;
-    let playbackObserver = null;
-
-    if ('IntersectionObserver' in window) {
-        preloadObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const video = entry.target.querySelector('video');
-                    if (video) {
-                        loadCardVideo(video);
-                    }
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            rootMargin: '350px 0px 350px 0px',
-            threshold: 0.01
-        });
-
-        playbackObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const card = entry.target;
-                const video = card.querySelector('video');
-                if (!video) return;
-
-                if (entry.isIntersecting) {
-                    intersectingCards.add(card);
-                    loadCardVideo(video);
-                    safePlayVideo(video);
-                } else {
-                    intersectingCards.delete(card);
-                    safePauseVideo(video);
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px 0px 0px'
-        });
-    }
-
-    // Register all video cards with performance observers
-    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, .project-cards .project-card, .testimonials-track .testimonial-card');
+    // Register all video cards with modal click bindings
+    const allVideoCards = document.querySelectorAll('.skills-stack .skill-card, .sw-stack .sw-card, .testimonials-stack .testimonial-card');
 
     allVideoCards.forEach(card => {
         const video = card.querySelector('video');
@@ -690,18 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
             video.addEventListener('loadeddata', () => {
                 video.style.opacity = '1';
             }, { once: true });
-
-            // Hover to play/focus enhancement
-            card.addEventListener('mouseenter', () => {
-                if (!isModalOpen && !document.hidden) {
-                    loadCardVideo(video);
-                    safePlayVideo(video);
-                }
-            });
         }
-
-        if (preloadObserver) preloadObserver.observe(card);
-        if (playbackObserver) playbackObserver.observe(card);
 
         // Card modal click binding
         card.addEventListener('click', () => openVideoModal(card));
@@ -711,24 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 openVideoModal(card);
             }
         });
-    });
-
-    // Pause all background video streams when user navigates away from tab
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            intersectingCards.forEach(card => {
-                const video = card.querySelector('video');
-                safePauseVideo(video);
-            });
-            if (modalVideo && !modalVideo.paused) {
-                safePauseVideo(modalVideo);
-            }
-        } else if (!isModalOpen) {
-            intersectingCards.forEach(card => {
-                const video = card.querySelector('video');
-                safePlayVideo(video);
-            });
-        }
     });
 
     // === Video Reel Modal Coordinator ===

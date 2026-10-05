@@ -183,6 +183,7 @@
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
 }
 
 body {
@@ -196,7 +197,7 @@ body {
         repeating-linear-gradient(90deg, transparent 0 55px, rgba(41, 38, 58, 0.2) 56px, transparent 57px);
     color: var(--text-primary);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-bottom: var(--sticky-height);
@@ -1671,248 +1672,7 @@ section[id],
     margin-right: auto;
 }
 
-.project-cards {
-    display: flex;
-    flex-direction: row;
-    gap: var(--space-md);
-    max-width: 1120px;
-    margin: 0 auto;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 2px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-
-.project-cards::-webkit-scrollbar {
-    display: none;
-}
-
-.project-cards:focus-visible {
-    outline: 2px solid var(--purple-primary);
-    outline-offset: 6px;
-}
-
-.project-carousel-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-md);
-    margin: var(--space-xl) auto 0;
-}
-
-.project-carousel-controls[hidden] {
-    display: none;
-}
-
-.project-control {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    flex: 0 0 44px;
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    background: var(--bg-card);
-    color: var(--text-primary);
-    font: inherit;
-    font-size: 20px;
-    cursor: pointer;
-    transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
-}
-
-.project-control:hover:not(:disabled) {
-    background: var(--purple-primary);
-    color: #ffffff;
-    border-color: var(--purple-gradient-start);
-    transform: translateY(-1px);
-}
-
-.project-control:disabled {
-    opacity: 0.42;
-    cursor: not-allowed;
-}
-
-.project-carousel-dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.project-carousel-dot {
-    width: 8px;
-    height: 8px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: var(--text-muted);
-    cursor: pointer;
-    transition: width var(--transition-fast), background var(--transition-fast);
-}
-
-.project-carousel-dot[aria-current="true"] {
-    width: 22px;
-    border-radius: 999px;
-    background: var(--gold-primary);
-    box-shadow: 0 0 10px rgba(244, 185, 66, 0.6);
-}
-
-.project-card {
-    flex: 0 0 min(84vw, 400px);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    transition: var(--transition-base);
-    cursor: pointer;
-}
-
-.project-card:hover {
-    border-color: var(--purple-primary);
-    transform: translateY(-6px) scale(1.012);
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45), 0 0 24px rgba(146, 85, 255, 0.2);
-}
-
-.project-thumb {
-    width: 100%;
-    aspect-ratio: 16/10;
-    background: linear-gradient(135deg, #191729, #0B0A14);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.project-card-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.project-card:hover .project-card-video {
-    transform: scale(1.06);
-}
-
-.project-thumb::before {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(15, 10, 30, 0.75);
-    border: 1px solid rgba(146, 85, 255, 0.45);
-    backdrop-filter: blur(8px);
-    z-index: 3;
-}
-
-.project-thumb-1::before { content: '01'; }
-.project-thumb-2::before { content: '02'; }
-.project-thumb-3::before { content: '03'; }
-.project-thumb-4::before { content: '04'; }
-.project-thumb-5::before { content: '05'; }
-.project-thumb-6::before { content: '06'; }
-.project-thumb-7::before { content: '07'; }
-.project-thumb-8::before { content: '08'; }
-
-.project-thumb[class*='project-thumb-']::before {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-accent);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: 0.5px;
-}
-
-.project-play-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(15, 10, 30, 0.75);
-    border: 1px solid rgba(146, 85, 255, 0.35);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    z-index: 3;
-    transition: var(--transition-base);
-}
-
-.project-play-badge svg {
-    margin-left: 2px;
-    fill: #ffffff;
-    transition: transform 0.3s ease;
-}
-
-.project-card:hover .project-play-badge {
-    background: var(--purple-primary);
-    border-color: var(--purple-light);
-    transform: scale(1.1);
-    box-shadow: 0 0 16px rgba(146, 85, 255, 0.6);
-}
-
-.project-card:hover .project-play-badge svg {
-    transform: scale(1.15);
-}
-
-.project-thumb::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.055) 48%, transparent 68%),
-        repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,0.025) 23px 24px);
-    opacity: 0.72;
-    background-size: 220% 100%, auto;
-    background-position: 100% 0, 0 0;
-    pointer-events: none;
-    animation: project-film-sheen 12s ease-in-out infinite;
-    z-index: 2;
-}
-
-.project-thumb-2::after { animation-delay: 1.5s; }
-.project-thumb-3::after { animation-delay: 3s; }
-.project-thumb-4::after { animation-delay: 4.5s; }
-.project-thumb-5::after { animation-delay: 6s; }
-.project-thumb-6::after { animation-delay: 7.5s; }
-.project-thumb-7::after { animation-delay: 9s; }
-.project-thumb-8::after { animation-delay: 10.5s; }
-
-.project-thumb-1 { background: linear-gradient(135deg, #191729, #12111F); }
-.project-thumb-2 { background: linear-gradient(135deg, #12111F, #191729); }
-.project-thumb-3 { background: linear-gradient(135deg, #221a3a, #0B0A14); }
-.project-thumb-4 { background: linear-gradient(135deg, #191729, #100e1e); }
-.project-thumb-5 { background: linear-gradient(135deg, #251944, #0B0A14); }
-.project-thumb-6 { background: linear-gradient(135deg, #191729, #12111F); }
-.project-thumb-7 { background: linear-gradient(135deg, #221a3a, #0B0A14); }
-.project-thumb-8 { background: linear-gradient(135deg, #251944, #12111F); }
-
-.project-card h3 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: var(--space-lg);
-    background: linear-gradient(0deg, rgba(11, 10, 20, 0.95) 0%, transparent 100%);
-    font-family: var(--font-heading);
-    font-size: 18px;
-    color: var(--purple-300);
-    text-align: left;
-    z-index: 3;
-}
+/* Student Works stacking card styles are provided in skill-card-swipe.css */
 
 /* === Showreel Section === */
 .showreel-section {
@@ -2284,12 +2044,12 @@ section[id],
     margin-bottom: 0;
 }
 
-/* === Student Video Testimonials - Horizontal Marquee === */
+/* === Student Video Testimonials === */
 .student-work-section {
     padding: var(--space-4xl) 0;
     text-align: center;
-    overflow: hidden;
     position: relative;
+    overflow: visible;
 }
 
 .student-work-desc {
@@ -2302,84 +2062,7 @@ section[id],
     padding: 0 var(--space-lg);
 }
 
-.testimonials-marquee {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    padding: 16px 0 28px;
-    /* Soft edge masking for smooth fade */
-    mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
-}
-
-.testimonials-track {
-    display: flex;
-    width: max-content;
-    animation: testimonials-scroll 36s linear infinite;
-    will-change: transform;
-}
-
-/* Pause scroll when hovering over the marquee */
-.testimonials-track:hover {
-    animation-play-state: paused;
-}
-
-.testimonials-group {
-    display: flex;
-    gap: 22px;
-    padding-right: 22px;
-}
-
-@keyframes testimonials-scroll {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-
-/* Card Styling - 9:16 Vertical Reel */
-.testimonial-card {
-    position: relative;
-    width: 235px;
-    height: 390px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: #0B0A14;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                border-color 0.3s ease, 
-                box-shadow 0.3s ease;
-    user-select: none;
-}
-
-.testimonial-card:hover,
-.testimonial-card:focus-visible {
-    transform: translateY(-8px) scale(1.02);
-    border-color: var(--gold-primary);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(244, 185, 66, 0.3);
-    outline: none;
-}
-
-.card-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    background: #000;
-    pointer-events: none;
-    transition: transform 0.5s ease;
-}
-
-.testimonial-card:hover .card-video {
-    transform: scale(1.04);
-}
+/* Testimonial stacking card styles are provided in skill-card-swipe.css */
 
 /* === Testimonial Video Modal Popup === */
 .testimonial-modal {
