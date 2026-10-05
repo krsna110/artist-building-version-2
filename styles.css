@@ -2337,16 +2337,21 @@ section[id],
     height: 100%;
     object-fit: cover;
     display: block;
-    background: #000;
+    background: #0B0A14;
     pointer-events: none;
     border-radius: inherit;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 2;
+    opacity: 1;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    z-index: 1;
+}
+
+.testimonial-card:hover .card-video {
+    transform: scale(1.04);
 }
 
 .testimonial-card.is-playing .card-video {
     opacity: 1;
+    transform: scale(1);
 }
 
 /* Gradient Fade Edges */
