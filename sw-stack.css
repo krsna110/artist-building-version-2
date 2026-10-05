@@ -88,96 +88,19 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(11, 10, 20, 0.65) 0%,
-    rgba(11, 10, 20, 0.1) 40%,
-    rgba(11, 10, 20, 0.55) 70%,
-    rgba(11, 10, 20, 0.95) 100%
-  );
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 55%, rgba(11, 10, 20, 0.4) 100%);
   pointer-events: none;
 }
 
 #projects .sw-card-content {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: clamp(18px, 3.5vw, 32px);
-  pointer-events: none;
-}
-
-#projects .sw-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-#projects .sw-badge-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-#projects .sw-num-badge {
-  font-family: var(--font-display, 'Syne', sans-serif);
-  font-size: 15px;
-  font-weight: 800;
-  color: #FFFFFF;
-  background: rgba(146, 85, 255, 0.3);
-  border: 1px solid rgba(146, 85, 255, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 4px 12px;
-  border-radius: var(--radius-full, 999px);
-}
-
-#projects .sw-status-pill {
-  font-family: var(--font-accent, 'Plus Jakarta Sans', sans-serif);
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--gold-highlight, #FFD580);
-  background: rgba(244, 185, 66, 0.18);
-  border: 1px solid rgba(244, 185, 66, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 4px 12px;
-  border-radius: var(--radius-full, 999px);
-}
-
-#projects .sw-bottom-bar {
-  display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-  width: 100%;
-}
-
-#projects .sw-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: left;
-}
-
-#projects .sw-title {
-  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(20px, 3.2vw, 26px);
-  font-weight: 800;
-  color: #FFFFFF;
-  margin: 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
-}
-
-#projects .sw-tag {
-  font-family: var(--font-accent, 'DM Sans', sans-serif);
-  font-size: clamp(12.5px, 1.8vw, 14px);
-  color: var(--text-secondary, #B8B4C7);
-  font-weight: 500;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  justify-content: flex-end;
+  padding: clamp(16px, 3vw, 24px);
+  pointer-events: none;
 }
 
 #projects .sw-play-btn {
