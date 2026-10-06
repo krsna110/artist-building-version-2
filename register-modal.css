@@ -688,6 +688,34 @@
     box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
 }
 
+.reg-brochure-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 48px;
+    background: linear-gradient(135deg, #FFD580 0%, #E5A52E 100%);
+    color: #17120A;
+    font-weight: 700;
+    font-size: 14.5px;
+    border-radius: var(--radius-full, 999px);
+    border: 1px solid rgba(255, 213, 128, 0.6);
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(244, 185, 66, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.reg-brochure-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(244, 185, 66, 0.5);
+    color: #17120A;
+}
+
+.reg-brochure-action-btn svg {
+    stroke: #17120A;
+}
+
 .reg-close-btn-secondary {
     height: 44px;
     background: rgba(25, 23, 41, 0.85);

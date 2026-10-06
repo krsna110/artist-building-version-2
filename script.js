@@ -712,11 +712,191 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // === Student Testimonials Horizontal Marquee & Inline Player ===
+    // === Student Testimonials Interactive Auto-Scrolling Engine ===
     const testimonialCarouselWrapper = document.getElementById('testimonials-carousel-wrapper');
+    const testimonialsTrack = document.getElementById('testimonials-track');
     const testimonialCards = document.querySelectorAll('.testimonial-card');
 
-    if (testimonialCards.length > 0) {
+    if (testimonialCarouselWrapper && testimonialsTrack && testimonialCards.length > 0) {
+        // Scroller Engine State
+        let currentX = 0;
+        let baseSpeed = 0.85; // Pixels per frame at 60Hz
+        let currentVelocity = 0;
+        let isAutoScrolling = true;
+        let isHovered = false;
+        let isInteracting = false;
+        let isPlayingVideo = false;
+        let animationFrameId = null;
+        let lastTimestamp = 0;
+
+        // Pointer Drag State
+        let isDragging = false;
+        let startPointerX = 0;
+        let startTranslateX = 0;
+        let lastPointerX = 0;
+        let lastMoveTime = 0;
+        let dragDistance = 0;
+        let hasMovedSignificantly = false;
+
+        // Smooth glide tween state for keyboard navigation
+        let isTweening = false;
+        let tweenStartX = 0;
+        let tweenTargetX = 0;
+        let tweenStartTime = 0;
+        let tweenDuration = 450; // ms
+
+        // Calculate single loop width (half of total scrollWidth because of duplicate set)
+        function getHalfTrackWidth() {
+            return testimonialsTrack.scrollWidth / 2;
+        }
+
+        // Keep currentX within [-halfWidth, 0] bounds seamlessly
+        function normalizePosition(x) {
+            const halfWidth = getHalfTrackWidth();
+            if (halfWidth <= 0) return x;
+            while (x <= -halfWidth) x += halfWidth;
+            while (x > 0) x -= halfWidth;
+            return x;
+        }
+
+        function applyTransform(x) {
+            testimonialsTrack.style.transform = `translate3d(${x}px, 0, 0)`;
+        }
+
+        // Cubic ease out for glide jumps
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        // Main 60/120fps Animation Loop
+        function stepAnimation(timestamp) {
+            if (!lastTimestamp) lastTimestamp = timestamp;
+            const delta = Math.min((timestamp - lastTimestamp) / 16.67, 2.5); // Normalized to ~60fps
+            lastTimestamp = timestamp;
+
+            const halfWidth = getHalfTrackWidth();
+
+            if (isTweening) {
+                const elapsed = timestamp - tweenStartTime;
+                const progress = Math.min(elapsed / tweenDuration, 1);
+                const eased = easeOutCubic(progress);
+                currentX = tweenStartX + (tweenTargetX - tweenStartX) * eased;
+                currentX = normalizePosition(currentX);
+                applyTransform(currentX);
+
+                if (progress >= 1) {
+                    isTweening = false;
+                }
+            } else if (isDragging) {
+                // Handled directly in pointermove
+            } else if (Math.abs(currentVelocity) > 0.05) {
+                // Momentum inertia after release
+                currentX += currentVelocity * delta;
+                currentX = normalizePosition(currentX);
+                applyTransform(currentX);
+                currentVelocity *= Math.pow(0.92, delta); // Friction deceleration
+            } else {
+                currentVelocity = 0;
+                const shouldDrift = isAutoScrolling && !isHovered && !isInteracting && !isPlayingVideo;
+                if (shouldDrift && halfWidth > 0) {
+                    currentX -= baseSpeed * delta;
+                    currentX = normalizePosition(currentX);
+                    applyTransform(currentX);
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(stepAnimation);
+        }
+
+        animationFrameId = requestAnimationFrame(stepAnimation);
+
+        // Smooth jump forward or backward by card width
+        function glideBy(offsetPx) {
+            isTweening = true;
+            tweenStartX = currentX;
+            tweenTargetX = currentX + offsetPx;
+            tweenStartTime = performance.now();
+        }
+
+        const getCardStep = () => {
+            const firstCard = testimonialCards[0];
+            const cardWidth = firstCard ? firstCard.offsetWidth : 280;
+            const gap = 24;
+            return cardWidth + gap;
+        };
+
+        // Pointer Drag Handling (Mouse Drag & Touch Swipe with Inertia)
+        function onPointerDown(e) {
+            if (e.target.closest('.card-sound-badge') || e.target.closest('.card-expand-badge')) return;
+            isDragging = true;
+            isTweening = false;
+            currentVelocity = 0;
+            startPointerX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+            startTranslateX = currentX;
+            lastPointerX = startPointerX;
+            lastMoveTime = performance.now();
+            dragDistance = 0;
+            hasMovedSignificantly = false;
+            testimonialCarouselWrapper.setPointerCapture?.(e.pointerId);
+        }
+
+        function onPointerMove(e) {
+            if (!isDragging) return;
+            const pointerX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+            const now = performance.now();
+            const deltaX = pointerX - startPointerX;
+            dragDistance = Math.abs(deltaX);
+
+            if (dragDistance > 6) {
+                hasMovedSignificantly = true;
+            }
+
+            // Calculate instantaneous drag velocity
+            const timeDiff = now - lastMoveTime;
+            if (timeDiff > 0) {
+                const moveDiff = pointerX - lastPointerX;
+                currentVelocity = (moveDiff / timeDiff) * 16.67; // Normalized px per frame
+            }
+
+            lastPointerX = pointerX;
+            lastMoveTime = now;
+
+            currentX = normalizePosition(startTranslateX + deltaX);
+            applyTransform(currentX);
+        }
+
+        function onPointerUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            testimonialCarouselWrapper.releasePointerCapture?.(e.pointerId);
+
+            // Clamp max release velocity for pleasant flick feel
+            currentVelocity = Math.max(-14, Math.min(14, currentVelocity));
+        }
+
+        testimonialCarouselWrapper.addEventListener('pointerdown', onPointerDown);
+        testimonialCarouselWrapper.addEventListener('pointermove', onPointerMove);
+        testimonialCarouselWrapper.addEventListener('pointerup', onPointerUp);
+        testimonialCarouselWrapper.addEventListener('pointercancel', onPointerUp);
+
+        // Hover & Focus Pause Handling
+        testimonialCarouselWrapper.addEventListener('mouseenter', () => {
+            isHovered = true;
+        });
+
+        testimonialCarouselWrapper.addEventListener('mouseleave', () => {
+            isHovered = false;
+        });
+
+        testimonialCarouselWrapper.addEventListener('focusin', () => {
+            isHovered = true;
+        });
+
+        testimonialCarouselWrapper.addEventListener('focusout', () => {
+            isHovered = false;
+        });
+
+        // Testimonial Cards Video Playback & Sound Coordination
         function resetTestimonialCard(c) {
             c.classList.remove('is-playing');
             const v = c.querySelector('video');
@@ -726,9 +906,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const playIcon = c.querySelector('.play-icon');
             const pauseIcon = c.querySelector('.pause-icon');
             const soundBtn = c.querySelector('.card-sound-badge');
+            const expandBtn = c.querySelector('.card-expand-badge');
+            const progressBar = c.querySelector('.card-progress-bar');
+
             if (playIcon) playIcon.style.display = 'block';
             if (pauseIcon) pauseIcon.style.display = 'none';
             if (soundBtn) soundBtn.style.display = 'none';
+            if (expandBtn) expandBtn.style.display = 'none';
+            if (progressBar) progressBar.style.width = '0%';
         }
 
         function syncSoundUI(card, isMuted) {
@@ -744,10 +929,12 @@ document.addEventListener('DOMContentLoaded', () => {
         testimonialCards.forEach(card => {
             const video = card.querySelector('video');
             const soundBtn = card.querySelector('.card-sound-badge');
+            const expandBtn = card.querySelector('.card-expand-badge');
             const playIcon = card.querySelector('.play-icon');
             const pauseIcon = card.querySelector('.pause-icon');
+            const progressBar = card.querySelector('.card-progress-bar');
 
-            // Sound button click
+            // Sound button toggle
             if (soundBtn && video) {
                 soundBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -756,36 +943,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Inline Play / Pause on Card Click
-            function toggleCardPlayback() {
+            // Expand to modal popup
+            if (expandBtn) {
+                expandBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openVideoModal(card);
+                });
+            }
+
+            // Real-time video progress bar
+            if (video && progressBar) {
+                video.addEventListener('timeupdate', () => {
+                    if (video.duration) {
+                        const progress = (video.currentTime / video.duration) * 100;
+                        progressBar.style.width = `${progress}%`;
+                    }
+                });
+            }
+
+            // Toggle inline video playback on card click
+            function toggleCardPlayback(e) {
+                if (hasMovedSignificantly) {
+                    hasMovedSignificantly = false;
+                    return;
+                }
+
                 if (!video) return;
 
                 if (card.classList.contains('is-playing')) {
-                    // Pause currently playing card
+                    // Pause playing card
                     video.pause();
                     card.classList.remove('is-playing');
                     if (playIcon) playIcon.style.display = 'block';
                     if (pauseIcon) pauseIcon.style.display = 'none';
                     if (soundBtn) soundBtn.style.display = 'none';
+                    if (expandBtn) expandBtn.style.display = 'none';
 
-                    // Check if any other cards are playing
-                    const anyPlaying = Array.from(testimonialCards).some(c => c.classList.contains('is-playing'));
-                    if (!anyPlaying && testimonialCarouselWrapper) {
-                        testimonialCarouselWrapper.classList.remove('has-playing-video');
-                    }
+                    isPlayingVideo = Array.from(testimonialCards).some(c => c.classList.contains('is-playing'));
                 } else {
                     // Reset all other testimonial cards
                     testimonialCards.forEach(c => {
                         if (c !== card) resetTestimonialCard(c);
                     });
 
-                    // Pause background cards in other sections to optimize performance
+                    // Pause background cards in other sections for optimal bandwidth & performance
                     intersectingCards.forEach(c => {
                         const bgVid = c.querySelector('video');
                         safePauseVideo(bgVid);
                     });
 
-                    // Load video stream if not yet loaded
+                    // Load video stream if lazy
                     if (!video.src || video.src === window.location.href) {
                         const targetSrc = card.dataset.videoSrc || (video.dataset && video.dataset.src);
                         if (targetSrc) {
@@ -794,17 +1001,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
 
-                    // Activate playing state and pause auto-scrolling
+                    // Activate playing state & pause auto-drift
                     card.classList.add('is-playing');
+                    isPlayingVideo = true;
+
                     if (playIcon) playIcon.style.display = 'none';
                     if (pauseIcon) pauseIcon.style.display = 'block';
                     if (soundBtn) {
                         soundBtn.style.display = 'flex';
                         syncSoundUI(card, video.muted);
                     }
-
-                    if (testimonialCarouselWrapper) {
-                        testimonialCarouselWrapper.classList.add('has-playing-video');
+                    if (expandBtn) {
+                        expandBtn.style.display = 'flex';
                     }
 
                     // Play video with audio
@@ -814,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const playPromise = video.play();
                     if (playPromise !== undefined) {
                         playPromise.catch(() => {
-                            // If unmuted playback is restricted by browser gesture policy, play muted and let user click unmute
+                            // If unmuted playback is blocked by browser policy, fall back to muted and allow user tap
                             video.muted = true;
                             syncSoundUI(card, true);
                             video.play().catch(() => {});
@@ -823,9 +1031,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     video.onended = () => {
                         resetTestimonialCard(card);
-                        if (testimonialCarouselWrapper) {
-                            testimonialCarouselWrapper.classList.remove('has-playing-video');
-                        }
+                        isPlayingVideo = Array.from(testimonialCards).some(c => c.classList.contains('is-playing'));
                     };
                 }
             }
@@ -834,21 +1040,16 @@ document.addEventListener('DOMContentLoaded', () => {
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    toggleCardPlayback();
+                    toggleCardPlayback(e);
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    glideBy(-getCardStep());
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    glideBy(getCardStep());
                 }
             });
         });
-
-        // Touch & Hold Pause handling on mobile devices
-        if (testimonialCarouselWrapper) {
-            testimonialCarouselWrapper.addEventListener('touchstart', () => {
-                testimonialCarouselWrapper.classList.add('is-paused');
-            }, { passive: true });
-
-            testimonialCarouselWrapper.addEventListener('touchend', () => {
-                testimonialCarouselWrapper.classList.remove('is-paused');
-            }, { passive: true });
-        }
     }
 
     // Pause all background video streams when user navigates away from tab
@@ -950,5 +1151,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-});
+    // === Interactive YouTube Course Preview Video Player ===
+    const courseVideoPlayer = document.getElementById('video-player');
+    const courseVideoPlaceholder = document.getElementById('video-placeholder');
 
+    if (courseVideoPlayer && courseVideoPlaceholder) {
+        const initCourseVideo = () => {
+            const videoId = courseVideoPlayer.getAttribute('data-video-id') || 'JKVwowo19GU';
+            const iframe = document.createElement('iframe');
+            iframe.className = 'video-iframe';
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+            iframe.title = "See What You'll Learn Inside - Video Editing Course Trailer";
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allowFullscreen = true;
+            iframe.setAttribute('loading', 'lazy');
+
+            courseVideoPlayer.innerHTML = '';
+            courseVideoPlayer.appendChild(iframe);
+        };
+
+        courseVideoPlaceholder.addEventListener('click', initCourseVideo);
+        courseVideoPlaceholder.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                initCourseVideo();
+            }
+        });
+    }
+
+});

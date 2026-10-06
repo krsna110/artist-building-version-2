@@ -49,7 +49,7 @@
                 <li><a href="#curriculum" class="dropdown-nav-link">Curriculum</a></li>
                 <li><a href="#projects" class="dropdown-nav-link">Projects</a></li>
                 <li><a href="#reviews" class="dropdown-nav-link">Reviews</a></li>
-                <li><a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Brochure.pdf" class="dropdown-nav-link text-gold" target="_blank" rel="noopener">📄 Download Brochure (PDF)</a></li>
+                <li><a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Brochure.pdf" class="dropdown-nav-link text-gold" data-open-modal="brochure" target="_blank" rel="noopener">📄 Download Brochure (PDF)</a></li>
             </ul>
         </div>
     </nav>
@@ -95,11 +95,39 @@
 
     <!-- Video Section -->
     <section class="video-section reveal" id="video-section">
-        <h2 class="section-heading">See What You'll Learn Inside</h2>
-        <div class="video-player" id="video-player">
-            <div class="video-placeholder">
-                <div class="play-button" id="play-button">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        <div class="video-container">
+            <span class="section-tag">🎬 Course Preview</span>
+            <h2 class="section-heading">See What You'll Learn Inside</h2>
+            <p class="section-subheading">A walkthrough of the curriculum, live editing projects, and creative workflows.</p>
+            
+            <div class="video-player" id="video-player" data-video-id="JKVwowo19GU" role="region" aria-label="Course Preview Video Player">
+                <div class="video-placeholder" id="video-placeholder" role="button" tabindex="0" aria-label="Play course preview video">
+                    <!-- High-Res YouTube Thumbnail Image -->
+                    <img class="video-thumbnail-img" 
+                         src="https://img.youtube.com/vi/JKVwowo19GU/maxresdefault.jpg" 
+                         onerror="this.onerror=null;this.src='https://img.youtube.com/vi/JKVwowo19GU/hqdefault.jpg';" 
+                         alt="See What You'll Learn Inside - Video Editing Course Trailer" 
+                         loading="lazy">
+                    
+                    <!-- Dark Gradient & Glass Vignette Overlay -->
+                    <div class="video-thumbnail-overlay"></div>
+                    
+                    <!-- Play Button with Pulsing Radar Rings -->
+                    <div class="play-button" id="play-button" aria-hidden="true">
+                        <span class="play-radar-ring"></span>
+                        <span class="play-radar-ring-2"></span>
+                        <div class="play-icon-inner">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6,4 20,12 6,20"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Bottom floating preview badge -->
+                    <div class="video-badge-preview">
+                        <span class="badge-play-icon">▶</span>
+                        <span>Watch Course Preview</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -605,177 +633,307 @@
         </div>
     </section>
 
-    <!-- Student Work / Reviews Section - Continuous Horizontal Scrolling Video Testimonials -->
+    <!-- Student Work / Reviews Section - Interactive Auto-Scrolling Video Testimonials -->
     <div id="reviews" class="scroll-anchor"></div>
-    <section class="student-work-section" id="student-work">
-        <h2 class="section-heading-large">What<br><em>Students Say</em></h2>
-        <p class="student-work-desc">Real feedback from students who completed the Artistbuilding Academy program.</p>
-        
-        <!-- Continuous Horizontal Scrolling Carousel (Pause on Hover/Touch & Inline Play on Click) -->
-        <div class="testimonials-carousel-wrapper" id="testimonials-carousel-wrapper">
+    <section class="student-work-section reveal" id="student-work" aria-label="Student Testimonials and Reviews">
+        <div class="student-work-header">
+            <span class="section-tag">💬 Student Stories</span>
+            <h2 class="section-heading-large">What Our Students<br><em>Say &amp; Create</em></h2>
+            <p class="student-work-desc">Real feedback and video reviews from editors who transformed their skills and landed paid work with Artistbuilding Academy.</p>
+        </div>
+
+        <!-- Interactive Continuous Drag/Touch Horizontal Scrolling Marquee -->
+        <div class="testimonials-carousel-wrapper" id="testimonials-carousel-wrapper" tabindex="0" role="region" aria-label="Student Video Testimonials Carousel">
             <div class="testimonials-carousel-container" id="testimonials-carousel">
                 <div class="testimonials-track" id="testimonials-track">
-                    <!-- Set 1: 6 Real Testimonial Cards -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" data-title="Student Review 01" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 1">
-                        <span class="card-num-badge">Review 01</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" poster="img/testimonials/testimonial_1.webp" playsinline preload="metadata"></video>
+                    <!-- Set 1: Clean Video Testimonial Cards -->
+                    <!-- Card 1 -->
+                    <article class="testimonial-card" data-card-id="1" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" data-title="Student Story 1" tabindex="0" role="button" aria-label="Play Student Testimonial 1">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" poster="img/testimonials/testimonial_1.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
                     <!-- Card 2 -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" data-title="Student Review 02" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 2">
-                        <span class="card-num-badge">Review 02</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" poster="img/testimonials/testimonial_2.webp" playsinline preload="metadata"></video>
+                    <article class="testimonial-card" data-card-id="2" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" data-title="Student Story 2" tabindex="0" role="button" aria-label="Play Student Testimonial 2">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" poster="img/testimonials/testimonial_2.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
                     <!-- Card 3 -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" data-title="Student Review 03" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 3">
-                        <span class="card-num-badge">Review 03</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" poster="img/testimonials/testimonial_3.webp" playsinline preload="metadata"></video>
+                    <article class="testimonial-card" data-card-id="3" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" data-title="Student Story 3" tabindex="0" role="button" aria-label="Play Student Testimonial 3">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" poster="img/testimonials/testimonial_3.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
                     <!-- Card 4 -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" data-title="Student Review 04" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 4">
-                        <span class="card-num-badge">Review 04</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" poster="img/testimonials/testimonial_4.webp" playsinline preload="metadata"></video>
+                    <article class="testimonial-card" data-card-id="4" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" data-title="Student Story 4" tabindex="0" role="button" aria-label="Play Student Testimonial 4">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" poster="img/testimonials/testimonial_4.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
                     <!-- Card 5 -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" data-title="Student Review 05" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 5">
-                        <span class="card-num-badge">Review 05</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" poster="img/testimonials/testimonial_5.webp" playsinline preload="metadata"></video>
+                    <article class="testimonial-card" data-card-id="5" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" data-title="Student Story 5" tabindex="0" role="button" aria-label="Play Student Testimonial 5">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" poster="img/testimonials/testimonial_5.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
                     <!-- Card 6 -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" data-title="Student Review 06" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 6">
-                        <span class="card-num-badge">Review 06</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" poster="img/testimonials/testimonial_6.webp" playsinline preload="metadata"></video>
+                    <article class="testimonial-card" data-card-id="6" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" data-title="Student Story 6" tabindex="0" role="button" aria-label="Play Student Testimonial 6">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" poster="img/testimonials/testimonial_6.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
-                    <!-- Set 2: Seamless Infinite Marquee Duplicate Set (Cards 1-6) -->
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" data-title="Student Review 01" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 1" aria-hidden="true">
-                        <span class="card-num-badge">Review 01</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" poster="img/testimonials/testimonial_1.webp" playsinline preload="metadata"></video>
+                    <!-- Set 2: Seamless Infinite Duplicate Set (Cards 1-6) -->
+                    <!-- Duplicate Card 1 -->
+                    <article class="testimonial-card is-clone" data-card-id="1" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" data-title="Student Story 1" tabindex="0" role="button" aria-label="Play Student Testimonial 1" aria-hidden="true">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_1_converted.mp4" poster="img/testimonials/testimonial_1.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" data-title="Student Review 02" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 2" aria-hidden="true">
-                        <span class="card-num-badge">Review 02</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" poster="img/testimonials/testimonial_2.webp" playsinline preload="metadata"></video>
+                    <!-- Duplicate Card 2 -->
+                    <article class="testimonial-card is-clone" data-card-id="2" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" data-title="Student Story 2" tabindex="0" role="button" aria-label="Play Student Testimonial 2" aria-hidden="true">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_2_converted.mp4" poster="img/testimonials/testimonial_2.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" data-title="Student Review 03" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 3" aria-hidden="true">
-                        <span class="card-num-badge">Review 03</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" poster="img/testimonials/testimonial_3.webp" playsinline preload="metadata"></video>
+                    <!-- Duplicate Card 3 -->
+                    <article class="testimonial-card is-clone" data-card-id="3" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" data-title="Student Story 3" tabindex="0" role="button" aria-label="Play Student Testimonial 3" aria-hidden="true">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_3_converted.mp4" poster="img/testimonials/testimonial_3.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" data-title="Student Review 04" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 4" aria-hidden="true">
-                        <span class="card-num-badge">Review 04</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" poster="img/testimonials/testimonial_4.webp" playsinline preload="metadata"></video>
+                    <!-- Duplicate Card 4 -->
+                    <article class="testimonial-card is-clone" data-card-id="4" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" data-title="Student Story 4" tabindex="0" role="button" aria-label="Play Student Testimonial 4" aria-hidden="true">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_4_converted.mp4" poster="img/testimonials/testimonial_4.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" data-title="Student Review 05" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 5" aria-hidden="true">
-                        <span class="card-num-badge">Review 05</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" poster="img/testimonials/testimonial_5.webp" playsinline preload="metadata"></video>
+                    <!-- Duplicate Card 5 -->
+                    <article class="testimonial-card is-clone" data-card-id="5" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" data-title="Student Story 5" tabindex="0" role="button" aria-label="Play Student Testimonial 5" aria-hidden="true">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_5_converted.mp4" poster="img/testimonials/testimonial_5.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
 
-                    <article class="testimonial-card" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" data-title="Student Review 06" data-tag="Student Testimonial" tabindex="0" role="button" aria-label="Play Student Testimonial 6" aria-hidden="true">
-                        <span class="card-num-badge">Review 06</span>
-                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" poster="img/testimonials/testimonial_6.webp" playsinline preload="metadata"></video>
+                    <!-- Duplicate Card 6 -->
+                    <article class="testimonial-card is-clone" data-card-id="6" data-video-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" data-title="Student Story 6" tabindex="0" role="button" aria-label="Play Student Testimonial 6" aria-hidden="true">
+                        <video class="card-video" data-src="https://pub-2e99560076ce45129d0b8c3d0e62ad9c.r2.dev/student%20-testimonials/Testimonial_6_converted.mp4" poster="img/testimonials/testimonial_6.webp" playsinline preload="none"></video>
+
                         <div class="card-play-badge" aria-hidden="true">
-                            <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                            <div class="play-pulse-ring"></div>
+                            <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                         </div>
-                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;">
+
+                        <button class="card-sound-badge" type="button" aria-label="Toggle Sound" style="display:none;" title="Mute / Unmute">
                             <svg class="sound-on-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <svg class="sound-off-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         </button>
+
+                        <button class="card-expand-badge" type="button" aria-label="Watch Fullscreen" title="Watch in Fullscreen Modal" style="display:none;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                        </button>
+
+                        <div class="card-progress-container" aria-hidden="true">
+                            <div class="card-progress-bar"></div>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -1117,7 +1275,7 @@
                         <p>Get the full class-by-class breakdown for Premiere Pro &amp; After Effects.</p>
                     </div>
                 </div>
-                <a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Academy-Brochure.pdf" class="btn-curriculum-brochure" target="_blank" rel="noopener" id="btn-curriculum-brochure">
+                <a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Academy-Brochure.pdf" class="btn-curriculum-brochure" data-open-modal="brochure" target="_blank" rel="noopener" id="btn-curriculum-brochure">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     <span>Download Brochure</span>
                 </a>
@@ -1320,7 +1478,7 @@
 
     <!-- Sticky Floating Brochure Download Button (Instant Download) -->
     <aside class="sticky-brochure-container" id="sticky-brochure" aria-label="Download Course Brochure">
-        <a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Academy-Brochure.pdf" class="btn-floating-brochure" id="btn-download-brochure" target="_blank" rel="noopener" aria-label="Download Full Course Syllabus PDF">
+        <a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Academy-Brochure.pdf" class="btn-floating-brochure" id="btn-download-brochure" data-open-modal="brochure" target="_blank" rel="noopener" aria-label="Download Full Course Syllabus PDF">
             <div class="brochure-icon-wrap" aria-hidden="true">
                 <svg class="pdf-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -1344,24 +1502,17 @@
 
     <!-- Sticky Floating Instagram Button -->
     <aside class="sticky-instagram-container" id="sticky-instagram" aria-label="Follow on Instagram">
-        <a href="https://www.instagram.com/artistbuildingacademy?stkn=MWlhMjQ3N2wwcTE1eQ==" target="_blank" rel="noopener noreferrer" class="btn-floating-instagram" id="btn-floating-instagram" aria-label="Follow Artist Building Academy on Instagram">
+        <a href="https://www.instagram.com/artistbuildingacademy?stkn=MWlhMjQ3N2wwcTE1eQ==" target="_blank" rel="noopener noreferrer" class="btn-floating-instagram" id="btn-floating-instagram" aria-label="Follow Artist Building Academy on Instagram" title="Follow us on Instagram">
+            <span class="insta-pulse-ring insta-pulse-1" aria-hidden="true"></span>
+            <span class="insta-pulse-ring insta-pulse-2" aria-hidden="true"></span>
             <div class="insta-icon-wrap" aria-hidden="true">
-                <svg class="insta-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="insta-svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span class="insta-pulse"></span>
             </div>
-            <div class="insta-text-wrap">
-                <span class="insta-sub">Instagram</span>
-                <span class="insta-title">@artistbuildingacademy</span>
-            </div>
-            <div class="insta-arrow-wrap" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </div>
+            <span class="insta-tooltip" aria-hidden="true">Follow on Instagram</span>
         </a>
     </aside>
 
@@ -1405,12 +1556,12 @@
 
             <!-- Modal Header -->
             <div class="reg-modal-header">
-                <div class="reg-modal-badge">
+                <div class="reg-modal-badge" id="reg-modal-badge">
                     <span class="reg-badge-dot"></span>
-                    <span>Admissions Open · Limited Seats</span>
+                    <span id="reg-modal-badge-text">Admissions Open · Limited Seats</span>
                 </div>
                 <h2 class="reg-modal-title" id="reg-modal-title">Advanced Video Editing Course</h2>
-                <p class="reg-modal-subtitle">Fill in the details below to reserve your seat and get instant batch timings & syllabus.</p>
+                <p class="reg-modal-subtitle" id="reg-modal-subtitle">Fill in the details below to reserve your seat and get instant batch timings & syllabus.</p>
                 
                 <!-- Progress Bar -->
                 <div class="reg-progress-wrapper" aria-hidden="true">
@@ -1643,7 +1794,7 @@
                     <!-- Submit Button & Trust Subtext -->
                     <div class="reg-modal-actions">
                         <button type="submit" class="btn-primary reg-submit-btn" id="reg-submit-btn">
-                            <span class="reg-btn-text">Submit Registration</span>
+                            <span class="reg-btn-text" id="reg-btn-text">Submit Registration</span>
                             <svg class="reg-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                         <p class="reg-trust-note">
@@ -1661,8 +1812,8 @@
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                     </div>
-                    <h3 class="reg-success-title">Application Submitted! 🎉</h3>
-                    <p class="reg-success-desc">
+                    <h3 class="reg-success-title" id="reg-success-title">Application Submitted! 🎉</h3>
+                    <p class="reg-success-desc" id="reg-success-desc">
                         Thank you, <strong id="success-student-name">Student</strong>! We have received your application for the <strong>Advanced Video Editing Course</strong>.
                     </p>
                     <div class="reg-success-details-box">
@@ -1679,8 +1830,16 @@
                             <span class="reg-detail-val" id="success-student-timeline">-</span>
                         </div>
                     </div>
-                    <p class="reg-success-subnote">Our counselor will reach out via WhatsApp with the curriculum overview, batch availability, and fee details.</p>
+                    <p class="reg-success-subnote" id="reg-success-subnote">Our counselor will reach out via WhatsApp with the curriculum overview, batch availability, and fee details.</p>
                     <div class="reg-success-actions">
+                        <a href="assets/artistbuilding-brochure.pdf" download="Artistbuilding-Academy-Brochure.pdf" id="success-brochure-btn" class="reg-brochure-action-btn" style="display: none;" target="_blank" rel="noopener">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            <span>Download Brochure PDF</span>
+                        </a>
                         <a href="#" id="success-wa-btn" class="reg-wa-action-btn" target="_blank" rel="noopener">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12.031 2C6.516 2 2 6.516 2 12.031c0 1.97.574 3.805 1.564 5.352L2.094 22l4.781-1.438a9.97 9.97 0 0 0 5.156 1.438c5.516 0 10.031-4.516 10.031-10.031C22.062 6.516 17.547 2 12.031 2zm0 18.062a8.03 8.03 0 0 1-4.14-1.14l-.3-.18-3.078.922.938-3-.195-.312a8.026 8.026 0 1 1 6.775 3.71zm4.61-6.03c-.25-.125-1.484-.734-1.719-.82-.234-.086-.406-.125-.578.125-.172.25-.672.828-.828.984-.156.156-.312.172-.562.047-.25-.125-1.055-.39-2.016-1.242-.742-.664-1.242-1.484-1.39-1.734-.148-.25-.016-.39.11-.516.11-.11.25-.281.375-.422.125-.14.172-.234.25-.39.078-.156.04-.3-.02-.422s-.578-1.39-.797-1.906c-.21-.5-.43-.43-.594-.438-.156-.008-.328-.008-.5-.008s-.453.063-.688.313c-.234.25-.906.89-.906 2.172s.922 2.516 1.047 2.688c.125.172 1.812 2.766 4.39 3.875.61.266 1.086.422 1.453.547.61.195 1.164.172 1.602.11.492-.078 1.484-.61 1.695-1.195.21-.586.21-1.086.148-1.195-.062-.11-.234-.172-.484-.297z"/>
