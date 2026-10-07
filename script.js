@@ -625,14 +625,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadCardVideo(video) {
         if (!video) return;
-        if (video.dataset && video.dataset.src && !video.src) {
-            video.src = video.dataset.src;
+        const targetSrc = (video.dataset && video.dataset.src) || (video.closest('[data-video-src]') && video.closest('[data-video-src]').dataset.videoSrc);
+        if (targetSrc && (!video.src || video.src === window.location.href)) {
+            video.src = targetSrc;
             video.preload = 'metadata';
-            video.load();
         }
     }
 
-    // Proximity observer: lazily loads MP4 streams only when card approaches viewport (300px buffer)
+    // Proximity observer: lazily loads MP4 streams only when card approaches viewport (350px buffer)
     let preloadObserver = null;
     let playbackObserver = null;
 
@@ -732,11 +732,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Pointer Drag State
         let isDragging = false;
         let startPointerX = 0;
+        let startPointerY = 0;
         let startTranslateX = 0;
         let lastPointerX = 0;
         let lastMoveTime = 0;
         let dragDistance = 0;
-        let hasMovedSignificantly = false;
+        let isDragGesture = false;
 
         // Smooth glide tween state for keyboard navigation
         let isTweening = false;
@@ -744,6 +745,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let tweenTargetX = 0;
         let tweenStartTime = 0;
         let tweenDuration = 450; // ms
+
+        // Preload testimonial videos as they approach viewport
+        testimonialCards.forEach(card => {
+            if (preloadObserver) preloadObserver.observe(card);
+        });
 
         // Calculate single loop width (half of total scrollWidth because of duplicate set)
         function getHalfTrackWidth() {
@@ -829,49 +835,65 @@ document.addEventListener('DOMContentLoaded', () => {
         function onPointerDown(e) {
             if (e.target.closest('.card-sound-badge') || e.target.closest('.card-expand-badge')) return;
             isDragging = true;
+            isInteracting = true; // Pause drift while pressing
             isTweening = false;
+            isDragGesture = false;
             currentVelocity = 0;
-            startPointerX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+            startPointerX = e.clientX ?? 0;
+            startPointerY = e.clientY ?? 0;
             startTranslateX = currentX;
             lastPointerX = startPointerX;
             lastMoveTime = performance.now();
             dragDistance = 0;
-            hasMovedSignificantly = false;
-            testimonialCarouselWrapper.setPointerCapture?.(e.pointerId);
         }
 
         function onPointerMove(e) {
             if (!isDragging) return;
-            const pointerX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-            const now = performance.now();
+            const pointerX = e.clientX ?? 0;
+            const pointerY = e.clientY ?? 0;
             const deltaX = pointerX - startPointerX;
-            dragDistance = Math.abs(deltaX);
+            const deltaY = pointerY - startPointerY;
+            dragDistance = Math.hypot(deltaX, deltaY);
 
-            if (dragDistance > 6) {
-                hasMovedSignificantly = true;
+            if (dragDistance > 8) {
+                isDragGesture = true;
+                if (testimonialCarouselWrapper.setPointerCapture && !testimonialCarouselWrapper.hasPointerCapture?.(e.pointerId)) {
+                    try {
+                        testimonialCarouselWrapper.setPointerCapture(e.pointerId);
+                    } catch (_) {}
+                }
+
+                // Calculate instantaneous drag velocity
+                const now = performance.now();
+                const timeDiff = now - lastMoveTime;
+                if (timeDiff > 0) {
+                    const moveDiff = pointerX - lastPointerX;
+                    currentVelocity = (moveDiff / timeDiff) * 16.67; // Normalized px per frame
+                }
+
+                lastPointerX = pointerX;
+                lastMoveTime = now;
+
+                currentX = normalizePosition(startTranslateX + deltaX);
+                applyTransform(currentX);
             }
-
-            // Calculate instantaneous drag velocity
-            const timeDiff = now - lastMoveTime;
-            if (timeDiff > 0) {
-                const moveDiff = pointerX - lastPointerX;
-                currentVelocity = (moveDiff / timeDiff) * 16.67; // Normalized px per frame
-            }
-
-            lastPointerX = pointerX;
-            lastMoveTime = now;
-
-            currentX = normalizePosition(startTranslateX + deltaX);
-            applyTransform(currentX);
         }
 
         function onPointerUp(e) {
             if (!isDragging) return;
             isDragging = false;
-            testimonialCarouselWrapper.releasePointerCapture?.(e.pointerId);
+            isInteracting = false;
 
-            // Clamp max release velocity for pleasant flick feel
-            currentVelocity = Math.max(-14, Math.min(14, currentVelocity));
+            if (testimonialCarouselWrapper.hasPointerCapture?.(e.pointerId)) {
+                try {
+                    testimonialCarouselWrapper.releasePointerCapture(e.pointerId);
+                } catch (_) {}
+            }
+
+            if (isDragGesture) {
+                // Clamp max release velocity for pleasant flick feel
+                currentVelocity = Math.max(-14, Math.min(14, currentVelocity));
+            }
         }
 
         testimonialCarouselWrapper.addEventListener('pointerdown', onPointerDown);
@@ -926,29 +948,118 @@ document.addEventListener('DOMContentLoaded', () => {
             soundBtn.setAttribute('aria-label', isMuted ? 'Unmute' : 'Mute');
         }
 
-        testimonialCards.forEach(card => {
+        let isToggling = false;
+        function toggleCardPlayback(card) {
+            if (isToggling) return;
+            isToggling = true;
+            setTimeout(() => { isToggling = false; }, 320);
+
             const video = card.querySelector('video');
+            if (!video) return;
+
             const soundBtn = card.querySelector('.card-sound-badge');
             const expandBtn = card.querySelector('.card-expand-badge');
             const playIcon = card.querySelector('.play-icon');
             const pauseIcon = card.querySelector('.pause-icon');
+
+            if (card.classList.contains('is-playing')) {
+                // Currently playing -> Pause
+                video.pause();
+                card.classList.remove('is-playing');
+                if (playIcon) playIcon.style.display = 'block';
+                if (pauseIcon) pauseIcon.style.display = 'none';
+                if (soundBtn) soundBtn.style.display = 'none';
+                if (expandBtn) expandBtn.style.display = 'none';
+
+                isPlayingVideo = Array.from(testimonialCards).some(c => c.classList.contains('is-playing') && !c.querySelector('video')?.paused);
+            } else {
+                // Start playing -> Reset all other testimonial cards
+                testimonialCards.forEach(c => {
+                    if (c !== card) resetTestimonialCard(c);
+                });
+
+                // Pause background cards in other sections
+                intersectingCards.forEach(c => {
+                    const bgVid = c.querySelector('video');
+                    safePauseVideo(bgVid);
+                });
+
+                // Ensure video src is loaded
+                const targetSrc = card.dataset.videoSrc || (video.dataset && video.dataset.src);
+                if (targetSrc && (!video.src || video.src === window.location.href)) {
+                    video.src = targetSrc;
+                }
+
+                // Activate playing state & pause auto-drift
+                card.classList.add('is-playing');
+                isPlayingVideo = true;
+
+                if (playIcon) playIcon.style.display = 'none';
+                if (pauseIcon) pauseIcon.style.display = 'block';
+                if (soundBtn) {
+                    soundBtn.style.display = 'flex';
+                    syncSoundUI(card, video.muted);
+                }
+                if (expandBtn) {
+                    expandBtn.style.display = 'flex';
+                }
+
+                // Play video with audio
+                video.muted = false;
+                syncSoundUI(card, false);
+
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(err => {
+                        console.warn('Direct unmuted play blocked by browser policy, falling back to muted:', err);
+                        video.muted = true;
+                        syncSoundUI(card, true);
+                        video.play().catch(e => console.error('Video play error:', e));
+                    });
+                }
+
+                video.onended = () => {
+                    resetTestimonialCard(card);
+                    isPlayingVideo = Array.from(testimonialCards).some(c => c.classList.contains('is-playing') && !c.querySelector('video')?.paused);
+                };
+            }
+        }
+
+        testimonialCards.forEach(card => {
+            const video = card.querySelector('video');
+            const soundBtn = card.querySelector('.card-sound-badge');
+            const expandBtn = card.querySelector('.card-expand-badge');
             const progressBar = card.querySelector('.card-progress-bar');
+
+            if (video) {
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
+            }
 
             // Sound button toggle
             if (soundBtn && video) {
-                soundBtn.addEventListener('click', (e) => {
+                const handleSound = (e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     video.muted = !video.muted;
                     syncSoundUI(card, video.muted);
-                });
+                };
+                soundBtn.addEventListener('click', handleSound);
+                soundBtn.addEventListener('pointerup', handleSound);
             }
 
             // Expand to modal popup
             if (expandBtn) {
-                expandBtn.addEventListener('click', (e) => {
+                const handleExpand = (e) => {
                     e.stopPropagation();
+                    e.preventDefault();
+                    if (video) video.pause();
+                    resetTestimonialCard(card);
+                    isPlayingVideo = false;
                     openVideoModal(card);
-                });
+                };
+                expandBtn.addEventListener('click', handleExpand);
+                expandBtn.addEventListener('pointerup', handleExpand);
             }
 
             // Real-time video progress bar
@@ -961,86 +1072,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Toggle inline video playback on card click
-            function toggleCardPlayback(e) {
-                if (hasMovedSignificantly) {
-                    hasMovedSignificantly = false;
-                    return;
-                }
+            // Click and pointerup handlers on individual card
+            const handleCardTrigger = (e) => {
+                if (e.target.closest('.card-sound-badge') || e.target.closest('.card-expand-badge')) return;
+                if (isDragGesture || dragDistance > 8) return;
+                toggleCardPlayback(card);
+            };
 
-                if (!video) return;
+            card.addEventListener('pointerup', handleCardTrigger);
+            card.addEventListener('click', handleCardTrigger);
 
-                if (card.classList.contains('is-playing')) {
-                    // Pause playing card
-                    video.pause();
-                    card.classList.remove('is-playing');
-                    if (playIcon) playIcon.style.display = 'block';
-                    if (pauseIcon) pauseIcon.style.display = 'none';
-                    if (soundBtn) soundBtn.style.display = 'none';
-                    if (expandBtn) expandBtn.style.display = 'none';
-
-                    isPlayingVideo = Array.from(testimonialCards).some(c => c.classList.contains('is-playing'));
-                } else {
-                    // Reset all other testimonial cards
-                    testimonialCards.forEach(c => {
-                        if (c !== card) resetTestimonialCard(c);
-                    });
-
-                    // Pause background cards in other sections for optimal bandwidth & performance
-                    intersectingCards.forEach(c => {
-                        const bgVid = c.querySelector('video');
-                        safePauseVideo(bgVid);
-                    });
-
-                    // Load video stream if lazy
-                    if (!video.src || video.src === window.location.href) {
-                        const targetSrc = card.dataset.videoSrc || (video.dataset && video.dataset.src);
-                        if (targetSrc) {
-                            video.src = targetSrc;
-                            video.load();
-                        }
-                    }
-
-                    // Activate playing state & pause auto-drift
-                    card.classList.add('is-playing');
-                    isPlayingVideo = true;
-
-                    if (playIcon) playIcon.style.display = 'none';
-                    if (pauseIcon) pauseIcon.style.display = 'block';
-                    if (soundBtn) {
-                        soundBtn.style.display = 'flex';
-                        syncSoundUI(card, video.muted);
-                    }
-                    if (expandBtn) {
-                        expandBtn.style.display = 'flex';
-                    }
-
-                    // Play video with audio
-                    video.muted = false;
-                    syncSoundUI(card, false);
-
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(() => {
-                            // If unmuted playback is blocked by browser policy, fall back to muted and allow user tap
-                            video.muted = true;
-                            syncSoundUI(card, true);
-                            video.play().catch(() => {});
-                        });
-                    }
-
-                    video.onended = () => {
-                        resetTestimonialCard(card);
-                        isPlayingVideo = Array.from(testimonialCards).some(c => c.classList.contains('is-playing'));
-                    };
-                }
-            }
-
-            card.addEventListener('click', toggleCardPlayback);
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    toggleCardPlayback(e);
+                    toggleCardPlayback(card);
                 } else if (e.key === 'ArrowRight') {
                     e.preventDefault();
                     glideBy(-getCardStep());
@@ -1086,11 +1131,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const video = c.querySelector('video');
             safePauseVideo(video);
         });
+        if (testimonialCards) {
+            testimonialCards.forEach(c => {
+                const v = c.querySelector('video');
+                if (v && !v.paused) v.pause();
+                c.classList.remove('is-playing');
+            });
+        }
 
-        const videoSrc = card.dataset.videoSrc || '';
-        const title = card.dataset.title || card.dataset.student || 'Video Reel';
-        const role = card.dataset.tag || card.dataset.role || '';
-        const poster = card.dataset.poster || '';
+        const videoSrc = card.dataset.videoSrc || (card.querySelector('video') && (card.querySelector('video').src || card.querySelector('video').dataset.src)) || '';
+        const title = card.dataset.title || card.dataset.student || 'Student Testimonial';
+        const role = card.dataset.tag || card.dataset.role || 'Course Review';
+        const poster = card.dataset.poster || (card.querySelector('video') && card.querySelector('video').poster) || '';
 
         if (modalStudentName) modalStudentName.textContent = title;
         if (modalStudentRole) modalStudentRole.textContent = role;
@@ -1099,11 +1151,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (modalNotice) modalNotice.style.display = 'none';
             modalVideo.style.display = 'block';
             modalVideo.poster = poster;
-            modalVideo.src = videoSrc;
+            if (modalVideo.src !== videoSrc) {
+                modalVideo.src = videoSrc;
+            }
             modalVideo.currentTime = 0;
+            modalVideo.muted = false;
             const modalPlayPromise = modalVideo.play();
             if (modalPlayPromise !== undefined) {
-                modalPlayPromise.catch(() => {});
+                modalPlayPromise.catch(err => {
+                    console.warn('Modal unmuted play blocked, trying muted:', err);
+                    modalVideo.muted = true;
+                    modalVideo.play().catch(() => {});
+                });
             }
         } else {
             // Placeholder notice if videoSrc is blank
@@ -1112,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modalVideo.style.display = 'none';
             if (modalNotice) {
                 modalNotice.style.display = 'flex';
-                if (noticeTitle) noticeTitle.textContent = `${title} Reel`;
+                if (noticeTitle) noticeTitle.textContent = `${title}`;
                 const noticeDesc = document.getElementById('notice-desc');
                 if (noticeDesc) noticeDesc.innerHTML = `Video reel coming soon! Set <code>data-video-src</code> on this card.`;
             }
