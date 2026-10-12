@@ -1596,8 +1596,8 @@ section[id],
     }
 
     .mentor-carousel {
-        aspect-ratio: 16 / 10;
-        max-height: 280px;
+        aspect-ratio: 1 / 1;
+        max-height: none;
     }
 
     .mentor-name {
@@ -4551,8 +4551,7 @@ body::after {
 
 @media (max-width: 768px) {
     .sticky-brochure-container {
-        bottom: calc(var(--sticky-height, 82px) + 12px);
-        left: 14px;
+        display: none;
     }
     
     .btn-floating-brochure {
@@ -4746,8 +4745,7 @@ body::after {
 /* Mobile Adaptation */
 @media (max-width: 768px) {
     .sticky-instagram-container {
-        bottom: calc(var(--sticky-height, 82px) + 14px);
-        right: 16px;
+        display: none;
     }
 
     .btn-floating-instagram {

@@ -167,6 +167,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Show the registration form the first time the YouTube preview enters view.
+    // It only opens once per page visit, so scrolling back to the section stays calm.
+    const videoSection = document.getElementById('video-section');
+    if (videoSection && 'IntersectionObserver' in window) {
+        let videoSectionPromptShown = false;
+        const videoSectionObserver = new IntersectionObserver((entries, observer) => {
+            const entry = entries[0];
+            if (!videoSectionPromptShown && entry.isIntersecting) {
+                videoSectionPromptShown = true;
+                openModal('register');
+                observer.disconnect();
+            }
+        }, { threshold: 0.4 });
+        videoSectionObserver.observe(videoSection);
+    }
+
     // Catch any remaining buttons with "Register Now" or "Enroll Now" text
     document.querySelectorAll('a, button').forEach(el => {
         if (el.id === 'success-brochure-btn' || el.id === 'btn-download-brochure' || el.id === 'btn-curriculum-brochure') return;
